@@ -2,9 +2,9 @@ console.log('Czech typography fixer here.');
 // window.addEventListener ("load", czech_typography_fixer_main, true);
 
 function czechTypographyFixerMain () {
-    var nodes = [];
+    let nodes = [];
 
-    var host = document.location.host;
+    const host = document.location.host;
     console.log('location.host: ' + host);
     if (host.startsWith('www.ceska-justice.cz')
       || host.startsWith('www.zdravotnickydenik.cz')) {
@@ -108,13 +108,13 @@ function czechTypographyFixerMain () {
     }
     console.log('Got ' + nodes.length + ' nodes.');
 
-    var textNodes = [];
-    var i;
+    const textNodes = [];
+    let i;
     for (i = 0; i !== nodes.length; ++i) {
-        var node = nodes[i];
+        const node = nodes[i];
         var walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT,
             {
-                acceptNode: function (n) {
+                acceptNode: (n) => {
                     if (n.parentNode && n.parentNode.nodeName === 'SCRIPT') {
                     // console.log('rejecting text of node ' + n.parentNode.nodeName);
                         return NodeFilter.FILTER_REJECT;
@@ -136,17 +136,17 @@ function czechTypographyFixerMain () {
     }
 }
 
-const czechTypographyFixerReSingleLetters = /(\b[zZsSuUkKoOvViI])[ ]+/gu;
-const czechTypographyFixerReSingleA = /(\b[aA])[ ]+/gu;
-const czechTypographyFixerRePercents = /([0-9])[ ]([%‰°℃℉])/gu;
-const czechTypographyFixerReDates = /(\d{1,2}\.)[ ](ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gu;
-const czechTypographyFixerReStraightToCzechQuotes = /([^0-9]|^)"([^"]*)"/gu;
-// const czechTypographyFixerReEnglishToCzechQuotes = /“([^”]*)”/gu;
-const czechTypographyFixerReSingleQuotes = /([^0-9a-z]|^)'([^']*)'/igu;
-const czechTypographyFixerReFixBoth99Quotes = /„([^”]*)”/gu;
-
 function transmogrifyTextNode (textNode) {
-    var text = textNode.nodeValue;
+    const czechTypographyFixerReSingleLetters = /(\b[zZsSuUkKoOvViI])[ ]+/gu;
+    const czechTypographyFixerReSingleA = /(\b[aA])[ ]+/gu;
+    const czechTypographyFixerRePercents = /([0-9])[ ]([%‰°℃℉])/gu;
+    const czechTypographyFixerReDates = /(\d{1,2}\.)[ ](ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gu;
+    const czechTypographyFixerReStraightToCzechQuotes = /([^0-9]|^)"([^"]*)"/gu;
+    // const czechTypographyFixerReEnglishToCzechQuotes = /“([^”]*)”/gu;
+    const czechTypographyFixerReSingleQuotes = /([^0-9a-z]|^)'([^']*)'/igu;
+    const czechTypographyFixerReFixBoth99Quotes = /„([^”]*)”/gu;
+
+    let text = textNode.nodeValue;
 
     text = text.replace(czechTypographyFixerReSingleLetters, '$1\u00a0');
     text = text.replace(czechTypographyFixerReSingleA, '$1\u00a0');

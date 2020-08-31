@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.13
+// @version     1.0.17
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -632,7 +632,7 @@ __webpack_require__.r(__webpack_exports__);
 console.log('Czech typography fixer here.'); // window.addEventListener ("load", czech_typography_fixer_main, true);
 
 function czechTypographyFixerMain() {
-  var nodes = [];
+  let nodes = [];
   const host = document.location.host;
   console.log('location.host: ' + host);
 
@@ -737,8 +737,8 @@ function czechTypographyFixerMain() {
   }
 
   console.log('Got ' + nodes.length + ' nodes.');
-  var textNodes = [];
-  var i;
+  const textNodes = [];
+  let i;
 
   for (i = 0; i !== nodes.length; ++i) {
     const node = nodes[i];
@@ -767,7 +767,7 @@ function czechTypographyFixerMain() {
 
 function transmogrifyTextNode(textNode) {
   // const czechTypographyFixerReEnglishToCzechQuotes = /“([^”]*)”/gu;
-  var text = textNode.nodeValue;
+  let text = textNode.nodeValue;
   text = text.replace(/(\b[zZsSuUkKoOvViI])[ ]+/gu, '$1\u00a0');
   text = text.replace(/(\b[aA])[ ]+/gu, '$1\u00a0');
   text = text.replace(/([0-9])[ ]([%‰°℃℉])/gu, '$1\u00a0$2');
