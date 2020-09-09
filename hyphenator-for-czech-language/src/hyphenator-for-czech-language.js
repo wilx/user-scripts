@@ -1370,7 +1370,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access public
      */
         function hyphenateURL (url) {
-            var tmp = url.replace(/([:\/\.\?#&\-_,;!@]+)/gi, '$&' + urlhyphen);
+            var tmp = url.replace(/([!#&,./:;?@_\-]+)/gi, '$&' + urlhyphen);
             var parts = tmp.split(urlhyphen);
             var i = 0;
             while (i < parts.length) {
@@ -2830,7 +2830,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 h = hyphen;
             }
             // strip off blank space at the end (omitted closing tags)
-            part = part.replace(/[\s]*$/, '');
+            part = part.replace(/\s*$/, '');
             if (orphanControl >= 2) {
                 // remove hyphen points from last word
                 r = part.split(' ');
@@ -2840,7 +2840,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             }
             if (orphanControl === 3) {
                 // replace spaces by non breaking spaces
-                r = r.replace(/[\ ]+/g, String.fromCharCode(160));
+                r = r.replace(/ +/g, String.fromCharCode(160));
             }
             return r;
         }
@@ -2883,7 +2883,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                         && n.data.length >= min) { // longer then min
                         n.data = n.data.replace(lo.genRegExp, hyphenate);
                         if (orphanControl !== 1) {
-                            n.data = n.data.replace(/[\S]+\ [\S]+[\s]*$/, controlOrphans);
+                            n.data = n.data.replace(/\S+ \S+\s*$/, controlOrphans);
                         }
                     }
                     i += 1;

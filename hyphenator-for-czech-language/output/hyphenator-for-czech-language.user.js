@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.38
+// @version     1.0.39
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -2084,7 +2084,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     */
 
     function hyphenateURL(url) {
-      var tmp = url.replace(/([:\/\.\?#&\-_,;!@]+)/gi, '$&' + urlhyphen);
+      var tmp = url.replace(/([!#&,./:;?@_\-]+)/gi, '$&' + urlhyphen);
       var parts = tmp.split(urlhyphen);
       var i = 0;
 
@@ -3747,7 +3747,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
       } // strip off blank space at the end (omitted closing tags)
 
 
-      part = part.replace(/[\s]*$/, '');
+      part = part.replace(/\s*$/, '');
 
       if (orphanControl >= 2) {
         // remove hyphen points from last word
@@ -3759,7 +3759,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
 
       if (orphanControl === 3) {
         // replace spaces by non breaking spaces
-        r = r.replace(/[\ ]+/g, String.fromCharCode(160));
+        r = r.replace(/ +/g, String.fromCharCode(160));
       }
 
       return r;
@@ -3813,7 +3813,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
             n.data = n.data.replace(lo.genRegExp, hyphenate);
 
             if (orphanControl !== 1) {
-              n.data = n.data.replace(/[\S]+\ [\S]+[\s]*$/, controlOrphans);
+              n.data = n.data.replace(/\S+ \S+\s*$/, controlOrphans);
             }
           }
 
