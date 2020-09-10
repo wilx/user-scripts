@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.17
+// @version     1.0.19
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -768,15 +768,15 @@ function czechTypographyFixerMain() {
 function transmogrifyTextNode(textNode) {
   // const czechTypographyFixerReEnglishToCzechQuotes = /“([^”]*)”/gu;
   let text = textNode.nodeValue;
-  text = text.replace(/(\b[zZsSuUkKoOvViI])[ ]+/gu, '$1\u00a0');
-  text = text.replace(/(\b[aA])[ ]+/gu, '$1\u00a0');
-  text = text.replace(/([0-9])[ ]([%‰°℃℉])/gu, '$1\u00a0$2');
-  text = text.replace(/(\d{1,2}\.)[ ](ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gu, '$1\u00a0$2'); // XXX This breaks proper Czech quotes if they are already in the text multiple times.
+  text = text.replace(/(\b[IKOSUVZikosuvz]) +/gu, '$1\u00a0');
+  text = text.replace(/(\b[Aa]) +/gu, '$1\u00a0');
+  text = text.replace(/(\d) ([%°‰℃℉])/gu, '$1\u00a0$2');
+  text = text.replace(/(\d{1,2}\.) (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gu, '$1\u00a0$2'); // XXX This breaks proper Czech quotes if they are already in the text multiple times.
   // text = text.replace(czechTypographyFixerReEnglishToCzechQuotes, '„$1“');
 
-  text = text.replace(/([^0-9]|^)"([^"]*)"/gu, '$1„$2“');
+  text = text.replace(/(\D|^)"([^"]*)"/gu, '$1„$2“');
   text = text.replace(/„([^”]*)”/gu, '„$1“');
-  text = text.replace(/([^0-9a-z]|^)'([^']*)'/igu, '$1‚$2‘'); // console.log("text after: >" + text + "<");
+  text = text.replace(/([^\da-z]|^)'([^']*)'/giu, '$1‚$2‘'); // console.log("text after: >" + text + "<");
 
   textNode.nodeValue = text;
 }

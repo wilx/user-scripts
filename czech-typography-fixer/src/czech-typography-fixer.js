@@ -137,13 +137,13 @@ function czechTypographyFixerMain () {
 }
 
 function transmogrifyTextNode (textNode) {
-    const czechTypographyFixerReSingleLetters = /(\b[zZsSuUkKoOvViI])[ ]+/gu;
-    const czechTypographyFixerReSingleA = /(\b[aA])[ ]+/gu;
-    const czechTypographyFixerRePercents = /([0-9])[ ]([%‰°℃℉])/gu;
-    const czechTypographyFixerReDates = /(\d{1,2}\.)[ ](ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gu;
-    const czechTypographyFixerReStraightToCzechQuotes = /([^0-9]|^)"([^"]*)"/gu;
+    const czechTypographyFixerReSingleLetters = /(\b[IKOSUVZikosuvz]) +/gu;
+    const czechTypographyFixerReSingleA = /(\b[Aa]) +/gu;
+    const czechTypographyFixerRePercents = /(\d) ([%°‰℃℉])/gu;
+    const czechTypographyFixerReDates = /(\d{1,2}\.) (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gu;
+    const czechTypographyFixerReStraightToCzechQuotes = /(\D|^)"([^"]*)"/gu;
     // const czechTypographyFixerReEnglishToCzechQuotes = /“([^”]*)”/gu;
-    const czechTypographyFixerReSingleQuotes = /([^0-9a-z]|^)'([^']*)'/igu;
+    const czechTypographyFixerReSingleQuotes = /([^\da-z]|^)'([^']*)'/giu;
     const czechTypographyFixerReFixBoth99Quotes = /„([^”]*)”/gu;
 
     let text = textNode.nodeValue;
