@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.39
+// @version     1.0.42
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -42,6 +42,7 @@
 // @include     /^https?:\/\/(.+\.)?irozhlas\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?epravo\.cz\/.*$/
 // @include     /^https?:\/\/www\.ahaonline\.cz\/.*$/
+// @include     /^https?:\/\/www\.christnet\.eu\/.*$/
 // ==/UserScript==
 
 /******/ (function(modules) { // webpackBootstrap
@@ -733,6 +734,9 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
   } else if (/^www\.ahaonline\.cz$/.test(host)) {
     console.log('using rules for ahaonline.cz');
     nodes = document.body.querySelectorAll('article');
+  } else if (/^www\.christnet\.eu$/.test(host)) {
+    console.log('using rules for christnet.eu');
+    nodes = document.body.querySelectorAll('.article-text');
   } else {
     console.log('No rule matched.');
   }

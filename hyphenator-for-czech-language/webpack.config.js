@@ -37,7 +37,8 @@ var includeOnSites = [
     /^https?:\/\/(.+\.)?denik\.cz\/.*$/,
     /^https?:\/\/(.+\.)?irozhlas\.cz\/.*$/,
     /^https?:\/\/(.+\.)?epravo\.cz\/.*$/,
-    /^https?:\/\/www\.ahaonline\.cz\/.*$/
+    /^https?:\/\/www\.ahaonline\.cz\/.*$/,
+    /^https?:\/\/www\.christnet\.eu\/.*$/
 ];
 includeOnSites = includeOnSites.map((x) => x.toString());
 

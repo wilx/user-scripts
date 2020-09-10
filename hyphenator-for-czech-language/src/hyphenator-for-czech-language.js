@@ -101,6 +101,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
     } else if (/^www\.ahaonline\.cz$/.test(host)) {
         console.log('using rules for ahaonline.cz');
         nodes = document.body.querySelectorAll('article');
+    } else if (/^www\.christnet\.eu$/.test(host)) {
+        console.log('using rules for christnet.eu');
+        nodes = document.body.querySelectorAll('.article-text');
     } else {
         console.log('No rule matched.');
     }
