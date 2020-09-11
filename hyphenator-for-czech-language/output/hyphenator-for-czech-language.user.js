@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.42
+// @version     1.0.44
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -28,7 +28,7 @@
 // @include     /^https?:\/\/.+\.info\.cz\/.*$/
 // @include     /^https?:\/\/.+\.tyden\.cz\/.*$/
 // @include     /^https?:\/\/cs\.wikipedia\.org\/.*$/
-// @include     /^https?:\/\/echo24\.cz\/.*$/
+// @include     /^https?:\/\/(www\.)?echo24\.cz\/.*$/
 // @include     /^https?:\/\/.+\.parlamentnilisty\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?forum24\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?euro\.cz\/.*$/
@@ -697,7 +697,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
   } else if (host.endsWith('.tyden.cz')) {
     console.log('using rules for Týden');
     nodes = document.body.querySelectorAll('div.article, div.articles');
-  } else if (host.endsWith('echo24.cz')) {
+  } else if (/^(www\.)?echo24\.cz$/.test(host)) {
     console.log('using rules for Echo24');
     nodes = document.body.querySelectorAll('div[id=content], article, section');
   } else if (host.endsWith('parlamentnilisty.cz')) {

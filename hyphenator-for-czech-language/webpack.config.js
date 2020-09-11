@@ -24,7 +24,7 @@ var includeOnSites = [
     /^https?:\/\/.+\.info\.cz\/.*$/,
     /^https?:\/\/.+\.tyden\.cz\/.*$/,
     /^https?:\/\/cs\.wikipedia\.org\/.*$/,
-    /^https?:\/\/echo24\.cz\/.*$/,
+    /^https?:\/\/(www\.)?echo24\.cz\/.*$/,
     /^https?:\/\/.+\.parlamentnilisty\.cz\/.*$/,
     /^https?:\/\/(.+\.)?forum24\.cz\/.*$/,
     /^https?:\/\/(.+\.)?euro\.cz\/.*$/,

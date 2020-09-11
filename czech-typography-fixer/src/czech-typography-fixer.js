@@ -64,7 +64,7 @@ function czechTypographyFixerMain () {
     } else if (host.endsWith('cs.wikipedia.org')) {
         console.log('using rules for Česká Wikipedie');
         nodes = document.body.querySelectorAll('div[id=bodyContent]');
-    } else if (host.endsWith('echo24.cz')) {
+    } else if (/^(www\.)?echo24\.cz$/.test(host)) {
         console.log('using rules for Echo24');
         nodes = document.body.querySelectorAll('div[id=content], article, section');
     } else if (host.endsWith('parlamentnilisty.cz')) {

@@ -64,7 +64,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
     } else if (host.endsWith('.tyden.cz')) {
         console.log('using rules for Týden');
         nodes = document.body.querySelectorAll('div.article, div.articles');
-    } else if (host.endsWith('echo24.cz')) {
+    } else if (/^(www\.)?echo24\.cz$/.test(host)) {
         console.log('using rules for Echo24');
         nodes = document.body.querySelectorAll('div[id=content], article, section');
     } else if (host.endsWith('parlamentnilisty.cz')) {

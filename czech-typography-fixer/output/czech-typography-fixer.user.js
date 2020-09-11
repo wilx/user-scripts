@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.19
+// @version     1.0.21
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -28,7 +28,7 @@
 // @include     /^https?:\/\/.+\.info\.cz\/.*$/
 // @include     /^https?:\/\/.+\.tyden\.cz\/.*$/
 // @include     /^https?:\/\/cs\.wikipedia\.org\/.*$/
-// @include     /^https?:\/\/echo24\.cz\/.*$/
+// @include     /^https?:\/\/(www\.)?echo24\.cz\/.*$/
 // @include     /^https?:\/\/.+\.parlamentnilisty\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?forum24\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?euro\.cz\/.*$/
@@ -693,7 +693,7 @@ function czechTypographyFixerMain() {
   } else if (host.endsWith('cs.wikipedia.org')) {
     console.log('using rules for Česká Wikipedie');
     nodes = document.body.querySelectorAll('div[id=bodyContent]');
-  } else if (host.endsWith('echo24.cz')) {
+  } else if (/^(www\.)?echo24\.cz$/.test(host)) {
     console.log('using rules for Echo24');
     nodes = document.body.querySelectorAll('div[id=content], article, section');
   } else if (host.endsWith('parlamentnilisty.cz')) {
