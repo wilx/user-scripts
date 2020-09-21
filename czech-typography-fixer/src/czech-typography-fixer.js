@@ -103,6 +103,9 @@ function czechTypographyFixerMain () {
     } else if (/^www\.ahaonline\.cz$/.test(host)) {
         console.log('using rules for ahaonline.cz');
         nodes = document.body.querySelectorAll('article');
+    } else if (/^tn\.nova\.cz$/.test(host)) {
+        console.log('using rules for tn.nova.cz');
+        nodes = document.body.querySelectorAll('div.article');
     } else {
         console.log('No rule matched.');
     }

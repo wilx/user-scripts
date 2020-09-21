@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.21
+// @version     1.0.22
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -42,6 +42,7 @@
 // @include     /^https?:\/\/(.+\.)?irozhlas\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?epravo\.cz\/.*$/
 // @include     /^https?:\/\/www\.ahaonline\.cz\/.*$/
+// @include     /^https?:\/\/tn\.nova\.cz\/.*$/
 // ==/UserScript==
 
 /******/ (function(modules) { // webpackBootstrap
@@ -732,6 +733,9 @@ function czechTypographyFixerMain() {
   } else if (/^www\.ahaonline\.cz$/.test(host)) {
     console.log('using rules for ahaonline.cz');
     nodes = document.body.querySelectorAll('article');
+  } else if (/^tn\.nova\.cz$/.test(host)) {
+    console.log('using rules for tn.nova.cz');
+    nodes = document.body.querySelectorAll('div.article');
   } else {
     console.log('No rule matched.');
   }
