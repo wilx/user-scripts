@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.26
+// @version     1.0.29
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -1554,7 +1554,7 @@ fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, ma
 "use strict";
 /* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5306);
 /* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
-
+;
 console.log('Czech typography fixer here.'); // window.addEventListener ("load", czech_typography_fixer_main, true);
 
 function czechTypographyFixerMain() {
@@ -1671,7 +1671,7 @@ function czechTypographyFixerMain() {
 
   for (i = 0; i !== nodes.length; ++i) {
     const node = nodes[i];
-    var walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
+    const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
       acceptNode: n => {
         if (n.parentNode && n.parentNode.nodeName === 'SCRIPT') {
           // console.log('rejecting text of node ' + n.parentNode.nodeName);
@@ -1681,8 +1681,8 @@ function czechTypographyFixerMain() {
           return NodeFilter.FILTER_ACCEPT;
         }
       }
-    }, false);
-    var textNode;
+    });
+    let textNode;
 
     while (textNode = walk.nextNode()) {
       textNodes.push(textNode);

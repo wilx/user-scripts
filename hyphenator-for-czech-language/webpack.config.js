@@ -3,7 +3,7 @@ const WebpackUserscript = require('webpack-userscript');
 const JsDocPlugin = require('jsdoc-webpack-plugin');
 const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
 
-var includeOnSites = [
+let includeOnSites = [
     /^https?:\/\/www\.ceska-justice\.cz\/.*$/,
     /^https?:\/\/www\.zdravotnickydenik\.cz\/.*$/,
     /^https?:\/\/(.+\.)?ihned\.(cz|news)\/.*$/,

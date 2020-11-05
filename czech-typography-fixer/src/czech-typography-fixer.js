@@ -115,7 +115,7 @@ function czechTypographyFixerMain () {
     let i;
     for (i = 0; i !== nodes.length; ++i) {
         const node = nodes[i];
-        var walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT,
+        const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT,
             {
                 acceptNode: (n) => {
                     if (n.parentNode && n.parentNode.nodeName === 'SCRIPT') {
@@ -126,9 +126,9 @@ function czechTypographyFixerMain () {
                         return NodeFilter.FILTER_ACCEPT;
                     }
                 }
-            }, false);
+            });
 
-        var textNode;
+        let textNode;
         while ((textNode = walk.nextNode())) {
             textNodes.push(textNode);
         }

@@ -149,8 +149,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
  *   Hyphenator.run();
  * &lt;/script&gt;
  */
-    var Hyphenator;
-    Hyphenator = (function (window) {
+    const Hyphenator = (function (window) {
         'use strict';
 
         /**
@@ -161,7 +160,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * If there are frames this will change.
      * So use contextWindow instead of window!
      */
-        var contextWindow = window;
+        let contextWindow = window;
 
         /**
      * @member {Object.<string, Hyphenator~supportedLangs~supportedLanguage>} Hyphenator~supportedLangs
@@ -174,7 +173,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * //Check if language lang is supported:
      * if (supportedLangs.hasOwnProperty(lang))
      */
-        var supportedLangs = (function () {
+        const supportedLangs = (function () {
             /**
              * @typedef {Object} Hyphenator~supportedLangs~supportedLanguage
              * @property {string} file - The name of the pattern file
@@ -185,7 +184,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             /**
          * @lends Hyphenator~supportedLangs
          */
-            var r = {};
+            const r = {};
             /**
              * @method Hyphenator~supportedLangs~o
              * @desc
@@ -197,7 +196,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * gujarati: 7, kannada: 8, lao: 9, malayalam: 10, oriya: 11, persian: 12, punjabi: 13, tamil: 14, telugu: 15
              * @param {string} prompt The sentence prompted to the user, if Hyphenator.js doesn't find a language hint
              */
-            var o = function (code, file, script, prompt) {
+            const o = function (code, file, script, prompt) {
                 r[code] = { file: file, script: script, prompt: prompt };
             };
 
@@ -260,18 +259,18 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator~loadPatterns}
      */
-        var locality = (function getLocality () {
-            var r = {
+        const locality = (function getLocality () {
+            const r = {
                 isBookmarklet: false,
                 basePath: '//mnater.github.io/Hyphenator/',
                 isLocal: false
             };
-            var scripts = contextWindow.document.getElementsByTagName('script');
-            var i = 0;
-            var src;
-            var len = scripts.length;
-            var p;
-            var currScript;
+            const scripts = contextWindow.document.getElementsByTagName('script');
+            let i = 0;
+            let src;
+            const len = scripts.length;
+            let p;
+            let currScript;
             while (i < len) {
                 currScript = scripts[i];
                 if (currScript.hasAttribute('src')) {
@@ -303,7 +302,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator~loadPatterns}
      */
-        var basePath = locality.basePath;
+        const basePath = locality.basePath;
 
         /**
      * @member {boolean} Hyphenator~isLocal
@@ -313,7 +312,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * isLocal is true, if Hyphenator is loaded from the same domain, as the webpage, but false, if
      * it's loaded from an external source (i.e. directly from github)
      */
-        var isLocal = locality.isLocal;
+        const isLocal = locality.isLocal;
 
         /**
      * @member {boolean} Hyphenator~documentLoaded
@@ -321,7 +320,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @desc
      * documentLoaded is true, when the DOM has been loaded. This is set by {@link Hyphenator~runWhenLoaded}
      */
-        var documentLoaded = false;
+        let documentLoaded = false;
 
         /**
      * @member {boolean} Hyphenator~persistentConfig
@@ -333,7 +332,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @default false
      * @see {@link Hyphenator.config}
      */
-        var persistentConfig = false;
+        let persistentConfig = false;
 
         /**
      * @member {boolean} Hyphenator~doFrames
@@ -344,7 +343,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @default false
      * @see {@link Hyphenator.config}
      */
-        var doFrames = false;
+        let doFrames = false;
 
         /**
      * @member {Object.<string,boolean>} Hyphenator~dontHyphenate
@@ -352,7 +351,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * A key-value object containing all html-tags whose content should not be hyphenated
      * @access private
      */
-        var dontHyphenate = { video: true, audio: true, script: true, code: true, pre: true, img: true, br: true, samp: true, kbd: true, var: true, abbr: true, acronym: true, sub: true, sup: true, button: true, option: true, label: true, textarea: true, input: true, math: true, svg: true, style: true };
+        const dontHyphenate = { video: true, audio: true, script: true, code: true, pre: true, img: true, br: true, samp: true, kbd: true, var: true, abbr: true, acronym: true, sub: true, sup: true, button: true, option: true, label: true, textarea: true, input: true, math: true, svg: true, style: true };
 
         /**
      * @member {boolean} Hyphenator~enableCache
@@ -362,7 +361,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var enableCache = true;
+        let enableCache = true;
 
         /**
      * @member {string} Hyphenator~storageType
@@ -372,7 +371,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var storageType = 'local';
+        let storageType = 'local';
 
         /**
      * @member {Object|undefined} Hyphenator~storage
@@ -383,7 +382,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator~createStorage}
      */
-        var storage;
+        let storage;
 
         /**
      * @member {boolean} Hyphenator~enableReducedPatternSet
@@ -394,7 +393,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @see {@link Hyphenator.getRedPatternSet}
      */
-        var enableReducedPatternSet = false;
+        let enableReducedPatternSet = false;
 
         /**
      * @member {boolean} Hyphenator~enableRemoteLoading
@@ -404,7 +403,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var enableRemoteLoading = true;
+        let enableRemoteLoading = true;
 
         /**
      * @member {boolean} Hyphenator~displayToggleBox
@@ -414,7 +413,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var displayToggleBox = false;
+        let displayToggleBox = false;
 
         /**
      * @method Hyphenator~onError
@@ -423,7 +422,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @access private
      */
-        var onError = function (e) {
+        let onError = function (e) {
             // window.alert("Hyphenator.js says:\n\nAn Error occurred at " + e.fileName + ":" + e.lineNumber + ":\n" + e.message);
             console.error('Hyphenator.js says:\n\nAn Error occurred at ' + e.fileName + ':' + e.lineNumber + ':\n' + e.message);
         };
@@ -435,7 +434,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @access private
      */
-        var onWarning = function (e) {
+        let onWarning = function (e) {
             window.console.log(e.message);
         };
 
@@ -447,7 +446,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      */
         function createElem (tagname, context) {
             context = context || contextWindow;
-            var el;
+            let el;
             if (window.document.createElementNS) {
                 el = context.document.createElementNS('http://www.w3.org/1999/xhtml', tagname);
             } else if (window.document.createElement) {
@@ -462,7 +461,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function forEachKey (o, f) {
-            var k;
+            let k;
             if (Object.hasOwnProperty('keys')) {
                 Object.keys(o).forEach(f);
             } else {
@@ -482,7 +481,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var css3 = false;
+        let css3 = false;
 
         /**
      * @method Hyphenator~css3_gethsupport
@@ -494,12 +493,12 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      */
         // eslint-disable-next-line camelcase
         function css3_gethsupport () {
-            var support = false;
-            var supportedBrowserLangs = {};
-            var property = '';
-            var checkLangSupport;
-            var createLangSupportChecker = function (prefix) {
-                var testStrings = [
+            let support = false;
+            const supportedBrowserLangs = {};
+            let property = '';
+            let checkLangSupport;
+            const createLangSupportChecker = function (prefix) {
+                const testStrings = [
                     // latin: 0
                     'aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz',
                     // cyrillic: 1
@@ -533,11 +532,11 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                     // telugu: 15
                     'ఁంఃఅఆఇఈఉఊఋఌఎఏఐఒఓఔకఖగఘఙచఛజఝఞటఠడఢణతథదధనపఫబభమయరఱలళవశషసహాిీుూృౄెేైొోౌ్ౕౖౠౡ'
                 ];
-                var f = function (lang) {
-                    var shadow;
-                    var computedHeight;
-                    var bdy;
-                    var r = false;
+                const f = function (lang) {
+                    let shadow;
+                    let computedHeight;
+                    let bdy;
+                    let r = false;
 
                     // check if lang has already been tested
                     if (supportedBrowserLangs.hasOwnProperty(lang)) {
@@ -573,7 +572,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 };
                 return f;
             };
-            var s;
+            let s;
 
             if (window.getComputedStyle) {
                 s = window.getComputedStyle(window.document.getElementsByTagName('body')[0], null);
@@ -627,7 +626,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * css3_h9n.checkLangSupport(&lt;lang&gt;)
      */
         // eslint-disable-next-line camelcase
-        var css3_h9n;
+        let css3_h9n;
 
         /**
      * @member {string} Hyphenator~hyphenateClass
@@ -639,7 +638,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * &lt;p class = "hyphenate"&gt;Text&lt;/p&gt;
      * @see {@link Hyphenator.config}
      */
-        var hyphenateClass = 'hyphenate';
+        let hyphenateClass = 'hyphenate';
 
         /**
      * @member {string} Hyphenator~urlHyphenateClass
@@ -651,7 +650,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * &lt;p class = "urlhyphenate"&gt;Text&lt;/p&gt;
      * @see {@link Hyphenator.config}
      */
-        var urlHyphenateClass = 'urlhyphenate';
+        let urlHyphenateClass = 'urlhyphenate';
 
         /**
      * @member {string} Hyphenator~classPrefix
@@ -660,7 +659,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * whenever Hyphenator sets a CSS-class
      * @access private
      */
-        var classPrefix = 'Hyphenator' + Math.round(Math.random() * 1000);
+        const classPrefix = 'Hyphenator' + Math.round(Math.random() * 1000);
 
         /**
      * @member {string} Hyphenator~hideClass
@@ -668,7 +667,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * The name of the class that hides elements
      * @access private
      */
-        var hideClass = classPrefix + 'hide';
+        const hideClass = classPrefix + 'hide';
 
         /**
      * @member {RegExp} Hyphenator~hideClassRegExp
@@ -676,7 +675,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * RegExp to remove hideClass from a list of classes
      * @access private
      */
-        var hideClassRegExp = new RegExp('\\s?\\b' + hideClass + '\\b', 'g');
+        const hideClassRegExp = new RegExp('\\s?\\b' + hideClass + '\\b', 'g');
 
         /**
      * @member {string} Hyphenator~hideClass
@@ -684,7 +683,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * The name of the class that unhides elements
      * @access private
      */
-        var unhideClass = classPrefix + 'unhide';
+        const unhideClass = classPrefix + 'unhide';
 
         /**
      * @member {RegExp} Hyphenator~hideClassRegExp
@@ -692,7 +691,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * RegExp to remove unhideClass from a list of classes
      * @access private
      */
-        var unhideClassRegExp = new RegExp('\\s?\\b' + unhideClass + '\\b', 'g');
+        const unhideClassRegExp = new RegExp('\\s?\\b' + unhideClass + '\\b', 'g');
 
         /**
      * @member {string} Hyphenator~css3hyphenateClass
@@ -700,7 +699,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * The name of the class that hyphenates elements with css3
      * @access private
      */
-        var css3hyphenateClass = classPrefix + 'css3hyphenate';
+        const css3hyphenateClass = classPrefix + 'css3hyphenate';
 
         /**
      * @member {CSSEdit} Hyphenator~css3hyphenateClass
@@ -708,7 +707,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * The var where CSSEdit class is stored
      * @access private
      */
-        var css3hyphenateClassHandle;
+        let css3hyphenateClassHandle;
 
         /**
      * @member {string} Hyphenator~dontHyphenateClass
@@ -720,7 +719,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * &lt;p class = "donthyphenate"&gt;Text&lt;/p&gt;
      * @see {@link Hyphenator.config}
      */
-        var dontHyphenateClass = 'donthyphenate';
+        let dontHyphenateClass = 'donthyphenate';
 
         /**
      * @member {number} Hyphenator~min
@@ -730,7 +729,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var min = 6;
+        let min = 6;
 
         /**
      * @member {number} Hyphenator~leftmin
@@ -741,7 +740,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var leftmin = 0;
+        let leftmin = 0;
 
         /**
      * @member {number} Hyphenator~rightmin
@@ -752,7 +751,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var rightmin = 0;
+        let rightmin = 0;
 
         /**
      * @member {number} Hyphenator~rightmin
@@ -765,7 +764,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var compound = 'auto';
+        let compound = 'auto';
 
         /**
      * @member {number} Hyphenator~orphanControl
@@ -777,7 +776,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @default 1
      * @access private
      */
-        var orphanControl = 1;
+        let orphanControl = 1;
 
         /**
      * @member {boolean} Hyphenator~isBookmarklet
@@ -786,7 +785,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * True if Hyphanetor runs as bookmarklet.
      * @access private
      */
-        var isBookmarklet = locality.isBookmarklet;
+        const isBookmarklet = locality.isBookmarklet;
 
         /**
      * @member {string|null} Hyphenator~mainLanguage
@@ -796,7 +795,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator~autoSetMainLanguage}
      */
-        var mainLanguage = null;
+        let mainLanguage = null;
 
         /**
      * @member {string|null} Hyphenator~defaultLanguage
@@ -808,7 +807,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @see {@link Hyphenator~autoSetMainLanguage}
      */
-        var defaultLanguage = '';
+        let defaultLanguage = '';
 
         /**
      * @member {ElementCollection} Hyphenator~elements
@@ -817,13 +816,13 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * {@link Hyphenator~gatherDocumentInfos}
      * @access private
      */
-        var elements = (function () {
+        const elements = (function () {
             /**
              * @constructor Hyphenator~elements~ElementCollection~Element
              * @desc represents a DOM Element with additional information
              * @access private
              */
-            var makeElement = function (element) {
+            const makeElement = function (element) {
                 return {
                     /**
                          * @member {Object} Hyphenator~elements~ElementCollection~Element~element
@@ -850,19 +849,19 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * @desc A collection of Elements to be hyphenated
              * @access protected
              */
-            var makeElementCollection = function () {
+            const makeElementCollection = function () {
                 /**
                          * @member {number} Hyphenator~elements~ElementCollection~counters
                          * @desc Array of [number of collected elements, number of hyphenated elements]
                          * @access protected
                          */
-                var counters = [0, 0];
+                const counters = [0, 0];
                 /**
                      * @member {Object.<string, Array.<Element>>} Hyphenator~elements~ElementCollection~list
                      * @desc The collection of elements, where the key is a language code and the value is an array of elements
                      * @access protected
                      */
-                var list = {};
+                const list = {};
                 /**
                      * @method Hyphenator~elements~ElementCollection.prototype~add
                      * @augments Hyphenator~elements~ElementCollection
@@ -871,8 +870,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                      * @param {Object} el - The DOM element
                      * @param {string} lang - The language of the element
                      */
-                var add = function (el, lang) {
-                    var elo = makeElement(el);
+                const add = function (el, lang) {
+                    const elo = makeElement(el);
                     if (!list.hasOwnProperty(lang)) {
                         list[lang] = [];
                     }
@@ -893,7 +892,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                      * @desc takes each element of the collection as an argument of fn
                      * @param {Hyphenator~elements~ElementCollection.prototype~each~callback} fn - A function that takes an element as an argument
                      */
-                var each = function (fn) {
+                const each = function (fn) {
                     forEachKey(list, function (k) {
                         if (fn.length === 2) {
                             fn(k, list[k]);
@@ -922,7 +921,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator~prepareLanguagesObj}
      * @access private
      */
-        var exceptions = {};
+        const exceptions = {};
 
         /**
      * @member {Object.<string, boolean>} Hyphenator~docLanguages
@@ -931,7 +930,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * {@link Hyphenator~gatherDocumentInfos}
      * @access private
      */
-        var docLanguages = {};
+        const docLanguages = {};
 
         /**
      * @member {string} Hyphenator~url
@@ -939,7 +938,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * A string containing a insane RegularExpression to match URL's
      * @access private
      */
-        var url = '(?:\\w*:\/\/)?(?:(?:\\w*:)?(?:\\w*)@)?(?:(?:(?:[\\d]{1,3}\\.){3}(?:[\\d]{1,3}))|(?:(?:www\\.|[a-zA-Z]\\.)?[a-zA-Z0-9\\-\\.]+\\.(?:[a-z]{2,4})))(?::\\d*)?(?:\/[\\w#!:\\.?\\+=&%@!\\-]*)*';
+        const url = '(?:\\w*:\/\/)?(?:(?:\\w*:)?(?:\\w*)@)?(?:(?:(?:[\\d]{1,3}\\.){3}(?:[\\d]{1,3}))|(?:(?:www\\.|[a-zA-Z]\\.)?[a-zA-Z0-9\\-\\.]+\\.(?:[a-z]{2,4})))(?::\\d*)?(?:\/[\\w#!:\\.?\\+=&%@!\\-]*)*';
         //      protocoll     usr     pwd                    ip               or                          host                 tld        port               path
 
         /**
@@ -948,7 +947,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * A string containing a RegularExpression to match mail-adresses
      * @access private
      */
-        var mail = '[\\w-\\.]+@[\\w\\.]+';
+        const mail = '[\\w-\\.]+@[\\w\\.]+';
 
         /**
      * @member {string} Hyphenator~zeroWidthSpace
@@ -958,8 +957,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * zeroWidthSpace is used to break URLs
      * @access private
      */
-        var zeroWidthSpace = (function () {
-            var zws; var ua = window.navigator.userAgent.toLowerCase();
+        const zeroWidthSpace = (function () {
+            let zws; const ua = window.navigator.userAgent.toLowerCase();
             zws = String.fromCharCode(8203); // Unicode zero width space
             if (ua.indexOf('msie 6') !== -1) {
                 zws = ''; // IE6 doesn't support zws
@@ -982,7 +981,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @param {string} lang
      * @return {string} The word that goes into hyphenation
      */
-        var onBeforeWordHyphenation = function (word) {
+        let onBeforeWordHyphenation = function (word) {
             return word;
         };
 
@@ -998,7 +997,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @param {string} lang
      * @return {string} The word that goes into hyphenation
      */
-        var onAfterWordHyphenation = function (word) {
+        let onAfterWordHyphenation = function (word) {
             return word;
         };
 
@@ -1012,7 +1011,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @param {string} context
      * @access private
      */
-        var onHyphenationDone = function (context) {
+        let onHyphenationDone = function (context) {
             return context;
         };
 
@@ -1027,7 +1026,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @type {function|boolean}
      * @access private
      */
-        var selectorFunction = false;
+        let selectorFunction = false;
 
         /**
      * @name Hyphenator~flattenNodeList
@@ -1040,10 +1039,10 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function flattenNodeList (nl) {
-            var parentElements = [];
-            var i = 1;
-            var j = 0;
-            var isParent = true;
+            const parentElements = [];
+            let i = 1;
+            let j = 0;
+            let isParent = true;
 
             parentElements.push(nl[0]); // add the first item, since this is always an parent
 
@@ -1073,9 +1072,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function mySelectorFunction (hyphenateClass) {
-            var tmp;
-            var el = [];
-            var i = 0;
+            let tmp;
+            let el = [];
+            let i = 0;
             if (window.document.getElementsByClassName) {
                 el = contextWindow.document.getElementsByClassName(hyphenateClass);
             } else if (window.document.querySelectorAll) {
@@ -1100,7 +1099,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function selectElements () {
-            var elems;
+            let elems;
             if (selectorFunction) {
                 elems = selectorFunction();
             } else {
@@ -1122,7 +1121,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @access private
      */
-        var intermediateState = 'hidden';
+        let intermediateState = 'hidden';
 
         /**
      * @member {string} Hyphenator~unhide
@@ -1133,7 +1132,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @access private
      */
-        var unhide = 'wait';
+        let unhide = 'wait';
 
         /**
      * @member {Array.<Hyphenator~CSSEdit>} Hyphenator~CSSEditors
@@ -1141,7 +1140,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * For each window object one CSSEdit class is inserted
      * @access private
      */
-        var CSSEditors = [];
+        const CSSEditors = [];
 
         /**
      * @constructor Hyphenator~CSSEdit
@@ -1153,7 +1152,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      */
         function makeCSSEdit (w) {
             w = w || window;
-            var doc = w.document;
+            const doc = w.document;
             /**
              * @member {Object} Hyphenator~CSSEdit~sheet
              * @desc
@@ -1161,12 +1160,12 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * If no StyleSheet can be found, lets create one.
              * @access private
              */
-            var sheet = (function () {
-                var i = 0;
-                var l = doc.styleSheets.length;
-                var s;
-                var element;
-                var r = false;
+            const sheet = (function () {
+                let i = 0;
+                const l = doc.styleSheets.length;
+                let s;
+                let element;
+                let r = false;
                 while (i < l) {
                     s = doc.styleSheets[i];
                     try {
@@ -1198,7 +1197,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * Sets a CSS rule for a specified selector
              * @access private
              */
-            var changes = [];
+            const changes = [];
 
             /**
              * @typedef Hyphenator~CSSEdit~rule
@@ -1214,14 +1213,14 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * @return {Hyphenator~CSSEdit~rule|false}
              * @access private
              */
-            var findRule = function (sel) {
-                var s;
-                var rule;
-                var sheets = w.document.styleSheets;
-                var rules;
-                var i = 0;
-                var j = 0;
-                var r = false;
+            const findRule = function (sel) {
+                let s;
+                let rule;
+                const sheets = w.document.styleSheets;
+                let rules;
+                let i = 0;
+                let j = 0;
+                let r = false;
                 while (i < sheets.length) {
                     s = sheets[i];
                     try { // FF has issues here with external CSS (s.o.p)
@@ -1257,8 +1256,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * @return {number} index of the new rule
              * @access private
              */
-            var addRule = function (sel, rulesStr) {
-                var i, r;
+            const addRule = function (sel, rulesStr) {
+                let i, r;
                 if (sheet.insertRule) {
                     if (sheet.cssRules) {
                         i = sheet.cssRules.length;
@@ -1286,7 +1285,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * @param {number} index - the index of the rule
              * @access private
              */
-            var removeRule = function (sheet, index) {
+            const removeRule = function (sheet, index) {
                 if (sheet.deleteRule) {
                     sheet.deleteRule(index);
                 } else {
@@ -1305,8 +1304,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                  * @param {string} rulesString - CSS-Rules
                  */
                 setRule: function (sel, rulesString) {
-                    var i, existingRule, cssText;
-                    existingRule = findRule(sel);
+                    let i, cssText;
+                    const existingRule = findRule(sel);
                     if (existingRule) {
                         if (existingRule.rule.cssText) {
                             cssText = existingRule.rule.cssText;
@@ -1337,7 +1336,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
              * @access public
              */
                 clearChanges: function () {
-                    var change = changes.pop();
+                    let change = changes.pop();
                     while (change) {
                         removeRule(change.sheet, change.index);
                         change = changes.pop();
@@ -1354,7 +1353,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator.config}
      */
-        var hyphen = String.fromCharCode(173);
+        let hyphen = String.fromCharCode(173);
 
         /**
      * @member {string} Hyphenator~urlhyphen
@@ -1365,7 +1364,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @see {@link Hyphenator~zeroWidthSpace}
      */
-        var urlhyphen = zeroWidthSpace;
+        let urlhyphen = zeroWidthSpace;
 
         /**
      * @method Hyphenator~hyphenateURL
@@ -1376,9 +1375,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access public
      */
         function hyphenateURL (url) {
-            var tmp = url.replace(/([!#&,./:;?@_\-]+)/gi, '$&' + urlhyphen);
-            var parts = tmp.split(urlhyphen);
-            var i = 0;
+            const tmp = url.replace(/([!#&,./:;?@_\-]+)/gi, '$&' + urlhyphen);
+            const parts = tmp.split(urlhyphen);
+            let i = 0;
             while (i < parts.length) {
                 if (parts[i].length > (2 * min)) {
                     parts[i] = parts[i].replace(/(\w{3})(\w)/gi, '$1' + urlhyphen + '$2');
@@ -1400,7 +1399,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @see {@link Hyphenator~registerOnCopy}
      */
-        var safeCopy = true;
+        let safeCopy = true;
 
         /**
      * @method Hyphenator~zeroTimeOut
@@ -1410,16 +1409,16 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link http://dbaron.org/log/20100309-faster-timeouts}
      */
-        var zeroTimeOut = (function () {
+        const zeroTimeOut = (function () {
             if (window.postMessage && window.addEventListener) {
                 return (function () {
-                    var timeouts = [];
-                    var msg = 'Hyphenator_zeroTimeOut_message';
-                    var setZeroTimeOut = function (fn) {
+                    const timeouts = [];
+                    const msg = 'Hyphenator_zeroTimeOut_message';
+                    const setZeroTimeOut = function (fn) {
                         timeouts.push(fn);
                         window.postMessage(msg, '*');
                     };
-                    var handleMessage = function (event) {
+                    const handleMessage = function (event) {
                         if (event.source === window && event.data === msg) {
                             event.stopPropagation();
                             if (timeouts.length > 0) {
@@ -1446,7 +1445,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator~runWhenLoaded}
      */
-        var hyphRunFor = {};
+        const hyphRunFor = {};
 
         /**
      * @method Hyphenator~runWhenLoaded
@@ -1459,14 +1458,14 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function runWhenLoaded (w, f) {
-            var toplevel;
-            var add = window.document.addEventListener
+            let toplevel;
+            const add = window.document.addEventListener
                 ? 'addEventListener'
                 : 'attachEvent';
-            var rem = window.document.addEventListener
+            const rem = window.document.addEventListener
                 ? 'removeEventListener'
                 : 'detachEvent';
-            var pre = window.document.addEventListener
+            const pre = window.document.addEventListener
                 ? ''
                 : 'on';
 
@@ -1496,9 +1495,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             }
 
             function doOnEvent (e) {
-                var i = 0;
-                var fl;
-                var haveAccess;
+                let i = 0;
+                let haveAccess;
                 if (!!e && e.type === 'readystatechange' && w.document.readyState !== 'interactive' && w.document.readyState !== 'complete') {
                     return;
                 }
@@ -1509,7 +1507,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 w.document[rem](pre + 'readystatechange', doOnEvent, false);
 
                 // check frames
-                fl = w.frames.length;
+                const fl = w.frames.length;
                 if (fl === 0 || !doFrames) {
                     // there are no frames!
                     // cleanup events
@@ -1601,23 +1599,23 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      */
         function autoSetMainLanguage (w) {
             w = w || contextWindow;
-            var el = w.document.getElementsByTagName('html')[0];
-            var m = w.document.getElementsByTagName('meta');
-            var i = 0;
-            var getLangFromUser = function () {
-                var ml;
-                var text = '';
-                var dH = 300;
-                var dW = 450;
-                var dX = Math.floor((w.outerWidth - dW) / 2) + window.screenX;
-                var dY = Math.floor((w.outerHeight - dH) / 2) + window.screenY;
-                var ul = '';
-                var languageHint;
+            const el = w.document.getElementsByTagName('html')[0];
+            const m = w.document.getElementsByTagName('meta');
+            let i = 0;
+            const getLangFromUser = function () {
+                let ml;
+                let text = '';
+                const dH = 300;
+                const dW = 450;
+                const dX = Math.floor((w.outerWidth - dW) / 2) + window.screenX;
+                const dY = Math.floor((w.outerHeight - dH) / 2) + window.screenY;
+                let ul = '';
+                let languageHint;
                 if (!!window.showModalDialog && (w.location.href.indexOf(basePath) !== -1)) {
                     ml = window.showModalDialog(basePath + 'modalLangDialog.html', supportedLangs, 'dialogWidth: ' + dW + 'px; dialogHeight: ' + dH + 'px; dialogtop: ' + dY + '; dialogleft: ' + dX + '; center: on; resizable: off; scroll: off;');
                 } else {
                     languageHint = (function () {
-                        var r = '';
+                        let r = '';
                         forEachKey(supportedLangs, function (k) {
                             r += k + ', ';
                         });
@@ -1677,10 +1675,10 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function gatherDocumentInfos () {
-            var elToProcess;
-            var urlhyphenEls;
-            var tmp;
-            var i = 0;
+            let elToProcess;
+            let urlhyphenEls;
+            let tmp;
+            let i = 0;
             /**
          * @method Hyphenator~gatherDocumentInfos
          * @desc
@@ -1692,11 +1690,11 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
          * @param {boolean} isChild true, if the parent of el has been processed
          */
             function process (el, pLang, isChild) {
-                var n;
-                var j = 0;
-                var hyphenate = true;
-                var eLang;
-                var useCSS3 = function () {
+                let n;
+                let j = 0;
+                let hyphenate = true;
+                let eLang;
+                const useCSS3 = function () {
                     css3hyphenateClassHandle = makeCSSEdit(contextWindow);
                     css3hyphenateClassHandle.setRule('.' + css3hyphenateClass, css3_h9n.property + ': auto;');
                     css3hyphenateClassHandle.setRule('.' + dontHyphenateClass, css3_h9n.property + ': manual;');
@@ -1705,7 +1703,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                     }
                     el.className = el.className + ' ' + css3hyphenateClass;
                 };
-                var useHyphenator = function () {
+                const useHyphenator = function () {
                     // quick fix for test111.html
                     // better: weight elements
                     if (isBookmarklet && eLang !== mainLanguage) {
@@ -1769,7 +1767,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 }
             }
             function processUrlStyled (el) {
-                var n; var j = 0;
+                let n; let j = 0;
 
                 n = el.childNodes[j];
                 while (n) {
@@ -1841,9 +1839,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @param {Object} language object
      */
         function makeCharMap () {
-            var int2code = [];
-            var code2int = {};
-            var add = function (newValue) {
+            const int2code = [];
+            const code2int = {};
+            const add = function (newValue) {
                 if (!code2int[newValue]) {
                     int2code.push(newValue);
                     code2int[newValue] = int2code.length - 1;
@@ -1862,8 +1860,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function makeValueStore (len) {
-            var indexes = (function () {
-                var arr;
+            const indexes = (function () {
+                let arr;
                 if (Object.prototype.hasOwnProperty.call(window, 'Uint32Array')) { // IE<9 doesn't have window.hasOwnProperty (host object)
                     arr = new window.Uint32Array(3);
                     arr[0] = 1; // start position of a value set
@@ -1874,12 +1872,12 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 }
                 return arr;
             }());
-            var keys = (function () {
-                var i, r;
+            const keys = (function () {
+                let i;
                 if (Object.prototype.hasOwnProperty.call(window, 'Uint8Array')) { // IE<9 doesn't have window.hasOwnProperty (host object)
                     return new window.Uint8Array(len);
                 }
-                r = [];
+                const r = [];
                 r.length = len;
                 i = r.length - 1;
                 while (i >= 0) {
@@ -1888,17 +1886,17 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 }
                 return r;
             }());
-            var add = function (p) {
+            const add = function (p) {
                 keys[indexes[1]] = p;
                 indexes[2] = indexes[1];
                 indexes[1] += 1;
             };
-            var add0 = function () {
+            const add0 = function () {
                 // just do a step, since array is initialized with zeroes
                 indexes[1] += 1;
             };
-            var finalize = function () {
-                var start = indexes[0];
+            const finalize = function () {
+                const start = indexes[0];
                 keys[indexes[2] + 1] = 255; // mark end of pattern
                 indexes[0] = indexes[2] + 2;
                 indexes[1] = indexes[0];
@@ -1953,20 +1951,16 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @param {Object} language object
      */
         function convertPatternsToArray (lo) {
-            var trieNextEmptyRow = 0;
-            var i;
-            var charMapc2i;
-            var valueStore;
-            var indexedTrie;
-            var trieRowLength;
+            let trieNextEmptyRow = 0;
+            let i;
 
-            var extract = function (patternSizeInt, patterns) {
-                var charPos = 0;
-                var charCode = 0;
-                var mappedCharCode = 0;
-                var rowStart = 0;
-                var nextRowStart = 0;
-                var prevWasDigit = false;
+            const extract = function (patternSizeInt, patterns) {
+                let charPos = 0;
+                let charCode = 0;
+                let mappedCharCode = 0;
+                let rowStart = 0;
+                let nextRowStart = 0;
+                let prevWasDigit = false;
                 while (charPos < patterns.length) {
                     charCode = patterns.charCodeAt(charPos);
                     if ((charPos + 1) % patternSizeInt !== 0) {
@@ -2044,9 +2038,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 lo.charMap.add(lo.patternChars.charCodeAt(i));
                 i += 1;
             }
-            charMapc2i = lo.charMap.code2int;
+            const charMapc2i = lo.charMap.code2int;
 
-            valueStore = makeValueStore(lo.valueStoreLength);
+            const valueStore = makeValueStore(lo.valueStoreLength);
             lo.valueStore = valueStore;
 
             if (Object.prototype.hasOwnProperty.call(window, 'Int32Array')) { // IE<9 doesn't have window.hasOwnProperty (host object)
@@ -2060,8 +2054,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                     i -= 1;
                 }
             }
-            indexedTrie = lo.indexedTrie;
-            trieRowLength = lo.charMap.int2code.length * 2;
+            const indexedTrie = lo.indexedTrie;
+            const trieRowLength = lo.charMap.int2code.length * 2;
 
             forEachKey(lo.patterns, function (i) {
                 extract(parseInt(i, 10), lo.patterns[i]);
@@ -2079,9 +2073,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @return {string} The pattern (chars and numbers)
      */
         function recreatePattern (pattern, nodePoints) {
-            var r = [];
-            var c = pattern.split('');
-            var i = 0;
+            const r = [];
+            const c = pattern.split('');
+            let i = 0;
             while (i <= c.length) {
                 if (nodePoints[i] && nodePoints[i] !== 0) {
                     r.push(nodePoints[i]);
@@ -2104,11 +2098,11 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @return {Object.<string, string>}
      */
         function convertExceptionsToObject (exc) {
-            var w = exc.split(', ');
-            var r = {};
-            var i = 0;
-            var l = w.length;
-            var key;
+            const w = exc.split(', ');
+            const r = {};
+            let i = 0;
+            const l = w.length;
+            let key;
             while (i < l) {
                 key = w[i].replace(/-/g, '');
                 if (!r.hasOwnProperty(key)) {
@@ -2132,7 +2126,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator~basePath}
      */
         function loadPatterns (lang, cb) {
-            var location; var xhr; var head; var script; var done = false;
+            let location; let xhr; let head; let script; let done = false;
             if (supportedLangs.hasOwnProperty(lang) && !Hyphenator.languages[lang]) {
                 location = basePath + 'patterns/' + supportedLangs[lang].file;
             } else {
@@ -2210,7 +2204,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @param {string} lang The language of the language object
      */
         function prepareLanguagesObj (lang) {
-            var lo = Hyphenator.languages[lang]; var wrd;
+            const lo = Hyphenator.languages[lang]; let wrd;
 
             if (!lo.prepared) {
                 if (enableCache) {
@@ -2271,7 +2265,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function prepare (callback) {
-            var tmp1;
+            let tmp1;
 
             function languagesLoaded () {
                 forEachKey(docLanguages, function (l) {
@@ -2290,7 +2284,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 forEachKey(Hyphenator.languages, function (lang) {
                     prepareLanguagesObj(lang);
                 });
-                // eslint-disable-next-line standard/no-callback-literal
+                // eslint-disable-next-line node/no-callback-literal
                 callback('*');
                 return;
             }
@@ -2343,13 +2337,13 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @see {@link Hyphenator.config}
      * @access private
      */
-        var toggleBox = function () {
-            var bdy;
-            var myTextNode;
-            var text = (Hyphenator.doHyphenation
+        let toggleBox = function () {
+            let bdy;
+            let myTextNode;
+            const text = (Hyphenator.doHyphenation
                 ? 'Hy-phen-a-tion'
                 : 'Hyphenation');
-            var myBox = contextWindow.document.getElementById('HyphenatorToggleBox');
+            let myBox = contextWindow.document.getElementById('HyphenatorToggleBox');
             if (myBox) {
                 myBox.firstChild.data = text;
             } else {
@@ -2389,7 +2383,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function doCharSubst (loCharSubst, w) {
-            var r = w;
+            let r = w;
             forEachKey(loCharSubst, function (subst) {
                 r = r.replace(new RegExp(subst, 'g'), loCharSubst[subst]);
             });
@@ -2403,7 +2397,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator~hyphenateWord}
      */
-        var wwAsMappedCharCodeStore = (function () {
+        const wwAsMappedCharCodeStore = (function () {
             if (Object.prototype.hasOwnProperty.call(window, 'Int32Array')) {
                 return new window.Int32Array(64);
             }
@@ -2417,8 +2411,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      * @see {@link Hyphenator~hyphenateWord}
      */
-        var wwhpStore = (function () {
-            var r;
+        const wwhpStore = (function () {
+            let r;
             if (Object.prototype.hasOwnProperty.call(window, 'Uint8Array')) {
                 r = new window.Uint8Array(64);
             } else {
@@ -2439,7 +2433,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function hyphenateCompound (lo, lang, word) {
-            var hw; var parts; var i = 0;
+            let hw; let parts; let i = 0;
             switch (compound) {
             case 'auto':
                 parts = word.split('-');
@@ -2487,26 +2481,26 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function hyphenateWord (lo, lang, word) {
-            var pattern = '';
-            var ww;
-            var wwlen;
-            var wwhp = wwhpStore;
-            var pstart = 0;
-            var plen;
-            var hp;
-            var hpc;
-            var wordLength = word.length;
-            var hw = '';
-            var charMap = lo.charMap.code2int;
-            var charCode;
-            var mappedCharCode;
-            var row = 0;
-            var link = 0;
-            var value = 0;
-            var values;
-            var indexedTrie = lo.indexedTrie;
-            var valueStore = lo.valueStore.keys;
-            var wwAsMappedCharCode = wwAsMappedCharCodeStore;
+            let pattern = '';
+            let ww;
+            let wwlen;
+            const wwhp = wwhpStore;
+            let pstart = 0;
+            let plen;
+            let hp;
+            let hpc;
+            const wordLength = word.length;
+            let hw = '';
+            const charMap = lo.charMap.code2int;
+            let charCode;
+            let mappedCharCode;
+            let row = 0;
+            let link = 0;
+            let value = 0;
+            let values;
+            const indexedTrie = lo.indexedTrie;
+            const valueStore = lo.valueStore.keys;
+            const wwAsMappedCharCode = wwAsMappedCharCodeStore;
             word = onBeforeWordHyphenation(word, lang);
             if (word === '') {
                 hw = '';
@@ -2616,7 +2610,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access public
      */
         function removeHyphenationFromElement (el) {
-            var h; var u; var i = 0; var n;
+            let h; let u; let i = 0; let n;
             switch (hyphen) {
             case '|':
                 h = '\\|';
@@ -2656,25 +2650,24 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             }
         }
 
-        var copy = (function () {
-            var makeCopy = function () {
-                var oncopyHandler = function (e) {
+        const copy = (function () {
+            const makeCopy = function () {
+                const oncopyHandler = function (e) {
                     e = e || window.event;
-                    var shadow;
-                    var selection;
-                    var range;
-                    var rangeShadow;
-                    var restore;
-                    var target = e.target || e.srcElement;
-                    var currDoc = target.ownerDocument;
-                    var bdy = currDoc.getElementsByTagName('body')[0];
-                    var targetWindow = currDoc.defaultView || currDoc.parentWindow;
+                    let selection;
+                    let range;
+                    let rangeShadow;
+                    let restore;
+                    const target = e.target || e.srcElement;
+                    const currDoc = target.ownerDocument;
+                    const bdy = currDoc.getElementsByTagName('body')[0];
+                    const targetWindow = currDoc.defaultView || currDoc.parentWindow;
                     if (target.tagName && dontHyphenate[target.tagName.toLowerCase()]) {
                         // Safari needs this
                         return;
                     }
                     // create a hidden shadow element
-                    shadow = currDoc.createElement('div');
+                    const shadow = currDoc.createElement('div');
                     // Moving the element out of the screen doesn't work for IE9 (https://connect.microsoft.com/IE/feedback/details/663981/)
                     // shadow.style.overflow = 'hidden';
                     // shadow.style.position = 'absolute';
@@ -2718,8 +2711,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                     }
                     zeroTimeOut(restore);
                 };
-                var removeOnCopy = function (el) {
-                    var body = el.ownerDocument.getElementsByTagName('body')[0];
+                const removeOnCopy = function (el) {
+                    const body = el.ownerDocument.getElementsByTagName('body')[0];
                     if (!body) {
                         return;
                     }
@@ -2730,8 +2723,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                         el.detachEvent('oncopy', oncopyHandler);
                     }
                 };
-                var registerOnCopy = function (el) {
-                    var body = el.ownerDocument.getElementsByTagName('body')[0];
+                const registerOnCopy = function (el) {
+                    const body = el.ownerDocument.getElementsByTagName('body')[0];
                     if (!body) {
                         return;
                     }
@@ -2761,12 +2754,12 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function checkIfAllDone () {
-            var allDone = true;
-            var i = 0;
-            var doclist = {};
+            let allDone = true;
+            let i = 0;
+            const doclist = {};
             elements.each(function (ellist) {
-                var j = 0;
-                var l = ellist.length;
+                let j = 0;
+                const l = ellist.length;
                 while (j < l) {
                     allDone = allDone && ellist[j].hyphenated;
                     if (!doclist.hasOwnProperty(ellist[j].element.baseURI)) {
@@ -2779,9 +2772,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             if (allDone) {
                 if (intermediateState === 'hidden' && unhide === 'progressive') {
                     elements.each(function (ellist) {
-                        var j = 0;
-                        var l = ellist.length;
-                        var el;
+                        let j = 0;
+                        const l = ellist.length;
+                        let el;
                         while (j < l) {
                             el = ellist[j].element;
                             el.className = el.className.replace(unhideClassRegExp, '');
@@ -2821,7 +2814,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function controlOrphans (part) {
-            var h, r;
+            let h, r;
             switch (hyphen) {
             case '|':
                 h = '\\|';
@@ -2862,15 +2855,15 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function hyphenateElement (lang, elo) {
-            var el = elo.element;
-            var hyphenate;
-            var n;
-            var i;
-            var lo;
+            const el = elo.element;
+            let hyphenate;
+            let n;
+            let i;
+            let lo;
             if (Hyphenator.languages.hasOwnProperty(lang) && Hyphenator.doHyphenation) {
                 lo = Hyphenator.languages[lang];
                 hyphenate = function (match, word, url, mail) {
-                    var r;
+                    let r;
                     if (!!url || !!mail) {
                         r = hyphenateURL(match);
                     } else {
@@ -2930,12 +2923,12 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                     return fun(arg1, arg2);
                 };
             } */
-            var i = 0;
-            var l;
+            let i = 0;
+            let l;
             if (lang === '*') {
                 elements.each(function (lang, ellist) {
-                    var j = 0;
-                    var le = ellist.length;
+                    let j = 0;
+                    const le = ellist.length;
                     while (j < le) {
                         // zeroTimeOut(bind(hyphenateElement, lang, ellist[j]));
                         hyphenateElement(lang, ellist[j]);
@@ -2962,8 +2955,8 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      */
         function removeHyphenationFromDocument () {
             elements.each(function (ellist) {
-                var i = 0;
-                var l = ellist.length;
+                let i = 0;
+                const l = ellist.length;
                 while (i < l) {
                     removeHyphenationFromElement(ellist[i].element);
                     if (safeCopy) {
@@ -2983,19 +2976,19 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function createStorage () {
-            var s;
+            let s;
             function makeStorage (s) {
-                var store = s;
-                var prefix = 'Hyphenator_' + Hyphenator.version + '_';
-                var deferred = [];
-                var test = function (name) {
-                    var val = store.getItem(prefix + name);
+                const store = s;
+                const prefix = 'Hyphenator_' + Hyphenator.version + '_';
+                const deferred = [];
+                const test = function (name) {
+                    const val = store.getItem(prefix + name);
                     return !!val;
                 };
-                var getItem = function (name) {
+                const getItem = function (name) {
                     return store.getItem(prefix + name);
                 };
-                var setItem = function (name, value) {
+                const setItem = function (name, value) {
                     try {
                         store.setItem(prefix + name, value);
                     } catch (e) {
@@ -3052,7 +3045,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             if (!storage) {
                 return;
             }
-            var settings = {
+            const settings = {
                 STORED: true,
                 classname: hyphenateClass,
                 urlclassname: urlHyphenateClass,
@@ -3095,7 +3088,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access private
      */
         function restoreConfiguration () {
-            var settings;
+            let settings;
             if (storage.test('config')) {
                 settings = window.JSON.parse(storage.getItem('config'));
                 Hyphenator.config(settings);
@@ -3113,7 +3106,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * minor release: new languages, improvements
      * @access public
      */
-        var version = '5.2.0(devel)';
+        const version = '5.2.0(devel)';
 
         /**
      * @member {boolean} Hyphenator.doHyphenation
@@ -3122,7 +3115,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * All other actions are performed.
      * @default true
      */
-        var doHyphenation = true;
+        const doHyphenation = true;
 
         /**
      * @typedef {Object} Hyphenator.languages.language
@@ -3142,7 +3135,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @namespace Hyphenator.languages
      * @access public
      */
-        var languages = {};
+        const languages = {};
 
         /**
      * @method Hyphenator.config
@@ -3159,10 +3152,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * &lt;/script&gt;
      */
         function config (obj) {
-            var assert = function (name, type) {
-                var r,
-                    t;
-                t = typeof obj[name];
+            const assert = function (name, type) {
+                let r;
+                const t = typeof obj[name];
                 if (t === type) {
                     r = true;
                 } else {
@@ -3368,7 +3360,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             /**
                  *@callback Hyphenator.run~process process - The function is called when the DOM has loaded (or called for each frame)
                  */
-            var process = function () {
+            const process = function () {
                 try {
                     if (contextWindow.document.getElementsByTagName('frameset').length > 0) {
                         return; // we are in a frameset
@@ -3432,14 +3424,14 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * &lt;/script&gt;
      */
         function hyphenate (target, lang) {
-            var turnout, n, i, lo;
-            lo = Hyphenator.languages[lang];
+            let turnout, n, i;
+            const lo = Hyphenator.languages[lang];
             if (Hyphenator.languages.hasOwnProperty(lang)) {
                 if (!lo.prepared) {
                     prepareLanguagesObj(lang);
                 }
                 turnout = function (match, word, url, mail) {
-                    var r;
+                    let r;
                     if (!!url || !!mail) {
                         r = hyphenateURL(match);
                     } else {
@@ -3492,15 +3484,15 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
      * @access public
      */
         function getConfigFromURI () {
-            var loc = null;
-            var re = {};
-            var jsArray = contextWindow.document.getElementsByTagName('script');
-            var i = 0;
-            var j = 0;
-            var l = jsArray.length;
-            var s;
-            var gp;
-            var option;
+            let loc = null;
+            const re = {};
+            const jsArray = contextWindow.document.getElementsByTagName('script');
+            let i = 0;
+            let j = 0;
+            const l = jsArray.length;
+            let s;
+            let gp;
+            let option;
             while (i < l) {
                 if (jsArray[i].getAttribute('src')) {
                     loc = jsArray[i].getAttribute('src');
