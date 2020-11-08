@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.29",
+  "version": "1.0.32",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -22,7 +22,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
     "chokidar": "^3.4.3",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -56,6 +56,6 @@
     "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/czech-typography-fixer.audit.html"
   },
   "dependencies": {
-    "core-js": "^3.6.5"
+    "core-js": "^3.7.0"
   }
 }
