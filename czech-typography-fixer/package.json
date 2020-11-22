@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.32",
+  "version": "1.0.48",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -14,15 +14,15 @@
     "greasemonkey"
   ],
   "devDependencies": {
-    "@babel/core": "^7.12.3",
+    "@babel/core": "^7.12.7",
     "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
     "@webpack-cli/info": "^1.1.0",
     "@webpack-cli/migrate": "^1.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
     "chokidar": "^3.4.3",
-    "eslint": "^7.13.0",
+    "eslint": "^7.14.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -45,9 +45,8 @@
       "Chrome >= 86"
     ],
     "compat": [
-      "Firefox ESR",
-      "Chrome >= 83",
-      "Safari >= 13"
+      "> 1%",
+      "not dead"
     ]
   },
   "scripts": {
@@ -56,6 +55,7 @@
     "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/czech-typography-fixer.audit.html"
   },
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "core-js": "^3.7.0"
   }
 }

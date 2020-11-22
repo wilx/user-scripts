@@ -69,7 +69,8 @@ module.exports = {
                             ]
                         ],
                         plugins: [
-                            'babel-plugin-minify-dead-code-elimination'
+                            'babel-plugin-minify-dead-code-elimination',
+                            '@babel/plugin-transform-runtime'
                         ]
                     }
                 }
