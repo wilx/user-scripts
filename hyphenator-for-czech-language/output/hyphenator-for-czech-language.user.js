@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.60
+// @version     1.0.67
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -1743,15 +1743,13 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
       const getLangFromUser = function () {
         let ml;
         let text = '';
-        const dH = 300;
-        const dW = 450;
-        const dX = Math.floor((w.outerWidth - dW) / 2) + window.screenX;
-        const dY = Math.floor((w.outerHeight - dH) / 2) + window.screenY;
+        const dX = Math.floor((w.outerWidth - 450) / 2) + window.screenX;
+        const dY = Math.floor((w.outerHeight - 300) / 2) + window.screenY;
         let ul = '';
         let languageHint;
 
         if (!!window.showModalDialog && w.location.href.indexOf(basePath) !== -1) {
-          ml = window.showModalDialog(basePath + 'modalLangDialog.html', supportedLangs, 'dialogWidth: ' + dW + 'px; dialogHeight: ' + dH + 'px; dialogtop: ' + dY + '; dialogleft: ' + dX + '; center: on; resizable: off; scroll: off;');
+          ml = window.showModalDialog(basePath + 'modalLangDialog.html', supportedLangs, "dialogWidth: 450px; dialogHeight: 300px; dialogtop: " + dY + '; dialogleft: ' + dX + '; center: on; resizable: off; scroll: off;');
         } else {
           languageHint = function () {
             let r = '';
@@ -1892,7 +1890,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
 
         isChild = isChild || false;
 
-        if (el.lang && typeof el.lang === 'string') {
+        if (el.lang && typeof el.lang == 'string') {
           eLang = el.lang.toLowerCase(); // copy attribute-lang to internal eLang
         } else if (!!pLang && pLang !== '') {
           eLang = pLang.toLowerCase();
@@ -2151,7 +2149,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
         while (charPos < patterns.length) {
           charCode = patterns.charCodeAt(charPos);
 
-          if ((charPos + 1) % patternSizeInt !== 0) {
+          if ((charPos + 1) % patternSizeInt != 0) {
             // more to come…
             if (charCode <= 57 && charCode >= 49) {
               // charCode is a digit
@@ -2874,7 +2872,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
         hp = 0;
 
         while (hp < wordLength) {
-          if (hp >= lo.leftmin && hp <= wordLength - lo.rightmin && wwhp[hp + 1] % 2 !== 0) {
+          if (hp >= lo.leftmin && hp <= wordLength - lo.rightmin && wwhp[hp + 1] % 2 != 0) {
             hw += hyphen + word.charAt(hp);
           } else {
             hw += word.charAt(hp);
@@ -3842,7 +3840,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
           return r;
         };
 
-        if (typeof target === 'object' && !(typeof target === 'string' || target.constructor === String)) {
+        if (typeof target == 'object' && !(typeof target == 'string' || target.constructor === String)) {
           i = 0;
           n = target.childNodes[i];
 
@@ -3863,7 +3861,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
             i += 1;
             n = target.childNodes[i];
           }
-        } else if (typeof target === 'string' || target.constructor === String) {
+        } else if (typeof target == 'string' || target.constructor === String) {
           return target.replace(lo.genRegExp, turnout);
         }
       } else {
@@ -3968,7 +3966,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     }
 
     return {
-      version: '5.2.0(devel)',
+      version: "5.2.0(devel)",
       doHyphenation: true,
       languages: {},
       config: config,

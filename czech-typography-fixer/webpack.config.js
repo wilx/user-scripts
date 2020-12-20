@@ -69,8 +69,17 @@ module.exports = {
                             ]
                         ],
                         plugins: [
-                            'babel-plugin-minify-dead-code-elimination',
-                            '@babel/plugin-transform-runtime'
+                            '@babel/plugin-transform-runtime',
+                            'babel-plugin-transform-regexp-constructors',
+                            'babel-plugin-minify-constant-folding',
+                            'babel-plugin-minify-guarded-expressions',
+                            ['babel-plugin-transform-remove-undefined', {
+                                tdz: true
+                            }],
+                            'babel-plugin-transform-simplify-comparison-operators',
+                            ['babel-plugin-minify-dead-code-elimination', {
+                                tdz: true
+                            }]
                         ]
                     }
                 }

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.48
+// @version     1.0.64
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -196,7 +196,7 @@ function czechTypographyFixerMain() {
       break;
     }
 
-    if (i === RULES.length - 1) {
+    if (i == RULES.length - 1) {
       console.log('No rule matched.');
     }
   }
