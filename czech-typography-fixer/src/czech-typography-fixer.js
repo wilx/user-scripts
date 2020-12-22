@@ -167,6 +167,11 @@ const RULES = [
         name: 'tn.nova.cz',
         hostTest: (host) => /^tn\.nova\.cz$/.test(host),
         selector: 'div.article'
+    },
+    {
+        name: 'autoforum.cz',
+        hostTest: host => /^www\.autoforum\.cz$/,
+        selector: 'div.article-detail, div#content-right'
     }
 ];
 

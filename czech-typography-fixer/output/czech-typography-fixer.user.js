@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.64
+// @version     1.0.65
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -43,6 +43,7 @@
 // @include     /^https?:\/\/(.+\.)?epravo\.cz\/.*$/
 // @include     /^https?:\/\/www\.ahaonline\.cz\/.*$/
 // @include     /^https?:\/\/tn\.nova\.cz\/.*$/
+// @include     /^https?:\/\/www\.autoforum\.cz\/.*$/
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap
@@ -180,6 +181,10 @@ const RULES = [{
   name: 'tn.nova.cz',
   hostTest: host => /^tn\.nova\.cz$/.test(host),
   selector: 'div.article'
+}, {
+  name: 'autoforum.cz',
+  hostTest: () => /^www\.autoforum\.cz$/,
+  selector: 'div.article-detail, div#content-right'
 }];
 
 function czechTypographyFixerMain() {

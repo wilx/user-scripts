@@ -107,6 +107,9 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
     } else if (/^tn\.nova\.cz$/.test(host)) {
         console.log('using rules for tn.nova.cz');
         nodes = document.body.querySelectorAll('div.article');
+    } else if (/^www\.autoforum\.cz$/.test(host)) {
+        console.log('using rules for autoforum.cz');
+        nodes = document.body.querySelectorAll('div.article-detail, div#content-right');
     } else {
         console.log('No rule matched.');
     }

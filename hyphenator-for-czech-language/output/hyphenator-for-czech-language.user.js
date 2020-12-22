@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.67
+// @version     1.0.68
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -44,6 +44,7 @@
 // @include     /^https?:\/\/www\.ahaonline\.cz\/.*$/
 // @include     /^https?:\/\/www\.christnet\.eu\/.*$/
 // @include     /^https?:\/\/tn\.nova\.cz\/.*$/
+// @include     /^https?:\/\/www\.autoforum\.cz\/.*$/
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap
@@ -156,6 +157,9 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
   } else if (/^tn\.nova\.cz$/.test(host)) {
     console.log('using rules for tn.nova.cz');
     nodes = document.body.querySelectorAll('div.article');
+  } else if (/^www\.autoforum\.cz$/.test(host)) {
+    console.log('using rules for autoforum.cz');
+    nodes = document.body.querySelectorAll('div.article-detail, div#content-right');
   } else {
     console.log('No rule matched.');
   }
