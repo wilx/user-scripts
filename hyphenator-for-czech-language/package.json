@@ -1,6 +1,6 @@
 {
   "name": "hyphenator-for-czech-language",
-  "version": "1.0.68",
+  "version": "1.0.72",
   "description": "Hyphenator for news sitez in Czech",
   "main": "src/hyphenator-for-czech-language.js",
   "author": {
@@ -17,8 +17,8 @@
     "@babel/core": "^7.12.10",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
-    "@webpack-cli/info": "^1.1.0",
-    "@webpack-cli/migrate": "^1.1.0",
+    "@webpack-cli/info": "^1.2.1",
+    "@webpack-cli/migrate": "^1.1.2",
     "babel-loader": "^8.2.2",
     "babel-plugin-minify-constant-folding": "^0.5.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
@@ -28,7 +28,7 @@
     "babel-plugin-transform-remove-undefined": "^0.5.0",
     "babel-plugin-transform-simplify-comparison-operators": "^6.9.4",
     "chokidar": "^3.4.3",
-    "eslint": "^7.16.0",
+    "eslint": "^7.17.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -37,20 +37,20 @@
     "eslint-plugin-standard": "^5.0.0",
     "jsdoc": "^3.6.6",
     "jsdoc-webpack-plugin": "^0.3.0",
-    "webpack": "^5.11.0",
-    "webpack-cli": "^4.2.0",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1",
     "webpack-userscript": "^2.5.6",
     "yarn-audit-html": "^1.4.0"
   },
   "dependencies": {
-    "core-js": "^3.8.1"
+    "core-js": "^3.8.2"
   },
   "resolutions": {
     "lodash": "^4.17.20"
   },
   "browserslist": {
     "production": [
-      "Firefox >= 83",
+      "Firefox >= 84",
       "Chrome >= 87"
     ],
     "compat": [
