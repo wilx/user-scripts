@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.67",
+  "version": "1.0.71",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -14,10 +14,10 @@
     "greasemonkey"
   ],
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@webpack-cli/info": "^1.2.1",
+    "@babel/core": "^7.13.10",
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@webpack-cli/info": "^1.2.2",
     "@webpack-cli/migrate": "^1.1.2",
     "babel-loader": "^8.2.2",
     "babel-plugin-minify-constant-folding": "^0.5.0",
@@ -27,28 +27,28 @@
     "babel-plugin-transform-regexp-constructors": "^0.4.3",
     "babel-plugin-transform-remove-undefined": "^0.5.0",
     "babel-plugin-transform-simplify-comparison-operators": "^6.9.4",
-    "chokidar": "^3.4.3",
-    "eslint": "^7.17.0",
+    "chokidar": "^3.5.1",
+    "eslint": "^7.22.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^5.0.0",
     "jsdoc": "^3.6.6",
     "jsdoc-webpack-plugin": "^0.3.0",
-    "webpack": "^5.11.1",
-    "webpack-cli": "^4.3.1",
+    "webpack": "^5.25.0",
+    "webpack-cli": "^4.5.0",
     "webpack-userscript": "^2.5.6",
-    "yarn-audit-html": "^1.4.0"
+    "yarn-audit-html": "^2.0.1"
   },
   "resolutions": {
     "lodash": "^4.17.20"
   },
   "browserslist": {
     "production": [
-      "Firefox >= 84",
-      "Chrome >= 87"
+      "Firefox >= 85",
+      "Chrome >= 89"
     ],
     "compat": [
       "> 1%",
@@ -61,7 +61,8 @@
     "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/czech-typography-fixer.audit.html"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
-    "core-js": "^3.8.2"
+    "@babel/runtime": "^7.13.10",
+    "core-js": "^3.9.1",
+    "lodash": "^4.17.21"
   }
 }
