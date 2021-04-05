@@ -170,7 +170,7 @@ const RULES = [
     },
     {
         name: 'autoforum.cz',
-        hostTest: host => /^www\.autoforum\.cz$/,
+        hostTest: (host) => /^www\.autoforum\.cz$/.test(host),
         selector: 'div.article-detail, div#content-right'
     }
 ];

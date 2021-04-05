@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.72
+// @version     1.0.73
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -185,7 +185,7 @@ const RULES = [{
   selector: 'div.article'
 }, {
   name: 'autoforum.cz',
-  hostTest: () => /^www\.autoforum\.cz$/,
+  hostTest: host => /^www\.autoforum\.cz$/.test(host),
   selector: 'div.article-detail, div#content-right'
 }];
 
