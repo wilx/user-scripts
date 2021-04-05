@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.71
+// @version     1.0.72
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
 // @namespace   https://github.com/wilx/user-scripts/czech-typography-fixer
+// @downloadURL https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js
 // @run-at      document-end
 // @grant       none
 // @noframes    

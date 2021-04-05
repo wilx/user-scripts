@@ -102,6 +102,7 @@ module.exports = {
                 author: 'wilx',
                 homepage: 'https://github.com/wilx/user-scripts/czech-typography-fixer',
                 namespace: 'https://github.com/wilx/user-scripts/czech-typography-fixer',
+                downloadURL: 'https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js',
                 'run-at': 'document-end',
                 grant: 'none',
                 noframes: true,

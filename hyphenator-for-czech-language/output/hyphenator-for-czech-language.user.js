@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.77
+// @version     1.0.78
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @namespace   https://github.com/wilx/user-scripts/hyphenator-for-czech-language
+// @downloadURL https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js
 // @run-at      document-end
 // @grant       none
 // @noframes    

@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.71",
+  "version": "1.0.72",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -14,10 +14,10 @@
     "greasemonkey"
   ],
   "devDependencies": {
-    "@babel/core": "^7.13.10",
+    "@babel/core": "^7.13.14",
     "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
-    "@webpack-cli/info": "^1.2.2",
+    "@babel/preset-env": "^7.13.12",
+    "@webpack-cli/info": "^1.2.3",
     "@webpack-cli/migrate": "^1.1.2",
     "babel-loader": "^8.2.2",
     "babel-plugin-minify-constant-folding": "^0.5.0",
@@ -28,7 +28,7 @@
     "babel-plugin-transform-remove-undefined": "^0.5.0",
     "babel-plugin-transform-simplify-comparison-operators": "^6.9.4",
     "chokidar": "^3.5.1",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -37,8 +37,8 @@
     "eslint-plugin-standard": "^5.0.0",
     "jsdoc": "^3.6.6",
     "jsdoc-webpack-plugin": "^0.3.0",
-    "webpack": "^5.25.0",
-    "webpack-cli": "^4.5.0",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0",
     "webpack-userscript": "^2.5.6",
     "yarn-audit-html": "^2.0.1"
   },
@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "core-js": "^3.9.1",
+    "core-js": "^3.10.0",
     "lodash": "^4.17.21"
   }
 }
