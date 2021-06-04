@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.84
+// @version     1.0.88
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -2039,44 +2039,18 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
 
 
     function makeValueStore(len) {
-      const indexes = function () {
-        let arr;
+      const indexes = (() => {
+        const arr = new Uint32Array(3);
+        arr[0] = 1; // start position of a value set
 
-        if (Object.prototype.hasOwnProperty.call(window, 'Uint32Array')) {
-          // IE<9 doesn't have window.hasOwnProperty (host object)
-          arr = new window.Uint32Array(3);
-          arr[0] = 1; // start position of a value set
+        arr[1] = 1; // next index
 
-          arr[1] = 1; // next index
-
-          arr[2] = 1; // last index with a significant value
-        } else {
-          arr = [1, 1, 1];
-        }
+        arr[2] = 1; // last index with a significant value
 
         return arr;
-      }();
+      })();
 
-      const keys = function () {
-        let i;
-
-        if (Object.prototype.hasOwnProperty.call(window, 'Uint8Array')) {
-          // IE<9 doesn't have window.hasOwnProperty (host object)
-          return new window.Uint8Array(len);
-        }
-
-        const r = [];
-        r.length = len;
-        i = r.length - 1;
-
-        while (i >= 0) {
-          r[i] = 0;
-          i -= 1;
-        }
-
-        return r;
-      }();
-
+      const keys = new Uint8Array(len);
       return {
         keys: keys,
         add: function (p) {
@@ -2248,21 +2222,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
       const charMapc2i = lo.charMap.code2int;
       const valueStore = makeValueStore(lo.valueStoreLength);
       lo.valueStore = valueStore;
-
-      if (Object.prototype.hasOwnProperty.call(window, 'Int32Array')) {
-        // IE<9 doesn't have window.hasOwnProperty (host object)
-        lo.indexedTrie = new window.Int32Array(lo.patternArrayLength * 2);
-      } else {
-        lo.indexedTrie = [];
-        lo.indexedTrie.length = lo.patternArrayLength * 2;
-        i = lo.indexedTrie.length - 1;
-
-        while (i >= 0) {
-          lo.indexedTrie[i] = 0;
-          i -= 1;
-        }
-      }
-
+      lo.indexedTrie = new Int32Array(lo.patternArrayLength * 2);
       const indexedTrie = lo.indexedTrie;
       const trieRowLength = lo.charMap.int2code.length * 2;
       forEachKey(lo.patterns, function (i) {
@@ -2638,13 +2598,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     */
 
 
-    const wwAsMappedCharCodeStore = function () {
-      if (Object.prototype.hasOwnProperty.call(window, 'Int32Array')) {
-        return new window.Int32Array(64);
-      }
-
-      return [];
-    }();
+    const wwAsMappedCharCodeStore = new Int32Array(64);
     /**
     * @member {Array} Hyphenator~wwhpStore
     * @desc
@@ -2653,18 +2607,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     * @see {@link Hyphenator~hyphenateWord}
     */
 
-
-    const wwhpStore = function () {
-      let r;
-
-      if (Object.prototype.hasOwnProperty.call(window, 'Uint8Array')) {
-        r = new window.Uint8Array(64);
-      } else {
-        r = [];
-      }
-
-      return r;
-    }();
+    const wwhpStore = new Uint8Array(64);
     /**
     * @method Hyphenator~hyphenateCompound
     * @desc
@@ -2676,7 +2619,6 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     * @returns string The (hyphenated) compound word
     * @access private
     */
-
 
     function hyphenateCompound(lo, lang, word) {
       let hw;
