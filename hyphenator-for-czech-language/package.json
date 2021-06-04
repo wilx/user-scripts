@@ -1,6 +1,6 @@
 {
   "name": "hyphenator-for-czech-language",
-  "version": "1.0.80",
+  "version": "1.0.84",
   "description": "Hyphenator for news sitez in Czech",
   "main": "src/hyphenator-for-czech-language.js",
   "author": {

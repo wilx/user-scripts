@@ -2245,11 +2245,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                     lo.exceptions = {};
                 }
                 convertPatternsToArray(lo);
-                if (String.prototype.normalize) {
-                    wrd = '[\\w' + lo.specialChars + lo.specialChars.normalize('NFD') + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
-                } else {
-                    wrd = '[\\w' + lo.specialChars + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
-                }
+                wrd = '[\\w' + lo.specialChars + lo.specialChars.normalize('NFD') + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
                 lo.genRegExp = new RegExp('(' + wrd + ')|(' + url + ')|(' + mail + ')', 'gi');
                 lo.prepared = true;
             }
@@ -2311,11 +2307,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                         delete exceptions[lang];
                     }
                     // Replace genRegExp since it may have been changed:
-                    if (String.prototype.normalize) {
-                        tmp1 = '[\\w' + Hyphenator.languages[lang].specialChars + Hyphenator.languages[lang].specialChars.normalize('NFD') + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
-                    } else {
-                        tmp1 = '[\\w' + Hyphenator.languages[lang].specialChars + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
-                    }
+                    tmp1 = '[\\w' + Hyphenator.languages[lang].specialChars + Hyphenator.languages[lang].specialChars.normalize('NFD') + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
                     Hyphenator.languages[lang].genRegExp = new RegExp('(' + tmp1 + ')|(' + url + ')|(' + mail + ')', 'gi');
                     if (enableCache) {
                         if (!Hyphenator.languages[lang].cache) {
@@ -2518,9 +2510,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 hw = hyphenateCompound(lo, lang, word);
             } else {
                 ww = word.toLowerCase();
-                if (String.prototype.normalize) {
-                    ww = ww.normalize('NFC');
-                }
+                ww = ww.normalize('NFC');
                 if (lo.hasOwnProperty('charSubstitution')) {
                     ww = doCharSubst(lo.charSubstitution, ww);
                 }
