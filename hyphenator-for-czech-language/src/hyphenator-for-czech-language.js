@@ -2108,39 +2108,20 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
             }
             if (isLocal && !isBookmarklet) {
                 // check if 'location' is available:
-                xhr = null;
-                try {
-                    // Mozilla, Opera, Safari and Internet Explorer (ab v7)
-                    xhr = new window.XMLHttpRequest();
-                } catch (ignore) {
-                    try {
-                        // IE>=6
-                        xhr = new window.ActiveXObject('Microsoft.XMLHTTP');
-                    } catch (ignore) {
-                        try {
-                            // IE>=5
-                            xhr = new window.ActiveXObject('Msxml2.XMLHTTP');
-                        } catch (ignore) {
-                            xhr = null;
+                xhr = new XMLHttpRequest();
+                xhr.open('HEAD', location, true);
+                xhr.setRequestHeader('Cache-Control', 'no-cache');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 2) {
+                        if (xhr.status >= 400) {
+                            onError(new Error('Could not load\n' + location));
+                            delete docLanguages[lang];
+                            return;
                         }
+                        xhr.abort();
                     }
-                }
-
-                if (xhr) {
-                    xhr.open('HEAD', location, true);
-                    xhr.setRequestHeader('Cache-Control', 'no-cache');
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 2) {
-                            if (xhr.status >= 400) {
-                                onError(new Error('Could not load\n' + location));
-                                delete docLanguages[lang];
-                                return;
-                            }
-                            xhr.abort();
-                        }
-                    };
-                    xhr.send(null);
-                }
+                };
+                xhr.send(null);
             }
             if (createElem) {
                 head = window.document.getElementsByTagName('head').item(0);
