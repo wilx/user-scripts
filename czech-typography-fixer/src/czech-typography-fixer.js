@@ -179,12 +179,12 @@ function czechTypographyFixerMain () {
     let nodes = [];
 
     const host = document.location.host;
-    console.log('location.host: ' + host);
+    console.log(`location.host: ${host}`);
 
     for (let i = 0; i !== RULES.length; ++i) {
         const rule = RULES[i];
         if (rule.hostTest(host)) {
-            console.log('Using rules for ' + rule.name);
+            console.log(`Using rules for ${rule.name}`);
             nodes = document.body.querySelectorAll(rule.selector);
             break;
         }
@@ -192,7 +192,7 @@ function czechTypographyFixerMain () {
             console.log('No rule matched.');
         }
     }
-    console.log('Got ' + nodes.length + ' nodes.');
+    console.log(`Got ${nodes.length} nodes.`);
 
     const textNodes = [];
     for (let i = 0; i !== nodes.length; ++i) {
