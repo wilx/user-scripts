@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.78",
+  "version": "1.0.80",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -56,7 +56,7 @@
     ]
   },
   "scripts": {
-    "build": "yarn version --patch --no-commit-hooks --no-git-tag-version && yarn eslint src/** && yarn webpack",
+    "build": "yarn version -i patch && yarn eslint src/** && yarn webpack",
     "build-compat": "BROWSERSLIST_ENV=compat yarn build",
     "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/czech-typography-fixer.audit.html"
   },
