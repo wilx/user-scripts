@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.80",
+  "version": "1.0.82",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -37,10 +37,10 @@
     "eslint-plugin-standard": "^5.0.0",
     "jsdoc": "^3.6.7",
     "jsdoc-webpack-plugin": "^0.3.0",
+    "npm-audit-html": "^1.5.0",
     "webpack": "^5.46.0",
     "webpack-cli": "^4.7.2",
-    "webpack-userscript": "^2.5.8",
-    "yarn-audit-html": "^3.0.0"
+    "webpack-userscript": "^2.5.8"
   },
   "resolutions": {
     "lodash": "^4.17.20"
@@ -58,12 +58,11 @@
   "scripts": {
     "build": "yarn version -i patch && yarn eslint src/** && yarn webpack",
     "build-compat": "BROWSERSLIST_ENV=compat yarn build",
-    "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/czech-typography-fixer.audit.html"
+    "audit-html": "yarn npm audit --recursive --json | npm-audit-html -o output/czech-typography-fixer.audit.html"
   },
   "dependencies": {
     "@babel/runtime": "^7.14.8",
-    "core-js": "^3.15.2",
-    "lodash": "^4.17.21"
+    "core-js": "^3.15.2"
   },
   "packageManager": "yarn@3.0.0"
 }
