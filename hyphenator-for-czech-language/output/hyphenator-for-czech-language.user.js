@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.99
+// @version     1.0.109
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -55,6 +55,8 @@ var __webpack_exports__ = {};
 /* eslint-disable no-prototype-builtins */
 
 /* eslint no-unused-vars: "warn" */
+
+/* eslint-disable camelcase */
 console.log('Hyphenator here.');
 
 function hyphenatorForCzechLanguageOnSelectedSites() {

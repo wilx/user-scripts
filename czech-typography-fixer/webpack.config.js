@@ -1,6 +1,7 @@
 const path = require('path');
 const WebpackUserscript = require('webpack-userscript');
 const JsDocPlugin = require('jsdoc-webpack-plugin');
+const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
 
 let includeOnSites = [
     /^https?:\/\/www\.ceska-justice\.cz\/.*$/,
@@ -95,6 +96,9 @@ module.exports = {
         minimize: false
     },
     plugins: [
+        new LimitChunkCountPlugin({
+            maxChunks: 1
+        }),
         new WebpackUserscript({
             headers: {
                 name: '[name]',
@@ -117,6 +121,7 @@ module.exports = {
     resolve: {
         alias: {
             node_modules: path.join(__dirname, 'node_modules')
-        }
+        },
+        extensions: ['.ts', '.tsx', '.js', '.json', '.wasm']
     }
 };

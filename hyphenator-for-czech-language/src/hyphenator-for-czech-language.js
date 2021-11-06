@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-prototype-builtins */
 /* eslint no-unused-vars: "warn" */
+/* eslint-disable camelcase */
 
 console.log('Hyphenator here.');
 
