@@ -64,6 +64,5 @@
     "build": "yarn version --patch --no-commit-hooks --no-git-tag-version && yarn eslint src/** && yarn webpack",
     "build-compat": "BROWSERSLIST_ENV=compat yarn build",
     "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/hyphenator-for-czech-language.audit.html"
-  },
-  "packageManager": "yarn@3.1.0"
+  }
 }
