@@ -66,13 +66,13 @@ module.exports = {
                                 {
                                     debug: true,
                                     useBuiltIns: 'usage',
-                                    corejs: '3'
+                                    corejs: '3',
+                                    shippedProposals: true
                                 }
                             ]
                         ],
                         plugins: [
                             '@babel/plugin-transform-runtime',
-                            'babel-plugin-transform-regexp-constructors',
                             'babel-plugin-minify-constant-folding',
                             'babel-plugin-minify-guarded-expressions',
                             ['babel-plugin-transform-remove-undefined', {
