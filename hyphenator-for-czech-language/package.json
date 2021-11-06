@@ -65,5 +65,5 @@
     "build-compat": "BROWSERSLIST_ENV=compat yarn build",
     "audit-html": "yarn npm audit --recursive --json | npm-audit-html -o output/hyphenator-for-czech-language.audit.html"
   },
-  "packageManager": "yarn@3.0.0"
+  "packageManager": "yarn@3.1.0"
 }
