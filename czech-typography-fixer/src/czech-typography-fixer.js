@@ -76,7 +76,7 @@ const RULES = [
     {
         name: 'Novinky',
         hostTest: (host) => host.endsWith('.novinky.cz'),
-        selector: 'main[role=main], div[id=articleBox], div[id=articleContent], div[id=articleHeaderBig], div[id=page] div[id=subpage] div[id=main]'
+        selector: 'div#szn-clanky main section, div#szn-clanky header'
     },
     {
         name: 'Google News',

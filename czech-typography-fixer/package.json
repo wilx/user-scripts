@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.101",
+  "version": "1.0.102",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -65,6 +65,5 @@
   "dependencies": {
     "@babel/runtime": "^7.16.0",
     "core-js": "^3.19.1"
-  },
-  "packageManager": "yarn@3.1.0"
+  }
 }

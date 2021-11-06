@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.101
+// @version     1.0.102
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -110,7 +110,7 @@ const RULES = [{
 }, {
   name: 'Novinky',
   hostTest: host => host.endsWith('.novinky.cz'),
-  selector: 'main[role=main], div[id=articleBox], div[id=articleContent], div[id=articleHeaderBig], div[id=page] div[id=subpage] div[id=main]'
+  selector: 'div#szn-clanky main section, div#szn-clanky header'
 }, {
   name: 'Google News',
   hostTest: host => host.startsWith('news.google.'),
