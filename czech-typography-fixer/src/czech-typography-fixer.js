@@ -7,7 +7,7 @@ const czechTypographyFixerReStraightToCzechQuotes = /(\D|^)"([^"]*)"/gu;
 const czechTypographyFixerReSingleQuotes = /([^\da-z]|^)'([^']*)'/giu;
 const czechTypographyFixerReFixBoth99Quotes = /„([^”]*)”/gu;
 
-export class CzechTypographyFixer {
+class CzechTypographyFixer {
     #rules = [
         {
             name: 'Česká Justice',
@@ -207,7 +207,7 @@ export class CzechTypographyFixer {
             const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT,
                 {
                     acceptNode: (n) => {
-                        if (n.parentNode && n.parentNode.nodeName === 'SCRIPT') {
+                        if (n?.parentNode?.nodeName === 'SCRIPT') {
                             // console.log('rejecting text of node ' + n.parentNode.nodeName);
                             return NodeFilter.FILTER_REJECT;
                         } else {
@@ -250,5 +250,5 @@ export class CzechTypographyFixer {
     }
 };
 
-export const fixer = new CzechTypographyFixer();
+const fixer = new CzechTypographyFixer();
 fixer.run();

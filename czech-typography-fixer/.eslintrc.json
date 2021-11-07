@@ -4,7 +4,7 @@
     ],
     "env": {
         "browser": true,
-        "es2020": true,
+        "es2021": true,
         "greasemonkey": true
     },
     "extends": [
@@ -16,7 +16,7 @@
     },
     "parser": "@babel/eslint-parser",
     "parserOptions": {
-        "ecmaVersion": 11,
+        "ecmaVersion": 12,
         "sourceType": "module",
         "ecmaFeatures": {
             "shippedProposals": true,
