@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.123",
+  "version": "1.0.126",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -15,11 +15,11 @@
   ],
   "devDependencies": {
     "@babel/cli": "^7.16.0",
-    "@babel/core": "^7.16.0",
-    "@babel/eslint-parser": "^7.16.0",
-    "@babel/plugin-proposal-class-static-block": "^7.16.0",
-    "@babel/plugin-transform-runtime": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/plugin-proposal-class-static-block": "^7.16.5",
+    "@babel/plugin-transform-runtime": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
     "@webpack-cli/info": "^1.4.0",
     "@webpack-cli/migrate": "^1.1.2",
     "babel-loader": "^8.2.3",
@@ -29,19 +29,19 @@
     "babel-plugin-minify-guarded-expressions": "^0.4.4",
     "babel-plugin-transform-remove-undefined": "^0.5.0",
     "babel-plugin-transform-simplify-comparison-operators": "^6.9.4",
-    "browserslist": "^4.17.6",
+    "browserslist": "^4.19.1",
     "chokidar": "^3.5.2",
-    "eslint": "^8.2.0",
+    "eslint": "^8.5.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-import-resolver-node": "^0.3.6",
-    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.1",
-    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "jsdoc": "^3.6.7",
     "jsdoc-webpack-plugin": "^0.3.0",
-    "webpack": "^5.62.1",
+    "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
     "webpack-userscript": "^2.5.8",
     "yarn-audit-html": "^3.0.1"
@@ -51,7 +51,7 @@
   },
   "browserslist": {
     "production": [
-      "Firefox >= 93",
+      "Firefox >= 95",
       "Chrome >= 95"
     ],
     "compat": [
@@ -65,8 +65,8 @@
     "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/czech-typography-fixer.audit.html"
   },
   "dependencies": {
-    "@babel/runtime": "^7.16.0",
-    "core-js": "^3.19.1"
+    "@babel/runtime": "^7.16.5",
+    "core-js": "^3.20.1"
   },
   "babel": {}
 }
