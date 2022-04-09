@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.113
+// @version     1.0.116
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
