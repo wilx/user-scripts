@@ -2,6 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint no-unused-vars: "warn" */
 /* eslint-disable camelcase */
+/* eslint-disable object-shorthand */
 
 console.log('Hyphenator here.');
 
@@ -2236,7 +2237,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
                 forEachKey(Hyphenator.languages, function (lang) {
                     prepareLanguagesObj(lang);
                 });
-                // eslint-disable-next-line node/no-callback-literal
+                // eslint-disable-next-line n/no-callback-literal
                 callback('*');
                 return;
             }

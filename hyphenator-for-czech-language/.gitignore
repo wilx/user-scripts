@@ -1,5 +1,5 @@
-output/
 !output/hyphenator-for-czech-language.user.js
+output/
 node_modules/
 docs/
 yarn-error.log
