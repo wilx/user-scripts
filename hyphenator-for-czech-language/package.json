@@ -1,6 +1,6 @@
 {
   "name": "hyphenator-for-czech-language",
-  "version": "1.0.129",
+  "version": "1.0.131",
   "description": "Hyphenator for news sitez in Czech",
   "main": "src/hyphenator-for-czech-language.js",
   "author": {
@@ -14,13 +14,13 @@
     "greasemonkey"
   ],
   "devDependencies": {
-    "@babel/core": "^7.18.13",
-    "@babel/eslint-parser": "^7.18.9",
-    "@babel/plugin-transform-runtime": "^7.18.10",
-    "@babel/preset-env": "^7.18.10",
-    "@webpack-cli/info": "^1.5.0",
+    "@babel/core": "^7.20.5",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "@webpack-cli/info": "^2.0.0",
     "@webpack-cli/migrate": "^1.1.2",
-    "babel-loader": "^8.2.5",
+    "babel-loader": "^9.1.0",
     "babel-plugin-minify-constant-folding": "^0.5.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.2",
     "babel-plugin-minify-flip-comparisons": "^0.4.3",
@@ -29,25 +29,25 @@
     "babel-plugin-transform-remove-undefined": "^0.5.0",
     "babel-plugin-transform-simplify-comparison-operators": "^6.9.4",
     "chokidar": "^3.5.3",
-    "eslint": "^8.23.0",
+    "eslint": "^8.28.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-n": "^15.5.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.1",
-    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^5.0.0",
-    "jsdoc": "^3.6.11",
+    "jsdoc": "^4.0.0",
     "jsdoc-webpack-plugin": "^0.3.0",
     "lodash-cli": "^4.17.5",
     "npm-audit-html": "^1.5.0",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0",
     "webpack-userscript": "^2.5.8",
     "yarn-audit-html": "^4.0.0"
   },
   "dependencies": {
-    "core-js": "^3.25.0"
+    "core-js": "^3.26.1"
   },
   "resolutions": {
     "lodash": "^4.17.20"

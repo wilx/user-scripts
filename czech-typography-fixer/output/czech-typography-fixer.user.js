@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.135
+// @version     1.0.138
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -53,11 +53,10 @@ const czechTypographyFixerReSingleLetters = /(\b[IKOSUVZikosuvz]) +/gu;
 const czechTypographyFixerReSingleA = /(\b[Aa]) +/gu;
 const czechTypographyFixerRePercents = /(\d) ([%°‰℃℉])/gu;
 const czechTypographyFixerReDates = /(\d{1,2}\.) (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gu;
-const czechTypographyFixerReStraightToCzechQuotes = /(\D|^)"([^"]*)"/gu; // const czechTypographyFixerReEnglishToCzechQuotes = /“([^”]*)”/gu;
-
+const czechTypographyFixerReStraightToCzechQuotes = /(\D|^)"([^"]*)"/gu;
+// const czechTypographyFixerReEnglishToCzechQuotes = /“([^”]*)”/gu;
 const czechTypographyFixerReSingleQuotes = /([^\da-z]|^)'([^']*)'/giu;
 const czechTypographyFixerReFixBoth99Quotes = /„([^”]*)”/gu;
-
 class CzechTypographyFixer {
   #rules = [{
     name: 'Česká Justice',
@@ -196,29 +195,23 @@ class CzechTypographyFixer {
     hostTest: host => /^www\.autoforum\.cz$/.test(host),
     selector: 'div.article-detail, div#content-right'
   }];
-
   run() {
     let nodes = [];
     const host = document.location.host;
     console.log(`location.host: ${host}`);
-
     for (let i = 0; i !== this.#rules.length; ++i) {
       const rule = this.#rules[i];
-
       if (rule.hostTest(host)) {
         console.log(`Using rules for ${rule.name}`);
         nodes = document.body.querySelectorAll(rule.selector);
         break;
       }
-
       if (i == this.#rules.length - 1) {
         console.log('No rule matched.');
       }
     }
-
     console.log(`Got ${nodes.length} nodes.`);
     const textNodes = [];
-
     for (let i = 0; i !== nodes.length; ++i) {
       const node = nodes[i];
       const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
@@ -233,38 +226,33 @@ class CzechTypographyFixer {
         }
       });
       let textNode;
-
       while (textNode = walk.nextNode()) {
         textNodes.push(textNode);
       }
     }
-
     for (let i = 0; i !== textNodes.length; ++i) {
       this.#transmogrifyTextNode(textNodes[i]);
     }
   }
-
   #transmogrifyTextNode(textNode) {
     let text = textNode.nodeValue;
     text = text.replace(czechTypographyFixerReSingleLetters, '$1\u00a0');
     text = text.replace(czechTypographyFixerReSingleA, '$1\u00a0');
     text = text.replace(czechTypographyFixerRePercents, '$1\u00a0$2');
-    text = text.replace(czechTypographyFixerReDates, '$1\u00a0$2'); // XXX This breaks proper Czech quotes if they are already in the text multiple times.
+    text = text.replace(czechTypographyFixerReDates, '$1\u00a0$2');
+    // XXX This breaks proper Czech quotes if they are already in the text multiple times.
     // text = text.replace(czechTypographyFixerReEnglishToCzechQuotes, '„$1“');
-
     text = text.replace(czechTypographyFixerReStraightToCzechQuotes, '$1„$2“');
     text = text.replace(czechTypographyFixerReFixBoth99Quotes, '„$1“');
-    text = text.replace(czechTypographyFixerReSingleQuotes, '$1‚$2‘'); // console.log("text after: >" + text + "<");
+    text = text.replace(czechTypographyFixerReSingleQuotes, '$1‚$2‘');
 
+    // console.log("text after: >" + text + "<");
     textNode.nodeValue = text;
   }
-
   constructor() {
     console.log('Czech typography fixer here.');
   }
-
 }
-
 const fixer = new CzechTypographyFixer();
 fixer.run();
 /******/ })()
