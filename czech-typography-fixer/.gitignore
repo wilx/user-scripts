@@ -1,0 +1,13 @@
+!/czech-typography-fixer/output/czech-typography-fixer.user.js
+!/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js
+output/
+node_modules/
+docs/
+yarn-error.log
+.idea/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
