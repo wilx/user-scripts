@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.141
+// @version     1.0.142
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -14,7 +14,7 @@
 // @include     /^https?:\/\/(.+\.)?ihned\.(cz|news)\/.*$/
 // @include     /^https?:\/\/.+\.aktualne\.cz\/.*$/
 // @include     /^https?:\/\/www\.ceskenoviny\.cz\/.*$/
-// @include     /^https?:\/\/.+\.idnes\.cz\/.*$/
+// @include     /^https?:\/\/.+\.(ihned|hn)\.cz\/.*$/
 // @include     /^https?:\/\/.+\.reflex\.cz\/.*$/
 // @include     /^https?:\/\/.+\.respekt\.cz\/.*$/
 // @include     /^https?:\/\/.+\.ceskatelevize\.cz\/.*$/

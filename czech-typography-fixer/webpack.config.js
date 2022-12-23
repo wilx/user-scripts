@@ -9,7 +9,7 @@ let includeOnSites = [
     /^https?:\/\/(.+\.)?ihned\.(cz|news)\/.*$/,
     /^https?:\/\/.+\.aktualne\.cz\/.*$/,
     /^https?:\/\/www\.ceskenoviny\.cz\/.*$/,
-    /^https?:\/\/.+\.idnes\.cz\/.*$/,
+    /^https?:\/\/.+\.(ihned|hn)\.cz\/.*$/,
     /^https?:\/\/.+\.reflex\.cz\/.*$/,
     /^https?:\/\/.+\.respekt\.cz\/.*$/,
     /^https?:\/\/.+\.ceskatelevize\.cz\/.*$/,
