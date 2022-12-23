@@ -1,6 +1,5 @@
-!/czech-typography-fixer/output/czech-typography-fixer.user.js
-!/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js
 output/
+!output/hyphenator-for-czech-language.user.js
 node_modules/
 docs/
 yarn-error.log
