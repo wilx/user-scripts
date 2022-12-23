@@ -15,7 +15,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
         || host.startsWith('www.zdravotnickydenik.cz')) {
         console.log('using rules for Česká Justice');
         nodes = document.body.querySelectorAll('article.post');
-    } else if (/^(.+\.)?ihned\.(cz|news)$/.test(host)) {
+    } else if (/^(.+\.)?(ihned|hn)\.(cz|news)$/.test(host)) {
         console.log('using rules for IHned');
         nodes = document.body.querySelectorAll('article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article');
     } else if (host.endsWith('.aktualne.cz')) {
