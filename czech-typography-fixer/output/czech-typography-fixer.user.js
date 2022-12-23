@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.142
+// @version     1.0.144
 // @author      wilx
 // @description Czech typography fixer for Czech news sites.
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
@@ -65,7 +65,7 @@ class CzechTypographyFixer {
   }, {
     name: 'IHned',
     hostTest: host => /^(.+\.)?(ihned|hn)\.(cz|news)$/.test(host),
-    selector: 'article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article'
+    selector: 'article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article, div.content'
   }, {
     name: 'Aktualne',
     hostTest: host => host.endsWith('.aktualne.cz'),

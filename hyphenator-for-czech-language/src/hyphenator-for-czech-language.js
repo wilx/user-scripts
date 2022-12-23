@@ -17,7 +17,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
         nodes = document.body.querySelectorAll('article.post');
     } else if (/^(.+\.)?(ihned|hn)\.(cz|news)$/.test(host)) {
         console.log('using rules for IHned');
-        nodes = document.body.querySelectorAll('article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article');
+        nodes = document.body.querySelectorAll('article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article, div.content');
     } else if (host.endsWith('.aktualne.cz')) {
         console.log('using rules for Aktualne');
         nodes = document.body.querySelectorAll('div.clanek, div.titulek-clanku, div.obsah, div.page');

@@ -18,7 +18,7 @@ class CzechTypographyFixer {
         {
             name: 'IHned',
             hostTest: (host) => /^(.+\.)?(ihned|hn)\.(cz|news)$/.test(host),
-            selector: 'article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article'
+            selector: 'article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article, div.content'
         },
         {
             name: 'Aktualne',
