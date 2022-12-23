@@ -6,7 +6,7 @@ const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugi
 let includeOnSites = [
     /^https?:\/\/www\.ceska-justice\.cz\/.*$/,
     /^https?:\/\/www\.zdravotnickydenik\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?ihned\.(cz|news)\/.*$/,
+    /^https?:\/\/(.+\.)?(ihned|hn)\.(cz|news)\/.*$/,
     /^https?:\/\/.+\.aktualne\.cz\/.*$/,
     /^https?:\/\/www\.ceskenoviny\.cz\/.*$/,
     /^https?:\/\/.+\.idnes\.cz\/.*$/,

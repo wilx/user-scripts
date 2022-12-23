@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.133
+// @version     1.0.134
 // @author      wilx
 // @description Hyphenator for news sitez in Czech
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
@@ -11,7 +11,7 @@
 // @noframes    
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
 // @include     /^https?:\/\/www\.zdravotnickydenik\.cz\/.*$/
-// @include     /^https?:\/\/(.+\.)?ihned\.(cz|news)\/.*$/
+// @include     /^https?:\/\/(.+\.)?(ihned|hn)\.(cz|news)\/.*$/
 // @include     /^https?:\/\/.+\.aktualne\.cz\/.*$/
 // @include     /^https?:\/\/www\.ceskenoviny\.cz\/.*$/
 // @include     /^https?:\/\/.+\.idnes\.cz\/.*$/
