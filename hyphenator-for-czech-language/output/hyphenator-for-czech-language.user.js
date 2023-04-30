@@ -1,14 +1,9 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
-// @version     1.0.136
-// @author      wilx
 // @description Hyphenator for news sitez in Czech
+// @version     1.0.138
+// @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
-// @namespace   https://github.com/wilx/user-scripts/hyphenator-for-czech-language
-// @downloadURL https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js
-// @run-at      document-end
-// @grant       none
-// @noframes    
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
 // @include     /^https?:\/\/www\.zdravotnickydenik\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?(ihned|hn)\.(cz|news)\/.*$/
@@ -46,6 +41,11 @@
 // @include     /^https?:\/\/www\.christnet\.eu\/.*$/
 // @include     /^https?:\/\/tn\.nova\.cz\/.*$/
 // @include     /^https?:\/\/www\.autoforum\.cz\/.*$/
+// @downloadURL https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js
+// @grant       none
+// @namespace   https://github.com/wilx/user-scripts/hyphenator-for-czech-language
+// @noframes
+// @run-at      document-end
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap
@@ -3092,7 +3092,70 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     * minor release: new languages, improvements
     * @access public
     */
-
+    /**
+    * @member {boolean} Hyphenator.doHyphenation
+    * @desc
+    * If doHyphenation is set to false, hyphenateDocument() isn't called.
+    * All other actions are performed.
+    * @default true
+    */
+    /**
+    * @typedef {Object} Hyphenator.languages.language
+    * @property {Number} leftmin - The minimum of chars to remain on the old line
+    * @property {Number} rightmin - The minimum of chars to go on the new line
+    * @property {string} specialChars - Non-ASCII chars in the alphabet.
+    * @property {Object.<number, string>} patterns - the patterns in a compressed format. The key is the length of the patterns in the value string.
+    * @property {Object.<string, string>} charSubstitution - optional: a hash table with chars that are replaced during hyphenation
+    * @property {string | Object.<string, string>} exceptions - optional: a csv string containing exceptions
+    */
+    /**
+    * @member {Object.<string, Hyphenator.languages.language>} Hyphenator.languages
+    * @desc
+    * Objects that holds key-value pairs, where key is the language and the value is the
+    * language-object loaded from (and set by) the pattern file.
+    * @namespace Hyphenator.languages
+    * @access public
+    */
+    /**
+    * @method Hyphenator.config
+    * @desc
+    * The Hyphenator.config() function that takes an object as an argument. The object contains key-value-pairs
+    * containig Hyphenator-settings.
+    * @param {Hyphenator.config} obj
+    * @access public
+    * @example
+    * &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
+    * &lt;script type = "text/javascript"&gt;
+    *     Hyphenator.config({'minwordlength':4,'hyphenchar':'|'});
+    *     Hyphenator.run();
+    * &lt;/script&gt;
+    */
+    /**
+    * @method Hyphenator.run
+    * @desc
+    * Bootstrap function that starts all hyphenation processes when called:
+    * Tries to create storage if required and calls {@link Hyphenator~runWhenLoaded} on 'window' handing over the callback 'process'
+    * @access public
+    * @example
+    * &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
+    * &lt;script type = "text/javascript"&gt;
+    *   Hyphenator.run();
+    * &lt;/script&gt;
+    */
+    /**
+    * @method Hyphenator.addExceptions
+    * @desc
+    * Adds the exceptions from the string to the appropriate language in the
+    * {@link Hyphenator~languages}-object
+    * @param {string} lang The language
+    * @param {string} words A comma separated string of hyphenated words WITH spaces.
+    * @access public
+    * @example &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
+    * &lt;script type = "text/javascript"&gt;
+    *   Hyphenator.addExceptions('de','ziem-lich, Wach-stube');
+    *   Hyphenator.run();
+    * &lt;/script&gt;
+    */
     /**
     * @method Hyphenator.hyphenate
     * @access public
@@ -3238,22 +3301,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
       version: "5.2.0(devel)",
       doHyphenation: true,
       languages: {},
-      config:
-      /**
-      * @method Hyphenator.config
-      * @desc
-      * The Hyphenator.config() function that takes an object as an argument. The object contains key-value-pairs
-      * containig Hyphenator-settings.
-      * @param {Hyphenator.config} obj
-      * @access public
-      * @example
-      * &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-      * &lt;script type = "text/javascript"&gt;
-      *     Hyphenator.config({'minwordlength':4,'hyphenchar':'|'});
-      *     Hyphenator.run();
-      * &lt;/script&gt;
-      */
-      function config(obj) {
+      config: function config(obj) {
         const assert = function (name, type) {
           let r;
           const t = typeof obj[name];
@@ -3442,21 +3490,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
         if (storage && persistentConfig) {
           storeConfiguration();
         }
-      }
-
-      /**
-      * @method Hyphenator.run
-      * @desc
-      * Bootstrap function that starts all hyphenation processes when called:
-      * Tries to create storage if required and calls {@link Hyphenator~runWhenLoaded} on 'window' handing over the callback 'process'
-      * @access public
-      * @example
-      * &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-      * &lt;script type = "text/javascript"&gt;
-      *   Hyphenator.run();
-      * &lt;/script&gt;
-      */,
-
+      },
       run: function run() {
         /**
              *@callback Hyphenator.run~process process - The function is called when the DOM has loaded (or called for each frame)
@@ -3481,23 +3515,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
           createStorage();
         }
         runWhenLoaded(window, process);
-      }
-
-      /**
-      * @method Hyphenator.addExceptions
-      * @desc
-      * Adds the exceptions from the string to the appropriate language in the
-      * {@link Hyphenator~languages}-object
-      * @param {string} lang The language
-      * @param {string} words A comma separated string of hyphenated words WITH spaces.
-      * @access public
-      * @example &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-      * &lt;script type = "text/javascript"&gt;
-      *   Hyphenator.addExceptions('de','ziem-lich, Wach-stube');
-      *   Hyphenator.run();
-      * &lt;/script&gt;
-      */,
-
+      },
       addExceptions: function addExceptions(lang, words) {
         if (lang === '') {
           lang = 'global';

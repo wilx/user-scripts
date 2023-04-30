@@ -1,5 +1,5 @@
 const path = require('path');
-const WebpackUserscript = require('webpack-userscript');
+const us = require('webpack-userscript');
 const JsDocPlugin = require('jsdoc-webpack-plugin');
 const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
 
@@ -102,18 +102,21 @@ module.exports = {
         new LimitChunkCountPlugin({
             maxChunks: 1
         }),
-        new WebpackUserscript({
-            headers: {
-                name: '[name]',
-                version: '[version]',
-                author: 'wilx',
-                homepage: 'https://github.com/wilx/user-scripts/hyphenator-for-czech-language',
-                namespace: 'https://github.com/wilx/user-scripts/hyphenator-for-czech-language',
-                downloadURL: 'https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js',
-                'run-at': 'document-end',
-                grant: 'none',
-                noframes: true,
-                include: includeOnSites
+        new us.UserscriptPlugin({
+            headers (original) {
+                return {
+                    ...original,
+                    name: '[name]',
+                    //version: '[version]',
+                    author: 'wilx',
+                    homepage: 'https://github.com/wilx/user-scripts/hyphenator-for-czech-language',
+                    namespace: 'https://github.com/wilx/user-scripts/hyphenator-for-czech-language',
+                    downloadURL: 'https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js',
+                    'run-at': 'document-end',
+                    grant: 'none',
+                    noframes: true,
+                    include: includeOnSites
+                }
             },
             pretty: true
         }),
