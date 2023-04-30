@@ -1,14 +1,9 @@
 // ==UserScript==
 // @name        czech-typography-fixer
-// @version     1.0.144
-// @author      wilx
 // @description Czech typography fixer for Czech news sites.
+// @version     1.0.145
+// @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
-// @namespace   https://github.com/wilx/user-scripts/czech-typography-fixer
-// @downloadURL https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js
-// @run-at      document-end
-// @grant       none
-// @noframes    
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
 // @include     /^https?:\/\/www\.zdravotnickydenik\.cz\/.*$/
 // @include     /^https?:\/\/(.+\.)?ihned\.(cz|news)\/.*$/
@@ -45,6 +40,12 @@
 // @include     /^https?:\/\/www\.ahaonline\.cz\/.*$/
 // @include     /^https?:\/\/tn\.nova\.cz\/.*$/
 // @include     /^https?:\/\/www\.autoforum\.cz\/.*$/
+// @downloadURL https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js
+// @grant       none
+// @namespace   https://github.com/wilx/user-scripts/czech-typography-fixer
+// @noframes
+// @run-at      document-end
+// @updateURL   https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap

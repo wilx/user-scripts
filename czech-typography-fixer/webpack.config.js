@@ -1,5 +1,5 @@
 const path = require('path');
-const WebpackUserscript = require('webpack-userscript');
+const us = require('webpack-userscript');
 const JsDocPlugin = require('jsdoc-webpack-plugin');
 const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
 
@@ -99,18 +99,22 @@ module.exports = {
         new LimitChunkCountPlugin({
             maxChunks: 1
         }),
-        new WebpackUserscript({
-            headers: {
-                name: '[name]',
-                version: '[version]',
-                author: 'wilx',
-                homepage: 'https://github.com/wilx/user-scripts/czech-typography-fixer',
-                namespace: 'https://github.com/wilx/user-scripts/czech-typography-fixer',
-                downloadURL: 'https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js',
-                'run-at': 'document-end',
-                grant: 'none',
-                noframes: true,
-                include: includeOnSites
+        new us.UserscriptPlugin({
+            headers(original) {
+                return {
+                    ...original,
+                    name: '[name]',
+                    //version: '[version]',
+                    author: 'wilx',
+                    homepage: 'https://github.com/wilx/user-scripts/czech-typography-fixer',
+                    namespace: 'https://github.com/wilx/user-scripts/czech-typography-fixer',
+                    downloadURL: 'https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js',
+                    updateURL: 'https://github.com/wilx/user-scripts/raw/master/czech-typography-fixer/output/czech-typography-fixer.user.js',
+                    'run-at': 'document-end',
+                    grant: 'none',
+                    noframes: true,
+                    include: includeOnSites
+                }
             },
             pretty: true
         }),
