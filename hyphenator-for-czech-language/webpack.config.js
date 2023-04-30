@@ -112,6 +112,7 @@ module.exports = {
                     homepage: 'https://github.com/wilx/user-scripts/hyphenator-for-czech-language',
                     namespace: 'https://github.com/wilx/user-scripts/hyphenator-for-czech-language',
                     downloadURL: 'https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js',
+                    updateURL: 'https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js',
                     'run-at': 'document-end',
                     grant: 'none',
                     noframes: true,

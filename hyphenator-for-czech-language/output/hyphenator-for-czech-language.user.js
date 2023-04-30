@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.138
+// @version     1.0.139
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
@@ -46,6 +46,7 @@
 // @namespace   https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @noframes
 // @run-at      document-end
+// @updateURL   https://github.com/wilx/user-scripts/raw/master/hyphenator-for-czech-language/output/hyphenator-for-czech-language.user.js
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap

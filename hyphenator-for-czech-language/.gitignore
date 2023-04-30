@@ -1,4 +1,4 @@
-output/
+output/*
 !output/hyphenator-for-czech-language.user.js
 node_modules/
 docs/
