@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.140
+// @version     1.0.141
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
@@ -50,7 +50,6 @@
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap
-var __webpack_exports__ = {};
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-prototype-builtins */
 /* eslint no-unused-vars: "warn" */
@@ -1040,11 +1039,9 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
       if (ua.indexOf('msie 6') !== -1) {
         zws = ''; // IE6 doesn't support zws
       }
-
       if (ua.indexOf('opera') !== -1 && ua.indexOf('version/10.00') !== -1) {
         zws = ''; // opera 10 on XP doesn't support zws
       }
-
       return zws;
     }();
 
@@ -1824,7 +1821,6 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
             } // else do nothing
           }
         }
-
         n = el.childNodes[j];
         while (n) {
           if (n.nodeType === 1 && !dontHyphenate[n.nodeName.toLowerCase()] && n.className.indexOf(dontHyphenateClass) === -1 && n.className.indexOf(urlHyphenateClass) === -1 && !elToProcess[n]) {
@@ -2228,7 +2224,6 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
           // Export
           // lo['cache'] = lo.cache;
         }
-
         if (enableReducedPatternSet) {
           lo.redPatSet = {};
         }
@@ -2518,7 +2513,6 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
         if (word.indexOf("'") !== -1) {
           ww = ww.replace(/'/g, '’'); // replace APOSTROPHE with RIGHT SINGLE QUOTATION MARK (since the latter is used in the patterns)
         }
-
         ww = '_' + ww + '_';
         wwlen = ww.length;
         // prepare wwhp and wwAsMappedCharCode
@@ -3093,6 +3087,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     * minor release: new languages, improvements
     * @access public
     */
+
     /**
     * @member {boolean} Hyphenator.doHyphenation
     * @desc
@@ -3100,6 +3095,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     * All other actions are performed.
     * @default true
     */
+
     /**
     * @typedef {Object} Hyphenator.languages.language
     * @property {Number} leftmin - The minimum of chars to remain on the old line
@@ -3109,6 +3105,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     * @property {Object.<string, string>} charSubstitution - optional: a hash table with chars that are replaced during hyphenation
     * @property {string | Object.<string, string>} exceptions - optional: a csv string containing exceptions
     */
+
     /**
     * @member {Object.<string, Hyphenator.languages.language>} Hyphenator.languages
     * @desc
@@ -3117,6 +3114,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     * @namespace Hyphenator.languages
     * @access public
     */
+
     /**
     * @method Hyphenator.config
     * @desc
@@ -3131,6 +3129,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     *     Hyphenator.run();
     * &lt;/script&gt;
     */
+
     /**
     * @method Hyphenator.run
     * @desc
@@ -3143,6 +3142,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     *   Hyphenator.run();
     * &lt;/script&gt;
     */
+
     /**
     * @method Hyphenator.addExceptions
     * @desc
@@ -3157,6 +3157,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     *   Hyphenator.run();
     * &lt;/script&gt;
     */
+
     /**
     * @method Hyphenator.hyphenate
     * @access public
@@ -3501,7 +3502,6 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
             if (contextWindow.document.getElementsByTagName('frameset').length > 0) {
               return; // we are in a frameset
             }
-
             autoSetMainLanguage(undefined);
             gatherDocumentInfos();
             if (displayToggleBox) {

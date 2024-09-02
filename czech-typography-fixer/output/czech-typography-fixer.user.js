@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        czech-typography-fixer
 // @description Czech typography fixer for Czech news sites.
-// @version     1.0.146
+// @version     1.0.149
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
@@ -49,7 +49,6 @@
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap
-var __webpack_exports__ = {};
 const czechTypographyFixerReSingleLetters = /(\b[IKOSUVZikosuvz]) +/gu;
 const czechTypographyFixerReSingleA = /(\b[Aa]) +/gu;
 const czechTypographyFixerRePercents = /(\d) ([%°‰℃℉])/gu;
