@@ -4,6 +4,7 @@ node_modules/
 docs/
 yarn-error.log
 .idea/
+.pnp.*
 .yarn/*
 !.yarn/patches
 !.yarn/plugins

@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.149",
+  "version": "1.0.153",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
@@ -17,7 +17,6 @@
     "@babel/cli": "^7.25.6",
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
-    "@babel/plugin-proposal-class-static-block": "^7.21.0",
     "@babel/plugin-transform-runtime": "^7.25.4",
     "@babel/preset-env": "^7.25.4",
     "@eslint/eslintrc": "^3.1.0",
@@ -32,7 +31,6 @@
     "babel-plugin-transform-remove-undefined": "^0.5.0",
     "babel-plugin-transform-simplify-comparison-operators": "^6.9.4",
     "browserslist": "^4.23.3",
-    "chokidar": "^3.6.0",
     "eslint": "^9.9.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-import-resolver-node": "^0.3.9",
@@ -49,9 +47,6 @@
     "webpack-userscript": "^3.2.2",
     "yarn-audit-html": "^7.3.2"
   },
-  "resolutions": {
-    "lodash": "^4.17.20"
-  },
   "browserslist": {
     "production": [
       "Firefox >= 97",
@@ -63,13 +58,14 @@
     ]
   },
   "scripts": {
-    "build": "yarn version --patch --no-commit-hooks --no-git-tag-version && yarn eslint src/** && yarn webpack",
+    "build": "yarn version patch -i && yarn eslint src/** && yarn webpack",
     "build-compat": "BROWSERSLIST_ENV=compat yarn build",
-    "audit-html": "yarn audit --group \"dependencies bundledDependencies\" --json | yarn-audit-html -o output/czech-typography-fixer.audit.html"
+    "audit-html": "yarn npm audit -R --environment production"
   },
   "dependencies": {
     "@babel/runtime": "^7.25.6",
     "core-js": "^3.38.1"
   },
-  "babel": {}
+  "babel": {},
+  "packageManager": "yarn@4.5.0"
 }
