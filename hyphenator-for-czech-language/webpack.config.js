@@ -51,7 +51,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'output'),
-        filename: 'hyphenator-for-czech-language.js'
+        filename: 'hyphenator-for-czech-language.js',
+        chunkFormat: false
     },
     module: {
         rules: [

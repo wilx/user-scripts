@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.143
+// @version     1.0.149
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
@@ -108,7 +108,7 @@ function hyphenatorForCzechLanguageOnSelectedSites() {
     nodes = document.body.querySelectorAll('div[id=bodyContent]');
   } else if (host.endsWith('.novinky.cz')) {
     console.log('using rules for Novinky');
-    nodes = document.body.querySelectorAll('div#szn-clanky main section, div#szn-clanky header');
+    nodes = document.body.querySelectorAll('div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]');
   } else if (host.endsWith('.info.cz')) {
     console.log('using rules for Info');
     nodes = document.body.querySelectorAll('article');

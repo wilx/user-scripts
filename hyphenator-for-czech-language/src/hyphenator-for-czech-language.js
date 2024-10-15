@@ -59,7 +59,7 @@ function hyphenatorForCzechLanguageOnSelectedSites () {
         nodes = document.body.querySelectorAll('div[id=bodyContent]');
     } else if (host.endsWith('.novinky.cz')) {
         console.log('using rules for Novinky');
-        nodes = document.body.querySelectorAll('div#szn-clanky main section, div#szn-clanky header');
+        nodes = document.body.querySelectorAll('div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]');
     } else if (host.endsWith('.info.cz')) {
         console.log('using rules for Info');
         nodes = document.body.querySelectorAll('article');

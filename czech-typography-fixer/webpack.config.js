@@ -50,7 +50,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'output'),
-        filename: 'czech-typography-fixer.js'
+        filename: 'czech-typography-fixer.js',
+        chunkFormat: false
     },
     module: {
         rules: [

@@ -83,7 +83,7 @@ class CzechTypographyFixer {
         {
             name: 'Novinky',
             hostTest: (host) => host.endsWith('.novinky.cz'),
-            selector: 'div#szn-clanky main section, div#szn-clanky header'
+            selector: 'div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]'
         },
         {
             name: 'Google News',
