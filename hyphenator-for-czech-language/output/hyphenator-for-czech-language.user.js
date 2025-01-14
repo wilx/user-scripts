@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.150
+// @version     1.0.151
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/

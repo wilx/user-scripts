@@ -25,7 +25,7 @@ export default [{
         },
 
         parser: babelParser,
-        ecmaVersion: 11,
+        ecmaVersion: 15,
         sourceType: "module",
 
         parserOptions: {

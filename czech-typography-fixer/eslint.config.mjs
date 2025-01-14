@@ -30,7 +30,7 @@ export default [{
         },
 
         parser: babelParser,
-        ecmaVersion: 12,
+        ecmaVersion: 15,
         sourceType: "module",
 
         parserOptions: {

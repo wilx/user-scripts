@@ -1,6 +1,6 @@
 {
   "name": "czech-typography-fixer",
-  "version": "1.0.161",
+  "version": "1.0.171",
   "description": "Czech typography fixer for Czech news sites.",
   "main": "czech-typography-fixer.js",
   "author": {
