@@ -1,5 +1,4 @@
 import globals from "globals";
-import babelParser from "@babel/eslint-parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
@@ -15,7 +14,7 @@ const compat = new FlatCompat({
 
 export default [{
     ignores: ["output/*.js"],
-}, ...compat.extends("standard"), {
+}, js.configs.recommended, {
     languageOptions: {
         globals: {
             ...globals.browser,
@@ -24,24 +23,27 @@ export default [{
             SharedArrayBuffer: "readonly",
         },
 
-        parser: babelParser,
-        ecmaVersion: 15,
-        sourceType: "module",
-
-        parserOptions: {
-            ecmaFeatures: {
-                shippedProposals: true,
-                classStaticBlock: true,
-            },
-
-            requireConfigFile: "false",
-            babelOptions: {},
-        },
+        ecmaVersion: 2024,
+        sourceType: "module"
     },
 
     rules: {
-        semi: [2, "always"],
+        "array-bracket-spacing": ["error", "never"],
+        "arrow-spacing": ["error", { before: true, after: true }],
+        "comma-dangle": ["error", "never"],
+        "comma-spacing": ["error", { before: false, after: true }],
+        "dot-location": ["error", "property"],
         indent: ["error", 4],
+        "key-spacing": ["error", { beforeColon: false, afterColon: true }],
+        "keyword-spacing": ["error", { before: true, after: true }],
+        "no-multi-spaces": "error",
+        "no-trailing-spaces": "error",
         "operator-linebreak": ["error", "before"],
+        "object-curly-spacing": ["error", "always"],
+        "space-before-blocks": ["error", "always"],
+        "space-in-parens": ["error", "never"],
+        "space-infix-ops": "error",
+        "space-unary-ops": ["error", { words: true, nonwords: false }],
+        semi: [2, "always"]
     },
 }];
