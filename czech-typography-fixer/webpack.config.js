@@ -3,45 +3,58 @@ const us = require('webpack-userscript');
 const JsDocPlugin = require('jsdoc-webpack-plugin');
 const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
 
-let includeOnSites = [
-    /^https?:\/\/www\.ceska-justice\.cz\/.*$/,
-    /^https?:\/\/www\.zdravotnickydenik\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?ihned\.(cz|news)\/.*$/,
-    /^https?:\/\/.+\.aktualne\.cz\/.*$/,
-    /^https?:\/\/www\.ceskenoviny\.cz\/.*$/,
-    /^https?:\/\/.+\.(ihned|hn)\.cz\/.*$/,
-    /^https?:\/\/.+\.reflex\.cz\/.*$/,
-    /^https?:\/\/.+\.respekt\.cz\/.*$/,
-    /^https?:\/\/.+\.ceskatelevize\.cz\/.*$/,
-    /^https?:\/\/.+\.seznam\.cz\/.*$/,
-    /^https?:\/\/.+\.seznamzpravy\.cz\/.*$/,
-    /^https?:\/\/.+\.lidovky\.cz\/.*$/,
-    /^https?:\/\/svobodneforum\.cz\/.*$/,
-    /^https?:\/\/.+\.rozhlas\.cz\/.*$/,
-    /^https?:\/\/mediahub\.cz\/.*$/,
-    /^https?:\/\/.+\.novinky\.cz\/.*$/,
-    /^https?:\/\/news\.google\.com\/.*$/,
-    /^https?:\/\/.+\.info\.cz\/.*$/,
-    /^https?:\/\/.+\.tyden\.cz\/.*$/,
-    /^https?:\/\/cs\.wikipedia\.org\/.*$/,
-    /^https?:\/\/(www\.)?echo24\.cz\/.*$/,
-    /^https?:\/\/.+\.parlamentnilisty\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?forum24\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?euro\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?zpovednice\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?e15\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?neovlivni\.cz\/.*$/,
-    /^https?:\/\/www\.sysifos\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?denikreferendum\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?neviditelnypes.lidovky\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?denik\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?irozhlas\.cz\/.*$/,
-    /^https?:\/\/(.+\.)?epravo\.cz\/.*$/,
-    /^https?:\/\/www\.ahaonline\.cz\/.*$/,
-    /^https?:\/\/tn\.nova\.cz\/.*$/,
-    /^https?:\/\/www\.autoforum\.cz\/.*$/
+const includeOnSites = [
+    '*://www.ceska-justice.cz/*',
+    '*://www.zdravotnickydenik.cz/*',
+    '*://ihned.cz/*',
+    '*://*.ihned.cz/*',
+    '*://ihned.news/*',
+    '*://*.ihned.news/*',
+    '*://*.aktualne.cz/*',
+    '*://www.ceskenoviny.cz/*',
+    '*://*.hn.cz/*',
+    '*://*.reflex.cz/*',
+    '*://*.respekt.cz/*',
+    '*://*.ceskatelevize.cz/*',
+    '*://*.seznam.cz/*',
+    '*://*.seznamzpravy.cz/*',
+    '*://*.lidovky.cz/*',
+    '*://svobodneforum.cz/*',
+    '*://*.rozhlas.cz/*',
+    '*://mediahub.cz/*',
+    '*://*.novinky.cz/*',
+    '*://news.google.com/*',
+    '*://*.info.cz/*',
+    '*://*.tyden.cz/*',
+    '*://cs.wikipedia.org/*',
+    '*://echo24.cz/*',
+    '*://www.echo24.cz/*',
+    '*://*.parlamentnilisty.cz/*',
+    '*://forum24.cz/*',
+    '*://*.forum24.cz/*',
+    '*://euro.cz/*',
+    '*://*.euro.cz/*',
+    '*://zpovednice.cz/*',
+    '*://*.zpovednice.cz/*',
+    '*://e15.cz/*',
+    '*://*.e15.cz/*',
+    '*://neovlivni.cz/*',
+    '*://*.neovlivni.cz/*',
+    '*://www.sysifos.cz/*',
+    '*://denikreferendum.cz/*',
+    '*://*.denikreferendum.cz/*',
+    '*://neviditelnypes.lidovky.cz/*',
+    '*://*.neviditelnypes.lidovky.cz/*',
+    '*://denik.cz/*',
+    '*://*.denik.cz/*',
+    '*://irozhlas.cz/*',
+    '*://*.irozhlas.cz/*',
+    '*://epravo.cz/*',
+    '*://*.epravo.cz/*',
+    '*://www.ahaonline.cz/*',
+    '*://tn.nova.cz/*',
+    '*://www.autoforum.cz/*'
 ];
-includeOnSites = includeOnSites.map((x) => x.toString());
 
 module.exports = {
     mode: 'production',
@@ -66,23 +79,17 @@ module.exports = {
                                 '@babel/preset-env',
                                 {
                                     debug: true,
-                                    useBuiltIns: 'usage',
-                                    corejs: '3',
                                     shippedProposals: true
                                 }
                             ]
                         ],
                         plugins: [
-                            '@babel/plugin-transform-runtime',
-                            'babel-plugin-minify-constant-folding',
-                            'babel-plugin-minify-guarded-expressions',
-                            ['babel-plugin-transform-remove-undefined', {
-                                tdz: true
+                            ['polyfill-corejs3', {
+                                method: 'usage-global',
+                                version: require('core-js/package.json').version,
+                                shippedProposals: true
                             }],
-                            'babel-plugin-transform-simplify-comparison-operators',
-                            ['babel-plugin-minify-dead-code-elimination', {
-                                tdz: true
-                            }]
+                            '@babel/plugin-transform-runtime'
                         ]
                     }
                 }
