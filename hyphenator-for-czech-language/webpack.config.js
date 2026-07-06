@@ -2,6 +2,7 @@ const path = require('path');
 const us = require('webpack-userscript');
 const JsDocPlugin = require('jsdoc-webpack-plugin');
 const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
+const coreJsVersion = require('core-js/package.json').version;
 
 let includeOnSites = [
     /^https?:\/\/www\.ceska-justice\.cz\/.*$/,
@@ -67,13 +68,16 @@ module.exports = {
                                 '@babel/preset-env',
                                 {
                                     debug: true,
-                                    useBuiltIns: 'usage',
-                                    corejs: '3',
                                     shippedProposals: true
                                 }
                             ]
                         ],
                         plugins: [
+                            ['polyfill-corejs3', {
+                                method: 'usage-global',
+                                version: coreJsVersion,
+                                proposals: true
+                            }],
                             '@babel/plugin-transform-runtime',
                             'babel-plugin-transform-regexp-constructors',
                             'babel-plugin-minify-constant-folding',
@@ -82,10 +86,7 @@ module.exports = {
                             ['babel-plugin-transform-remove-undefined', {
                                 tdz: true
                             }],
-                            'babel-plugin-transform-simplify-comparison-operators',
-                            ['babel-plugin-minify-dead-code-elimination', {
-                                tdz: true
-                            }]
+                            'babel-plugin-transform-simplify-comparison-operators'
                         ]
                     }
                 }
