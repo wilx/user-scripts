@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.179
+// @version     1.0.180
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @match       *://www.ceska-justice.cz/*
@@ -5808,9 +5808,9 @@ function loadHyphenEngine(lang) {
     }
 
     if (settings.sync) {
-        cb(null, settings.loaderSync(file, new URL('./patterns/', __webpack_require__.b)));
+        cb(null, settings.loaderSync(file, undefined));
     } else {
-        settings.loader(file, new URL('./patterns/', __webpack_require__.b)).then(
+        settings.loader(file, undefined).then(
             (res) => {
                 cb(null, res);
             },
@@ -6332,4 +6332,3 @@ async function hyphenatorForCzechLanguageOnSelectedSites() {
 hyphenatorForCzechLanguageOnSelectedSites();
 /******/ })()
 ;
-//# sourceMappingURL=hyphenator-for-czech-language.js.map

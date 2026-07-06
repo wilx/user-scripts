@@ -4,6 +4,40 @@ const JsDocPlugin = require('jsdoc-webpack-plugin');
 const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
 const coreJsVersion = require('core-js/package.json').version;
 
+class InlineHyphenopolyPatternsPlugin {
+    apply (compiler) {
+        compiler.hooks.thisCompilation.tap('InlineHyphenopolyPatternsPlugin', compilation => {
+            compilation.hooks.processAssets.tap(
+                {
+                    name: 'InlineHyphenopolyPatternsPlugin',
+                    stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE
+                },
+                assets => {
+                    for (const assetName of Object.keys(assets)) {
+                        if (!assetName.endsWith('.js')) {
+                            continue;
+                        }
+
+                        const asset = compilation.getAsset(assetName);
+                        const source = asset.source.source().toString();
+                        const updated = source.replaceAll(
+                            "new URL('./patterns/', __webpack_require__.b)",
+                            'undefined'
+                        );
+
+                        if (updated !== source) {
+                            compilation.updateAsset(
+                                assetName,
+                                new compiler.webpack.sources.RawSource(updated)
+                            );
+                        }
+                    }
+                }
+            );
+        });
+    }
+}
+
 const matchOnSites = [
     '*://www.ceska-justice.cz/*',
     '*://www.zdravotnickydenik.cz/*',
@@ -125,6 +159,7 @@ module.exports = {
         new LimitChunkCountPlugin({
             maxChunks: 1
         }),
+        new InlineHyphenopolyPatternsPlugin(),
         new us.UserscriptPlugin({
             headers (original) {
                 return {
