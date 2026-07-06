@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.177
+// @version     1.0.178
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @include     /^https?:\/\/www\.ceska-justice\.cz\/.*$/
@@ -83,6 +83,21 @@ var $TypeError = TypeError;
 module.exports = function (argument) {
   if (isPossiblePrototype(argument)) return argument;
   throw new $TypeError("Can't set " + $String(argument) + ' as a prototype');
+};
+
+
+/***/ },
+
+/***/ 7080
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var has = (__webpack_require__(4402).has);
+
+// Perform ? RequireInternalSlot(M, [[SetData]])
+module.exports = function (it) {
+  has(it);
+  return it;
 };
 
 
@@ -771,6 +786,25 @@ module.exports = {
 
 /***/ },
 
+/***/ 6319
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var anObject = __webpack_require__(8551);
+var iteratorClose = __webpack_require__(9539);
+
+// call something on iterator step with safe closing on error
+module.exports = function (iterator, fn, value, ENTRIES) {
+  try {
+    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
+  } catch (error) {
+    iteratorClose(iterator, 'throw', error);
+  }
+};
+
+
+/***/ },
+
 /***/ 2195
 (module, __unused_webpack_exports, __webpack_require__) {
 
@@ -860,6 +894,19 @@ module.exports = !fails(function () {
   // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
   return Object.getPrototypeOf(new F()) !== F.prototype;
 });
+
+
+/***/ },
+
+/***/ 2529
+(module) {
+
+
+// `CreateIterResultObject` abstract operation
+// https://tc39.es/ecma262/#sec-createiterresultobject
+module.exports = function (value, done) {
+  return { value: value, done: done };
+};
 
 
 /***/ },
@@ -965,6 +1012,20 @@ module.exports = function (O, key, value, options) {
 
 /***/ },
 
+/***/ 6279
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var defineBuiltIn = __webpack_require__(6840);
+
+module.exports = function (target, src, options) {
+  for (var key in src) defineBuiltIn(target, key, src[key], options);
+  return target;
+};
+
+
+/***/ },
+
 /***/ 9433
 (module, __unused_webpack_exports, __webpack_require__) {
 
@@ -1033,6 +1094,41 @@ module.exports = function (it) {
 
 /***/ },
 
+/***/ 5002
+(module) {
+
+
+module.exports = {
+  IndexSizeError: { s: 'INDEX_SIZE_ERR', c: 1, m: 1 },
+  DOMStringSizeError: { s: 'DOMSTRING_SIZE_ERR', c: 2, m: 0 },
+  HierarchyRequestError: { s: 'HIERARCHY_REQUEST_ERR', c: 3, m: 1 },
+  WrongDocumentError: { s: 'WRONG_DOCUMENT_ERR', c: 4, m: 1 },
+  InvalidCharacterError: { s: 'INVALID_CHARACTER_ERR', c: 5, m: 1 },
+  NoDataAllowedError: { s: 'NO_DATA_ALLOWED_ERR', c: 6, m: 0 },
+  NoModificationAllowedError: { s: 'NO_MODIFICATION_ALLOWED_ERR', c: 7, m: 1 },
+  NotFoundError: { s: 'NOT_FOUND_ERR', c: 8, m: 1 },
+  NotSupportedError: { s: 'NOT_SUPPORTED_ERR', c: 9, m: 1 },
+  InUseAttributeError: { s: 'INUSE_ATTRIBUTE_ERR', c: 10, m: 1 },
+  InvalidStateError: { s: 'INVALID_STATE_ERR', c: 11, m: 1 },
+  SyntaxError: { s: 'SYNTAX_ERR', c: 12, m: 1 },
+  InvalidModificationError: { s: 'INVALID_MODIFICATION_ERR', c: 13, m: 1 },
+  NamespaceError: { s: 'NAMESPACE_ERR', c: 14, m: 1 },
+  InvalidAccessError: { s: 'INVALID_ACCESS_ERR', c: 15, m: 1 },
+  ValidationError: { s: 'VALIDATION_ERR', c: 16, m: 0 },
+  TypeMismatchError: { s: 'TYPE_MISMATCH_ERR', c: 17, m: 1 },
+  SecurityError: { s: 'SECURITY_ERR', c: 18, m: 1 },
+  NetworkError: { s: 'NETWORK_ERR', c: 19, m: 1 },
+  AbortError: { s: 'ABORT_ERR', c: 20, m: 1 },
+  URLMismatchError: { s: 'URL_MISMATCH_ERR', c: 21, m: 1 },
+  QuotaExceededError: { s: 'QUOTA_EXCEEDED_ERR', c: 22, m: 1 },
+  TimeoutError: { s: 'TIMEOUT_ERR', c: 23, m: 1 },
+  InvalidNodeTypeError: { s: 'INVALID_NODE_TYPE_ERR', c: 24, m: 1 },
+  DataCloneError: { s: 'DATA_CLONE_ERR', c: 25, m: 1 }
+};
+
+
+/***/ },
+
 /***/ 8727
 (module) {
 
@@ -1096,6 +1192,29 @@ if (!version && userAgent) {
 }
 
 module.exports = version;
+
+
+/***/ },
+
+/***/ 6193
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var uncurryThis = __webpack_require__(9504);
+
+var $Error = Error;
+var replace = uncurryThis(''.replace);
+
+var TEST = (function (arg) { return String(new $Error(arg).stack); })('zxcasd');
+// eslint-disable-next-line redos/no-vulnerable, sonarjs/slow-regex -- safe
+var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
+var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
+
+module.exports = function (stack, dropEntries) {
+  if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error.prepareStackTrace) {
+    while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
+  } return stack;
+};
 
 
 /***/ },
@@ -1417,6 +1536,53 @@ module.exports = function (V, P) {
 
 /***/ },
 
+/***/ 3789
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aCallable = __webpack_require__(9306);
+var anObject = __webpack_require__(8551);
+var call = __webpack_require__(9565);
+var toIntegerOrInfinity = __webpack_require__(1291);
+var getIteratorDirect = __webpack_require__(1767);
+
+var INVALID_SIZE = 'Invalid size';
+var $RangeError = RangeError;
+var $TypeError = TypeError;
+var max = Math.max;
+
+var SetRecord = function (set, intSize) {
+  this.set = set;
+  this.size = max(intSize, 0);
+  this.has = aCallable(set.has);
+  this.keys = aCallable(set.keys);
+};
+
+SetRecord.prototype = {
+  getIterator: function () {
+    return getIteratorDirect(anObject(call(this.keys, this.set)));
+  },
+  includes: function (it) {
+    return call(this.has, this.set, it);
+  }
+};
+
+// `GetSetRecord` abstract operation
+// https://tc39.es/proposal-set-methods/#sec-getsetrecord
+module.exports = function (obj) {
+  anObject(obj);
+  var numSize = +obj.size;
+  // NOTE: If size is undefined, then numSize will be NaN
+  // eslint-disable-next-line no-self-compare -- NaN check
+  if (numSize !== numSize) throw new $TypeError(INVALID_SIZE);
+  var intSize = toIntegerOrInfinity(numSize);
+  if (intSize < 0) throw new $RangeError(INVALID_SIZE);
+  return new SetRecord(obj, intSize);
+};
+
+
+/***/ },
+
 /***/ 4576
 (module) {
 
@@ -1517,6 +1683,32 @@ module.exports = fails(function () {
 }) ? function (it) {
   return classof(it) === 'String' ? split(it, '') : $Object(it);
 } : $Object;
+
+
+/***/ },
+
+/***/ 3167
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var isCallable = __webpack_require__(4901);
+var isObject = __webpack_require__(34);
+var setPrototypeOf = __webpack_require__(2967);
+
+// makes subclassing work correct for wrapped built-ins
+module.exports = function ($this, dummy, Wrapper) {
+  var NewTarget, NewTargetPrototype;
+  if (
+    // it can work only with native `setPrototypeOf`
+    setPrototypeOf &&
+    // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
+    isCallable(NewTarget = dummy.constructor) &&
+    NewTarget !== Wrapper &&
+    isObject(NewTargetPrototype = NewTarget.prototype) &&
+    NewTargetPrototype !== Wrapper.prototype
+  ) setPrototypeOf($this, NewTargetPrototype);
+  return $this;
+};
 
 
 /***/ },
@@ -1777,6 +1969,30 @@ module.exports = isForced;
 
 /***/ },
 
+/***/ 1563
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var classof = __webpack_require__(6955);
+var hasOwn = __webpack_require__(9297);
+var isNullOrUndefined = __webpack_require__(4117);
+var wellKnownSymbol = __webpack_require__(8227);
+var Iterators = __webpack_require__(6269);
+
+var ITERATOR = wellKnownSymbol('iterator');
+var $Object = Object;
+
+module.exports = function (it) {
+  if (isNullOrUndefined(it)) return false;
+  var O = $Object(it);
+  return O[ITERATOR] !== undefined
+    || '@@iterator' in O
+    || hasOwn(Iterators, classof(O));
+};
+
+
+/***/ },
+
 /***/ 4117
 (module) {
 
@@ -1946,6 +2162,29 @@ module.exports = function (iterable, unboundFunction, options) {
 
 /***/ },
 
+/***/ 1385
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var iteratorClose = __webpack_require__(9539);
+
+module.exports = function (iters, kind, value) {
+  for (var i = iters.length - 1; i >= 0; i--) {
+    if (iters[i] === undefined) continue;
+    try {
+      value = iteratorClose(iters[i].iterator, kind, value);
+    } catch (error) {
+      kind = 'throw';
+      value = error;
+    }
+  }
+  if (kind === 'throw') throw value;
+  return value;
+};
+
+
+/***/ },
+
 /***/ 9539
 (module, __unused_webpack_exports, __webpack_require__) {
 
@@ -1972,6 +2211,121 @@ module.exports = function (iterator, kind, value) {
   if (innerError) throw innerResult;
   anObject(innerResult);
   return value;
+};
+
+
+/***/ },
+
+/***/ 9462
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var call = __webpack_require__(9565);
+var create = __webpack_require__(2360);
+var createNonEnumerableProperty = __webpack_require__(6699);
+var defineBuiltIns = __webpack_require__(6279);
+var wellKnownSymbol = __webpack_require__(8227);
+var InternalStateModule = __webpack_require__(1181);
+var getMethod = __webpack_require__(5966);
+var IteratorPrototype = (__webpack_require__(7657).IteratorPrototype);
+var createIterResultObject = __webpack_require__(2529);
+var iteratorClose = __webpack_require__(9539);
+var iteratorCloseAll = __webpack_require__(1385);
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var ITERATOR_HELPER = 'IteratorHelper';
+var WRAP_FOR_VALID_ITERATOR = 'WrapForValidIterator';
+var NORMAL = 'normal';
+var THROW = 'throw';
+var setInternalState = InternalStateModule.set;
+
+var createIteratorProxyPrototype = function (IS_ITERATOR) {
+  var getInternalState = InternalStateModule.getterFor(IS_ITERATOR ? WRAP_FOR_VALID_ITERATOR : ITERATOR_HELPER);
+
+  return defineBuiltIns(create(IteratorPrototype), {
+    next: function next() {
+      var state = getInternalState(this);
+      // for simplification:
+      //   for `%WrapForValidIteratorPrototype%.next` or with `state.returnHandlerResult` our `nextHandler` returns `IterResultObject`
+      //   for `%IteratorHelperPrototype%.next` - just a value
+      if (IS_ITERATOR) return state.nextHandler();
+      if (state.done) return createIterResultObject(undefined, true);
+      try {
+        var result = state.nextHandler();
+        return state.returnHandlerResult ? result : createIterResultObject(result, state.done);
+      } catch (error) {
+        state.done = true;
+        throw error;
+      }
+    },
+    'return': function () {
+      var state = getInternalState(this);
+      var iterator = state.iterator;
+      var done = state.done;
+      state.done = true;
+      if (IS_ITERATOR) {
+        var returnMethod = getMethod(iterator, 'return');
+        return returnMethod ? call(returnMethod, iterator) : createIterResultObject(undefined, true);
+      }
+      if (done) return createIterResultObject(undefined, true);
+      if (state.inner) try {
+        iteratorClose(state.inner.iterator, NORMAL);
+      } catch (error) {
+        return iteratorClose(iterator, THROW, error);
+      }
+      if (state.openIters) try {
+        iteratorCloseAll(state.openIters, NORMAL);
+      } catch (error) {
+        if (iterator) return iteratorClose(iterator, THROW, error);
+        throw error;
+      }
+      if (iterator) iteratorClose(iterator, NORMAL);
+      return createIterResultObject(undefined, true);
+    }
+  });
+};
+
+var WrapForValidIteratorPrototype = createIteratorProxyPrototype(true);
+var IteratorHelperPrototype = createIteratorProxyPrototype(false);
+
+createNonEnumerableProperty(IteratorHelperPrototype, TO_STRING_TAG, 'Iterator Helper');
+
+module.exports = function (nextHandler, IS_ITERATOR, RETURN_HANDLER_RESULT) {
+  var IteratorProxy = function Iterator(record, state) {
+    if (state) {
+      state.iterator = record.iterator;
+      state.next = record.next;
+    } else state = record;
+    state.type = IS_ITERATOR ? WRAP_FOR_VALID_ITERATOR : ITERATOR_HELPER;
+    state.returnHandlerResult = !!RETURN_HANDLER_RESULT;
+    state.nextHandler = nextHandler;
+    state.counter = 0;
+    state.done = false;
+    setInternalState(this, state);
+  };
+
+  IteratorProxy.prototype = IS_ITERATOR ? WrapForValidIteratorPrototype : IteratorHelperPrototype;
+
+  return IteratorProxy;
+};
+
+
+/***/ },
+
+/***/ 684
+(module) {
+
+
+// Should throw an error on invalid iterator
+// https://issues.chromium.org/issues/336839115
+module.exports = function (methodName, argument) {
+  // eslint-disable-next-line es/no-iterator -- required for testing
+  var method = typeof Iterator == 'function' && Iterator.prototype[methodName];
+  if (method) try {
+    method.call({ next: null }, argument).next();
+  } catch (error) {
+    return true;
+  }
 };
 
 
@@ -2207,6 +2561,19 @@ var floor = Math.floor;
 module.exports = Math.trunc || function trunc(x) {
   var n = +x;
   return (n > 0 ? floor : ceil)(n);
+};
+
+
+/***/ },
+
+/***/ 2603
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var toString = __webpack_require__(655);
+
+module.exports = function (argument, $default) {
+  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
 };
 
 
@@ -2647,6 +3014,389 @@ module.exports = function (it) {
 
 /***/ },
 
+/***/ 9286
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var SetHelpers = __webpack_require__(4402);
+var iterate = __webpack_require__(8469);
+
+var Set = SetHelpers.Set;
+var add = SetHelpers.add;
+
+module.exports = function (set) {
+  var result = new Set();
+  iterate(set, function (it) {
+    add(result, it);
+  });
+  return result;
+};
+
+
+/***/ },
+
+/***/ 3440
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aSet = __webpack_require__(7080);
+var SetHelpers = __webpack_require__(4402);
+var clone = __webpack_require__(9286);
+var size = __webpack_require__(5170);
+var getSetRecord = __webpack_require__(3789);
+var iterateSet = __webpack_require__(8469);
+var iterateSimple = __webpack_require__(507);
+
+var has = SetHelpers.has;
+var remove = SetHelpers.remove;
+
+// `Set.prototype.difference` method
+// https://tc39.es/ecma262/#sec-set.prototype.difference
+module.exports = function difference(other) {
+  var O = aSet(this);
+  var otherRec = getSetRecord(other);
+  var result = clone(O);
+  if (size(result) <= otherRec.size) iterateSet(result, function (e) {
+    if (otherRec.includes(e)) remove(result, e);
+  });
+  else iterateSimple(otherRec.getIterator(), function (e) {
+    if (has(result, e)) remove(result, e);
+  });
+  return result;
+};
+
+
+/***/ },
+
+/***/ 4402
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var uncurryThis = __webpack_require__(9504);
+
+// eslint-disable-next-line es/no-set -- safe
+var SetPrototype = Set.prototype;
+
+module.exports = {
+  // eslint-disable-next-line es/no-set -- safe
+  Set: Set,
+  add: uncurryThis(SetPrototype.add),
+  has: uncurryThis(SetPrototype.has),
+  remove: uncurryThis(SetPrototype['delete']),
+  proto: SetPrototype
+};
+
+
+/***/ },
+
+/***/ 8750
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aSet = __webpack_require__(7080);
+var SetHelpers = __webpack_require__(4402);
+var size = __webpack_require__(5170);
+var getSetRecord = __webpack_require__(3789);
+var iterateSet = __webpack_require__(8469);
+var iterateSimple = __webpack_require__(507);
+
+var Set = SetHelpers.Set;
+var add = SetHelpers.add;
+var has = SetHelpers.has;
+
+// `Set.prototype.intersection` method
+// https://tc39.es/ecma262/#sec-set.prototype.intersection
+module.exports = function intersection(other) {
+  var O = aSet(this);
+  var otherRec = getSetRecord(other);
+  var result = new Set();
+
+  if (size(O) > otherRec.size) {
+    iterateSimple(otherRec.getIterator(), function (e) {
+      if (has(O, e)) add(result, e);
+    });
+  } else {
+    iterateSet(O, function (e) {
+      if (otherRec.includes(e)) add(result, e);
+    });
+  }
+
+  return result;
+};
+
+
+/***/ },
+
+/***/ 4449
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aSet = __webpack_require__(7080);
+var has = (__webpack_require__(4402).has);
+var size = __webpack_require__(5170);
+var getSetRecord = __webpack_require__(3789);
+var iterateSet = __webpack_require__(8469);
+var iterateSimple = __webpack_require__(507);
+var iteratorClose = __webpack_require__(9539);
+
+// `Set.prototype.isDisjointFrom` method
+// https://tc39.es/ecma262/#sec-set.prototype.isdisjointfrom
+module.exports = function isDisjointFrom(other) {
+  var O = aSet(this);
+  var otherRec = getSetRecord(other);
+  if (size(O) <= otherRec.size) return iterateSet(O, function (e) {
+    if (otherRec.includes(e)) return false;
+  }, true) !== false;
+  var iterator = otherRec.getIterator();
+  return iterateSimple(iterator, function (e) {
+    if (has(O, e)) return iteratorClose(iterator.iterator, 'normal', false);
+  }) !== false;
+};
+
+
+/***/ },
+
+/***/ 3838
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aSet = __webpack_require__(7080);
+var size = __webpack_require__(5170);
+var iterate = __webpack_require__(8469);
+var getSetRecord = __webpack_require__(3789);
+
+// `Set.prototype.isSubsetOf` method
+// https://tc39.es/ecma262/#sec-set.prototype.issubsetof
+module.exports = function isSubsetOf(other) {
+  var O = aSet(this);
+  var otherRec = getSetRecord(other);
+  if (size(O) > otherRec.size) return false;
+  return iterate(O, function (e) {
+    if (!otherRec.includes(e)) return false;
+  }, true) !== false;
+};
+
+
+/***/ },
+
+/***/ 8527
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aSet = __webpack_require__(7080);
+var has = (__webpack_require__(4402).has);
+var size = __webpack_require__(5170);
+var getSetRecord = __webpack_require__(3789);
+var iterateSimple = __webpack_require__(507);
+var iteratorClose = __webpack_require__(9539);
+
+// `Set.prototype.isSupersetOf` method
+// https://tc39.es/ecma262/#sec-set.prototype.issupersetof
+module.exports = function isSupersetOf(other) {
+  var O = aSet(this);
+  var otherRec = getSetRecord(other);
+  if (size(O) < otherRec.size) return false;
+  var iterator = otherRec.getIterator();
+  return iterateSimple(iterator, function (e) {
+    if (!has(O, e)) return iteratorClose(iterator.iterator, 'normal', false);
+  }) !== false;
+};
+
+
+/***/ },
+
+/***/ 8469
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var uncurryThis = __webpack_require__(9504);
+var iterateSimple = __webpack_require__(507);
+var SetHelpers = __webpack_require__(4402);
+
+var Set = SetHelpers.Set;
+var SetPrototype = SetHelpers.proto;
+var forEach = uncurryThis(SetPrototype.forEach);
+var keys = uncurryThis(SetPrototype.keys);
+var next = keys(new Set()).next;
+
+module.exports = function (set, fn, interruptible) {
+  return interruptible ? iterateSimple({ iterator: keys(set), next: next }, fn) : forEach(set, fn);
+};
+
+
+/***/ },
+
+/***/ 4916
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var getBuiltIn = __webpack_require__(7751);
+
+var createSetLike = function (size) {
+  return {
+    size: size,
+    has: function () {
+      return false;
+    },
+    keys: function () {
+      return {
+        next: function () {
+          return { done: true };
+        }
+      };
+    }
+  };
+};
+
+var createSetLikeWithInfinitySize = function (size) {
+  return {
+    size: size,
+    has: function () {
+      return true;
+    },
+    keys: function () {
+      throw new Error('e');
+    }
+  };
+};
+
+module.exports = function (name, callback) {
+  var Set = getBuiltIn('Set');
+  try {
+    new Set()[name](createSetLike(0));
+    try {
+      // late spec change, early WebKit ~ Safari 17 implementation does not pass it
+      // https://github.com/tc39/proposal-set-methods/pull/88
+      // also covered engines with
+      // https://bugs.webkit.org/show_bug.cgi?id=272679
+      new Set()[name](createSetLike(-1));
+      return false;
+    } catch (error2) {
+      if (!callback) return true;
+      // early V8 implementation bug
+      // https://issues.chromium.org/issues/351332634
+      try {
+        new Set()[name](createSetLikeWithInfinitySize(-Infinity));
+        return false;
+      } catch (error) {
+        var set = new Set([1, 2]);
+        return callback(set[name](createSetLikeWithInfinitySize(Infinity)));
+      }
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+
+/***/ },
+
+/***/ 9835
+(module) {
+
+
+// Should get iterator record of a set-like object before cloning this
+// https://bugs.webkit.org/show_bug.cgi?id=289430
+module.exports = function (METHOD_NAME) {
+  try {
+    // eslint-disable-next-line es/no-set -- needed for test
+    var baseSet = new Set();
+    var setLike = {
+      size: 0,
+      has: function () { return true; },
+      keys: function () {
+        // eslint-disable-next-line es/no-object-defineproperty -- needed for test
+        return Object.defineProperty({}, 'next', {
+          get: function () {
+            baseSet.clear();
+            baseSet.add(4);
+            return function () {
+              return { done: true };
+            };
+          }
+        });
+      }
+    };
+    var result = baseSet[METHOD_NAME](setLike);
+
+    return result.size === 1 && result.values().next().value === 4;
+  } catch (error) {
+    return false;
+  }
+};
+
+
+/***/ },
+
+/***/ 5170
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var uncurryThisAccessor = __webpack_require__(6706);
+var SetHelpers = __webpack_require__(4402);
+
+module.exports = uncurryThisAccessor(SetHelpers.proto, 'size', 'get') || function (set) {
+  return set.size;
+};
+
+
+/***/ },
+
+/***/ 3650
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aSet = __webpack_require__(7080);
+var SetHelpers = __webpack_require__(4402);
+var clone = __webpack_require__(9286);
+var getSetRecord = __webpack_require__(3789);
+var iterateSimple = __webpack_require__(507);
+
+var add = SetHelpers.add;
+var has = SetHelpers.has;
+var remove = SetHelpers.remove;
+
+// `Set.prototype.symmetricDifference` method
+// https://tc39.es/ecma262/#sec-set.prototype.symmetricdifference
+module.exports = function symmetricDifference(other) {
+  var O = aSet(this);
+  var keysIter = getSetRecord(other).getIterator();
+  var result = clone(O);
+  iterateSimple(keysIter, function (e) {
+    if (has(O, e)) remove(result, e);
+    else add(result, e);
+  });
+  return result;
+};
+
+
+/***/ },
+
+/***/ 4204
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var aSet = __webpack_require__(7080);
+var add = (__webpack_require__(4402).add);
+var clone = __webpack_require__(9286);
+var getSetRecord = __webpack_require__(3789);
+var iterateSimple = __webpack_require__(507);
+
+// `Set.prototype.union` method
+// https://tc39.es/ecma262/#sec-set.prototype.union
+module.exports = function union(other) {
+  var O = aSet(this);
+  var keysIter = getSetRecord(other).getIterator();
+  var result = clone(O);
+  iterateSimple(keysIter, function (it) {
+    add(result, it);
+  });
+  return result;
+};
+
+
+/***/ },
+
 /***/ 6119
 (module, __unused_webpack_exports, __webpack_require__) {
 
@@ -2881,6 +3631,33 @@ module.exports = function (argument) {
 
 /***/ },
 
+/***/ 7650
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var getBuiltIn = __webpack_require__(7751);
+var isCallable = __webpack_require__(4901);
+var isIterable = __webpack_require__(1563);
+var isObject = __webpack_require__(34);
+
+var Set = getBuiltIn('Set');
+
+var isSetLike = function (it) {
+  return isObject(it)
+    && typeof it.size == 'number'
+    && isCallable(it.has)
+    && isCallable(it.keys);
+};
+
+// fallback old -> new set methods proposal arguments
+module.exports = function (it) {
+  if (isSetLike(it)) return it;
+  return isIterable(it) ? new Set(it) : it;
+};
+
+
+/***/ },
+
 /***/ 2140
 (module, __unused_webpack_exports, __webpack_require__) {
 
@@ -2893,6 +3670,22 @@ var test = {};
 test[TO_STRING_TAG] = 'z';
 
 module.exports = String(test) === '[object z]';
+
+
+/***/ },
+
+/***/ 655
+(module, __unused_webpack_exports, __webpack_require__) {
+
+
+var classof = __webpack_require__(6955);
+
+var $String = String;
+
+module.exports = function (argument) {
+  if (classof(argument) === 'Symbol') throw new TypeError('Cannot convert a Symbol value to a string');
+  return $String(argument);
+};
 
 
 /***/ },
@@ -3337,6 +4130,64 @@ $({ global: true, constructor: true, forced: FORCED }, {
 
 /***/ },
 
+/***/ 2489
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var aCallable = __webpack_require__(9306);
+var anObject = __webpack_require__(8551);
+var getIteratorDirect = __webpack_require__(1767);
+var createIteratorProxy = __webpack_require__(9462);
+var callWithSafeIterationClosing = __webpack_require__(6319);
+var IS_PURE = __webpack_require__(6395);
+var iteratorClose = __webpack_require__(9539);
+var iteratorHelperThrowsOnInvalidIterator = __webpack_require__(684);
+var iteratorHelperWithoutClosingOnEarlyError = __webpack_require__(4549);
+
+var FILTER_WITHOUT_THROWING_ON_INVALID_ITERATOR = !IS_PURE && !iteratorHelperThrowsOnInvalidIterator('filter', function () { /* empty */ });
+var filterWithoutClosingOnEarlyError = !IS_PURE && !FILTER_WITHOUT_THROWING_ON_INVALID_ITERATOR
+  && iteratorHelperWithoutClosingOnEarlyError('filter', TypeError);
+
+var FORCED = IS_PURE || FILTER_WITHOUT_THROWING_ON_INVALID_ITERATOR || filterWithoutClosingOnEarlyError;
+
+var IteratorProxy = createIteratorProxy(function () {
+  var iterator = this.iterator;
+  var predicate = this.predicate;
+  var next = this.next;
+  var result, done, value;
+  while (true) {
+    result = anObject(call(next, iterator));
+    done = this.done = !!result.done;
+    if (done) return;
+    value = result.value;
+    if (callWithSafeIterationClosing(iterator, predicate, [value, this.counter++], true)) return value;
+  }
+});
+
+// `Iterator.prototype.filter` method
+// https://tc39.es/ecma262/#sec-iterator.prototype.filter
+$({ target: 'Iterator', proto: true, real: true, forced: FORCED }, {
+  filter: function filter(predicate) {
+    anObject(this);
+    try {
+      aCallable(predicate);
+    } catch (error) {
+      iteratorClose(this, 'throw', error);
+    }
+
+    if (filterWithoutClosingOnEarlyError) return call(filterWithoutClosingOnEarlyError, this, predicate);
+
+    return new IteratorProxy(getIteratorDirect(this), {
+      predicate: predicate
+    });
+  }
+});
+
+
+/***/ },
+
 /***/ 7588
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
@@ -3371,6 +4222,178 @@ $({ target: 'Iterator', proto: true, real: true, forced: forEachWithoutClosingOn
       fn(value, counter++);
     }, { IS_RECORD: true });
   }
+});
+
+
+/***/ },
+
+/***/ 7642
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var difference = __webpack_require__(3440);
+var fails = __webpack_require__(9039);
+var setMethodAcceptSetLike = __webpack_require__(4916);
+
+var SET_LIKE_INCORRECT_BEHAVIOR = !setMethodAcceptSetLike('difference', function (result) {
+  return result.size === 0;
+});
+
+var FORCED = SET_LIKE_INCORRECT_BEHAVIOR || fails(function () {
+  // https://bugs.webkit.org/show_bug.cgi?id=288595
+  var setLike = {
+    size: 1,
+    has: function () { return true; },
+    keys: function () {
+      var index = 0;
+      return {
+        next: function () {
+          var done = index++ > 1;
+          if (baseSet.has(1)) baseSet.clear();
+          return { done: done, value: 2 };
+        }
+      };
+    }
+  };
+  // eslint-disable-next-line es/no-set -- testing
+  var baseSet = new Set([1, 2, 3, 4]);
+  // eslint-disable-next-line es/no-set-prototype-difference -- testing
+  return baseSet.difference(setLike).size !== 3;
+});
+
+// `Set.prototype.difference` method
+// https://tc39.es/ecma262/#sec-set.prototype.difference
+$({ target: 'Set', proto: true, real: true, forced: FORCED }, {
+  difference: difference
+});
+
+
+/***/ },
+
+/***/ 8004
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var fails = __webpack_require__(9039);
+var intersection = __webpack_require__(8750);
+var setMethodAcceptSetLike = __webpack_require__(4916);
+
+var INCORRECT = !setMethodAcceptSetLike('intersection', function (result) {
+  return result.size === 2 && result.has(1) && result.has(2);
+}) || fails(function () {
+  // eslint-disable-next-line es/no-array-from, es/no-set, es/no-set-prototype-intersection -- testing
+  return String(Array.from(new Set([1, 2, 3]).intersection(new Set([3, 2])))) !== '3,2';
+});
+
+// `Set.prototype.intersection` method
+// https://tc39.es/ecma262/#sec-set.prototype.intersection
+$({ target: 'Set', proto: true, real: true, forced: INCORRECT }, {
+  intersection: intersection
+});
+
+
+/***/ },
+
+/***/ 3853
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var isDisjointFrom = __webpack_require__(4449);
+var setMethodAcceptSetLike = __webpack_require__(4916);
+
+var INCORRECT = !setMethodAcceptSetLike('isDisjointFrom', function (result) {
+  return !result;
+});
+
+// `Set.prototype.isDisjointFrom` method
+// https://tc39.es/ecma262/#sec-set.prototype.isdisjointfrom
+$({ target: 'Set', proto: true, real: true, forced: INCORRECT }, {
+  isDisjointFrom: isDisjointFrom
+});
+
+
+/***/ },
+
+/***/ 5876
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var isSubsetOf = __webpack_require__(3838);
+var setMethodAcceptSetLike = __webpack_require__(4916);
+
+var INCORRECT = !setMethodAcceptSetLike('isSubsetOf', function (result) {
+  return result;
+});
+
+// `Set.prototype.isSubsetOf` method
+// https://tc39.es/ecma262/#sec-set.prototype.issubsetof
+$({ target: 'Set', proto: true, real: true, forced: INCORRECT }, {
+  isSubsetOf: isSubsetOf
+});
+
+
+/***/ },
+
+/***/ 2475
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var isSupersetOf = __webpack_require__(8527);
+var setMethodAcceptSetLike = __webpack_require__(4916);
+
+var INCORRECT = !setMethodAcceptSetLike('isSupersetOf', function (result) {
+  return !result;
+});
+
+// `Set.prototype.isSupersetOf` method
+// https://tc39.es/ecma262/#sec-set.prototype.issupersetof
+$({ target: 'Set', proto: true, real: true, forced: INCORRECT }, {
+  isSupersetOf: isSupersetOf
+});
+
+
+/***/ },
+
+/***/ 5024
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var symmetricDifference = __webpack_require__(3650);
+var setMethodGetKeysBeforeCloning = __webpack_require__(9835);
+var setMethodAcceptSetLike = __webpack_require__(4916);
+
+var FORCED = !setMethodAcceptSetLike('symmetricDifference') || !setMethodGetKeysBeforeCloning('symmetricDifference');
+
+// `Set.prototype.symmetricDifference` method
+// https://tc39.es/ecma262/#sec-set.prototype.symmetricdifference
+$({ target: 'Set', proto: true, real: true, forced: FORCED }, {
+  symmetricDifference: symmetricDifference
+});
+
+
+/***/ },
+
+/***/ 1698
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var union = __webpack_require__(4204);
+var setMethodGetKeysBeforeCloning = __webpack_require__(9835);
+var setMethodAcceptSetLike = __webpack_require__(4916);
+
+var FORCED = !setMethodAcceptSetLike('union') || !setMethodGetKeysBeforeCloning('union');
+
+// `Set.prototype.union` method
+// https://tc39.es/ecma262/#sec-set.prototype.union
+$({ target: 'Set', proto: true, real: true, forced: FORCED }, {
+  union: union
 });
 
 
@@ -3624,6 +4647,398 @@ if (Uint8Array) $({ target: 'Uint8Array', proto: true, forced: INCORRECT_BEHAVIO
 
 /***/ },
 
+/***/ 5509
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var aSet = __webpack_require__(7080);
+var add = (__webpack_require__(4402).add);
+
+// `Set.prototype.addAll` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  addAll: function addAll(/* ...elements */) {
+    var set = aSet(this);
+    for (var k = 0, len = arguments.length; k < len; k++) {
+      add(set, arguments[k]);
+    } return set;
+  }
+});
+
+
+/***/ },
+
+/***/ 5223
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var aSet = __webpack_require__(7080);
+var remove = (__webpack_require__(4402).remove);
+
+// `Set.prototype.deleteAll` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  deleteAll: function deleteAll(/* ...elements */) {
+    var collection = aSet(this);
+    var allDeleted = true;
+    var wasDeleted;
+    for (var k = 0, len = arguments.length; k < len; k++) {
+      wasDeleted = remove(collection, arguments[k]);
+      allDeleted = allDeleted && wasDeleted;
+    } return !!allDeleted;
+  }
+});
+
+
+/***/ },
+
+/***/ 321
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var toSetLike = __webpack_require__(7650);
+var $difference = __webpack_require__(3440);
+
+// `Set.prototype.difference` method
+// https://github.com/tc39/proposal-set-methods
+// TODO: Obsolete version, remove from `core-js@4`
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  difference: function difference(other) {
+    return call($difference, this, toSetLike(other));
+  }
+});
+
+
+/***/ },
+
+/***/ 1927
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var bind = __webpack_require__(6080);
+var aSet = __webpack_require__(7080);
+var iterate = __webpack_require__(8469);
+
+// `Set.prototype.every` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  every: function every(callbackfn /* , thisArg */) {
+    var set = aSet(this);
+    var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    return iterate(set, function (value) {
+      if (!boundFunction(value, value, set)) return false;
+    }, true) !== false;
+  }
+});
+
+
+/***/ },
+
+/***/ 1632
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var bind = __webpack_require__(6080);
+var aSet = __webpack_require__(7080);
+var SetHelpers = __webpack_require__(4402);
+var iterate = __webpack_require__(8469);
+
+var Set = SetHelpers.Set;
+var add = SetHelpers.add;
+
+// `Set.prototype.filter` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    var set = aSet(this);
+    var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    var newSet = new Set();
+    iterate(set, function (value) {
+      if (boundFunction(value, value, set)) add(newSet, value);
+    });
+    return newSet;
+  }
+});
+
+
+/***/ },
+
+/***/ 4377
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var bind = __webpack_require__(6080);
+var aSet = __webpack_require__(7080);
+var iterate = __webpack_require__(8469);
+
+// `Set.prototype.find` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  find: function find(callbackfn /* , thisArg */) {
+    var set = aSet(this);
+    var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    var result = iterate(set, function (value) {
+      if (boundFunction(value, value, set)) return { value: value };
+    }, true);
+    return result && result.value;
+  }
+});
+
+
+/***/ },
+
+/***/ 6771
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var toSetLike = __webpack_require__(7650);
+var $intersection = __webpack_require__(8750);
+
+// `Set.prototype.intersection` method
+// https://github.com/tc39/proposal-set-methods
+// TODO: Obsolete version, remove from `core-js@4`
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  intersection: function intersection(other) {
+    return call($intersection, this, toSetLike(other));
+  }
+});
+
+
+/***/ },
+
+/***/ 2516
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var toSetLike = __webpack_require__(7650);
+var $isDisjointFrom = __webpack_require__(4449);
+
+// `Set.prototype.isDisjointFrom` method
+// https://github.com/tc39/proposal-set-methods
+// TODO: Obsolete version, remove from `core-js@4`
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  isDisjointFrom: function isDisjointFrom(other) {
+    return call($isDisjointFrom, this, toSetLike(other));
+  }
+});
+
+
+/***/ },
+
+/***/ 8931
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var toSetLike = __webpack_require__(7650);
+var $isSubsetOf = __webpack_require__(3838);
+
+// `Set.prototype.isSubsetOf` method
+// https://github.com/tc39/proposal-set-methods
+// TODO: Obsolete version, remove from `core-js@4`
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  isSubsetOf: function isSubsetOf(other) {
+    return call($isSubsetOf, this, toSetLike(other));
+  }
+});
+
+
+/***/ },
+
+/***/ 2514
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var toSetLike = __webpack_require__(7650);
+var $isSupersetOf = __webpack_require__(8527);
+
+// `Set.prototype.isSupersetOf` method
+// https://github.com/tc39/proposal-set-methods
+// TODO: Obsolete version, remove from `core-js@4`
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  isSupersetOf: function isSupersetOf(other) {
+    return call($isSupersetOf, this, toSetLike(other));
+  }
+});
+
+
+/***/ },
+
+/***/ 5694
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var uncurryThis = __webpack_require__(9504);
+var aSet = __webpack_require__(7080);
+var iterate = __webpack_require__(8469);
+var toString = __webpack_require__(655);
+
+var arrayJoin = uncurryThis([].join);
+var push = uncurryThis([].push);
+
+// `Set.prototype.join` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  join: function join(separator) {
+    var set = aSet(this);
+    var sep = separator === undefined ? ',' : toString(separator);
+    var array = [];
+    iterate(set, function (value) {
+      push(array, value);
+    });
+    return arrayJoin(array, sep);
+  }
+});
+
+
+/***/ },
+
+/***/ 2774
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var bind = __webpack_require__(6080);
+var aSet = __webpack_require__(7080);
+var SetHelpers = __webpack_require__(4402);
+var iterate = __webpack_require__(8469);
+
+var Set = SetHelpers.Set;
+var add = SetHelpers.add;
+
+// `Set.prototype.map` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  map: function map(callbackfn /* , thisArg */) {
+    var set = aSet(this);
+    var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    var newSet = new Set();
+    iterate(set, function (value) {
+      add(newSet, boundFunction(value, value, set));
+    });
+    return newSet;
+  }
+});
+
+
+/***/ },
+
+/***/ 9536
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var aCallable = __webpack_require__(9306);
+var aSet = __webpack_require__(7080);
+var iterate = __webpack_require__(8469);
+
+var $TypeError = TypeError;
+
+// `Set.prototype.reduce` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  reduce: function reduce(callbackfn /* , initialValue */) {
+    var set = aSet(this);
+    var noInitial = arguments.length < 2;
+    var accumulator = noInitial ? undefined : arguments[1];
+    aCallable(callbackfn);
+    iterate(set, function (value) {
+      if (noInitial) {
+        noInitial = false;
+        accumulator = value;
+      } else {
+        accumulator = callbackfn(accumulator, value, value, set);
+      }
+    });
+    if (noInitial) throw new $TypeError('Reduce of empty set with no initial value');
+    return accumulator;
+  }
+});
+
+
+/***/ },
+
+/***/ 1926
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var bind = __webpack_require__(6080);
+var aSet = __webpack_require__(7080);
+var iterate = __webpack_require__(8469);
+
+// `Set.prototype.some` method
+// https://github.com/tc39/proposal-collection-methods
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  some: function some(callbackfn /* , thisArg */) {
+    var set = aSet(this);
+    var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    return iterate(set, function (value) {
+      if (boundFunction(value, value, set)) return true;
+    }, true) === true;
+  }
+});
+
+
+/***/ },
+
+/***/ 4483
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var toSetLike = __webpack_require__(7650);
+var $symmetricDifference = __webpack_require__(3650);
+
+// `Set.prototype.symmetricDifference` method
+// https://github.com/tc39/proposal-set-methods
+// TODO: Obsolete version, remove from `core-js@4`
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  symmetricDifference: function symmetricDifference(other) {
+    return call($symmetricDifference, this, toSetLike(other));
+  }
+});
+
+
+/***/ },
+
+/***/ 6215
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var toSetLike = __webpack_require__(7650);
+var $union = __webpack_require__(4204);
+
+// `Set.prototype.union` method
+// https://github.com/tc39/proposal-set-methods
+// TODO: Obsolete version, remove from `core-js@4`
+$({ target: 'Set', proto: true, real: true, forced: true }, {
+  union: function union(other) {
+    return call($union, this, toSetLike(other));
+  }
+});
+
+
+/***/ },
+
 /***/ 7350
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
@@ -3748,6 +5163,81 @@ exportTypedArrayMethod('uniqueBy', function uniqueBy(resolver) {
 }, true);
 
 
+/***/ },
+
+/***/ 4979
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+
+var $ = __webpack_require__(6518);
+var globalThis = __webpack_require__(4576);
+var getBuiltIn = __webpack_require__(7751);
+var createPropertyDescriptor = __webpack_require__(6980);
+var defineProperty = (__webpack_require__(4913).f);
+var hasOwn = __webpack_require__(9297);
+var anInstance = __webpack_require__(679);
+var inheritIfRequired = __webpack_require__(3167);
+var normalizeStringArgument = __webpack_require__(2603);
+var DOMExceptionConstants = __webpack_require__(5002);
+var clearErrorStack = __webpack_require__(6193);
+var DESCRIPTORS = __webpack_require__(3724);
+var IS_PURE = __webpack_require__(6395);
+
+var DOM_EXCEPTION = 'DOMException';
+var Error = getBuiltIn('Error');
+var NativeDOMException = getBuiltIn(DOM_EXCEPTION);
+
+var $DOMException = function DOMException() {
+  anInstance(this, DOMExceptionPrototype);
+  var argumentsLength = arguments.length;
+  var message = normalizeStringArgument(argumentsLength < 1 ? undefined : arguments[0]);
+  var name = normalizeStringArgument(argumentsLength < 2 ? undefined : arguments[1], 'Error');
+  var that = new NativeDOMException(message, name);
+  var error = new Error(message);
+  error.name = DOM_EXCEPTION;
+  defineProperty(that, 'stack', createPropertyDescriptor(1, clearErrorStack(error.stack, 1)));
+  inheritIfRequired(that, this, $DOMException);
+  return that;
+};
+
+var DOMExceptionPrototype = $DOMException.prototype = NativeDOMException.prototype;
+
+var ERROR_HAS_STACK = 'stack' in new Error(DOM_EXCEPTION);
+var DOM_EXCEPTION_HAS_STACK = 'stack' in new NativeDOMException(1, 2);
+
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var descriptor = NativeDOMException && DESCRIPTORS && Object.getOwnPropertyDescriptor(globalThis, DOM_EXCEPTION);
+
+// Bun ~ 0.1.1 DOMException have incorrect descriptor and we can't redefine it
+// https://github.com/Jarred-Sumner/bun/issues/399
+var BUGGY_DESCRIPTOR = !!descriptor && !(descriptor.writable && descriptor.configurable);
+
+var FORCED_CONSTRUCTOR = ERROR_HAS_STACK && !BUGGY_DESCRIPTOR && !DOM_EXCEPTION_HAS_STACK;
+
+// `DOMException` constructor patch for `.stack` where it's required
+// https://webidl.spec.whatwg.org/#es-DOMException-specialness
+$({ global: true, constructor: true, forced: IS_PURE || FORCED_CONSTRUCTOR }, { // TODO: fix export logic
+  DOMException: FORCED_CONSTRUCTOR ? $DOMException : NativeDOMException
+});
+
+var PolyfilledDOMException = getBuiltIn(DOM_EXCEPTION);
+var PolyfilledDOMExceptionPrototype = PolyfilledDOMException.prototype;
+
+if (PolyfilledDOMExceptionPrototype.constructor !== PolyfilledDOMException) {
+  if (!IS_PURE) {
+    defineProperty(PolyfilledDOMExceptionPrototype, 'constructor', createPropertyDescriptor(1, PolyfilledDOMException));
+  }
+
+  for (var key in DOMExceptionConstants) if (hasOwn(DOMExceptionConstants, key)) {
+    var constant = DOMExceptionConstants[key];
+    var constantName = constant.s;
+    if (!hasOwn(PolyfilledDOMException, constantName)) {
+      defineProperty(PolyfilledDOMException, constantName, createPropertyDescriptor(6, constant.c));
+    }
+  }
+}
+
+
 /***/ }
 
 /******/ 	});
@@ -3777,3644 +5267,1049 @@ exportTypedArrayMethod('uniqueBy', function uniqueBy(resolver) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	/* webpack/runtime/base uri */
 /******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			const getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter/value functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			if(Array.isArray(definition)) {
-/******/ 				var i = 0;
-/******/ 				while(i < definition.length) {
-/******/ 					var key = definition[i++];
-/******/ 					var binding = definition[i++];
-/******/ 					if(!__webpack_require__.o(exports, key)) {
-/******/ 						if(binding === 0) {
-/******/ 							Object.defineProperty(exports, key, { enumerable: true, value: definition[i++] });
-/******/ 						} else {
-/******/ 							Object.defineProperty(exports, key, { enumerable: true, get: binding });
-/******/ 						}
-/******/ 					} else if(binding === 0) { i++; }
-/******/ 				}
-/******/ 			} else {
-/******/ 				for(var key in definition) {
-/******/ 					if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 						Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.hasOwn(obj, prop))
+/******/ 		__webpack_require__.b = undefined;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
 let __webpack_exports__ = {};
-/* harmony import */ var core_js_modules_es_array_push_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4114);
-/* harmony import */ var core_js_modules_es_array_push_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_push_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_iterator_constructor_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8111);
-/* harmony import */ var core_js_modules_es_iterator_constructor_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_iterator_constructor_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_iterator_for_each_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7588);
-/* harmony import */ var core_js_modules_es_iterator_for_each_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_iterator_for_each_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_typed_array_with_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9577);
-/* harmony import */ var core_js_modules_es_typed_array_with_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_typed_array_with_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_uint8_array_set_from_base64_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6632);
-/* harmony import */ var core_js_modules_es_uint8_array_set_from_base64_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_uint8_array_set_from_base64_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_es_uint8_array_set_from_hex_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4226);
-/* harmony import */ var core_js_modules_es_uint8_array_set_from_hex_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_uint8_array_set_from_hex_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var core_js_modules_es_uint8_array_to_base64_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9486);
-/* harmony import */ var core_js_modules_es_uint8_array_to_base64_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_uint8_array_to_base64_js__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var core_js_modules_es_uint8_array_to_hex_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(456);
-/* harmony import */ var core_js_modules_es_uint8_array_to_hex_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_uint8_array_to_hex_js__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var core_js_modules_esnext_typed_array_filter_reject_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7350);
-/* harmony import */ var core_js_modules_esnext_typed_array_filter_reject_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_typed_array_filter_reject_js__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var core_js_modules_esnext_typed_array_group_by_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3241);
-/* harmony import */ var core_js_modules_esnext_typed_array_group_by_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_typed_array_group_by_js__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var core_js_modules_esnext_typed_array_to_spliced_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7302);
-/* harmony import */ var core_js_modules_esnext_typed_array_to_spliced_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_typed_array_to_spliced_js__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var core_js_modules_esnext_typed_array_unique_by_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(5871);
-/* harmony import */ var core_js_modules_esnext_typed_array_unique_by_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_typed_array_unique_by_js__WEBPACK_IMPORTED_MODULE_11__);
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.push.js
+var es_array_push = __webpack_require__(4114);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.constructor.js
+var es_iterator_constructor = __webpack_require__(8111);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.filter.js
+var es_iterator_filter = __webpack_require__(2489);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.for-each.js
+var es_iterator_for_each = __webpack_require__(7588);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.set.difference.v2.js
+var es_set_difference_v2 = __webpack_require__(7642);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.set.intersection.v2.js
+var es_set_intersection_v2 = __webpack_require__(8004);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.set.is-disjoint-from.v2.js
+var es_set_is_disjoint_from_v2 = __webpack_require__(3853);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.set.is-subset-of.v2.js
+var es_set_is_subset_of_v2 = __webpack_require__(5876);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.set.is-superset-of.v2.js
+var es_set_is_superset_of_v2 = __webpack_require__(2475);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.set.symmetric-difference.v2.js
+var es_set_symmetric_difference_v2 = __webpack_require__(5024);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.set.union.v2.js
+var es_set_union_v2 = __webpack_require__(1698);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.typed-array.with.js
+var es_typed_array_with = __webpack_require__(9577);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.uint8-array.set-from-base64.js
+var es_uint8_array_set_from_base64 = __webpack_require__(6632);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.uint8-array.set-from-hex.js
+var es_uint8_array_set_from_hex = __webpack_require__(4226);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.uint8-array.to-base64.js
+var es_uint8_array_to_base64 = __webpack_require__(9486);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.uint8-array.to-hex.js
+var es_uint8_array_to_hex = __webpack_require__(456);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.add-all.js
+var esnext_set_add_all = __webpack_require__(5509);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.delete-all.js
+var esnext_set_delete_all = __webpack_require__(5223);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.difference.js
+var esnext_set_difference = __webpack_require__(321);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.every.js
+var esnext_set_every = __webpack_require__(1927);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.filter.js
+var esnext_set_filter = __webpack_require__(1632);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.find.js
+var esnext_set_find = __webpack_require__(4377);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.intersection.js
+var esnext_set_intersection = __webpack_require__(6771);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.is-disjoint-from.js
+var esnext_set_is_disjoint_from = __webpack_require__(2516);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.is-subset-of.js
+var esnext_set_is_subset_of = __webpack_require__(8931);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.is-superset-of.js
+var esnext_set_is_superset_of = __webpack_require__(2514);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.join.js
+var esnext_set_join = __webpack_require__(5694);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.map.js
+var esnext_set_map = __webpack_require__(2774);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.reduce.js
+var esnext_set_reduce = __webpack_require__(9536);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.some.js
+var esnext_set_some = __webpack_require__(1926);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.symmetric-difference.js
+var esnext_set_symmetric_difference = __webpack_require__(4483);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.set.union.js
+var esnext_set_union = __webpack_require__(6215);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.typed-array.filter-reject.js
+var esnext_typed_array_filter_reject = __webpack_require__(7350);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.typed-array.group-by.js
+var esnext_typed_array_group_by = __webpack_require__(3241);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.typed-array.to-spliced.js
+var esnext_typed_array_to_spliced = __webpack_require__(7302);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.typed-array.unique-by.js
+var esnext_typed_array_unique_by = __webpack_require__(5871);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-exception.stack.js
+var web_dom_exception_stack = __webpack_require__(4979);
+;// ./node_modules/hyphenopoly/hyphenopoly.module.js
+/**
+ * @license MIT
+ * Hyphenopoly.module.js 6.1.0 - hyphenation for node
+ * ©2026  Mathias Nater, Güttingen (mathiasnater at gmail dot com)
+ * https://github.com/mnater/Hyphenopoly
+ *
+ * Released under the MIT license
+ * http://mnater.github.io/Hyphenopoly/LICENSE
+ */
 
-
-
-
-
-
-
-
-
-
-
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-prototype-builtins */
-/* eslint no-unused-vars: "warn" */
-/* eslint-disable camelcase */
-/* eslint-disable object-shorthand */
-
-console.log('Hyphenator here.');
-function hyphenatorForCzechLanguageOnSelectedSites() {
-  let nodes = [];
-  const host = document.location.host;
-  console.log('location.host: ' + host);
-  if (host.startsWith('www.ceska-justice.cz') || host.startsWith('www.zdravotnickydenik.cz')) {
-    console.log('using rules for Česká Justice');
-    nodes = document.body.querySelectorAll('article.post');
-  } else if (/^(.+\.)?(ihned|hn)\.(cz|news)$/.test(host)) {
-    console.log('using rules for IHned');
-    nodes = document.body.querySelectorAll('article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article, div.content');
-  } else if (host.endsWith('.aktualne.cz')) {
-    console.log('using rules for Aktualne');
-    nodes = document.body.querySelectorAll('div.clanek, div.titulek-clanku, div.obsah, div.page');
-  } else if (host === 'www.ceskenoviny.cz') {
-    console.log('using rules for České Noviny');
-    nodes = document.body.querySelectorAll('div.box-article');
-  } else if (host.endsWith('.idnes.cz')) {
-    console.log('using rules for IDnes');
-    nodes = document.body.querySelectorAll('div.art-full, div.col, div.hp-b, div[id=main] div[id=content]');
-  } else if (host.endsWith('.reflex.cz')) {
-    console.log('using rules for Reflex');
-    nodes = document.body.querySelectorAll('article');
-  } else if (host.endsWith('.respekt.cz')) {
-    console.log('using rules for Respekt');
-    nodes = document.body.querySelectorAll('div.layout_content-text, div.layout_content-full');
-  } else if (host.endsWith('.ceskatelevize.cz')) {
-    console.log('using rules for Česká televize');
-    nodes = document.body.querySelectorAll('article, div[id=myPage] div[id=mainPanel]');
-  } else if (host.endsWith('.seznam.cz') || host.endsWith('.seznamzpravy.cz')) {
-    console.log('using rules for Seznam');
-    nodes = document.body.querySelectorAll('main');
-  } else if (/^(.+\.)?neviditelnypes.lidovky\.cz$/.test(host)) {
-    console.log('using rules for Neviditelný Pes');
-    nodes = document.body.querySelectorAll('div[id=art-full], div[id=col-c]');
-  } else if (host.endsWith('.lidovky.cz')) {
-    console.log('using rules for Lidovky');
-    nodes = document.body.querySelectorAll('div[id=content]');
-  } else if (host === 'svobodneforum.cz') {
-    console.log('using rules for Svobodné fórum');
-    nodes = document.body.querySelectorAll('main');
-  } else if (host.endsWith('.rozhlas.cz')) {
-    console.log('using rules for Rozhlas');
-    nodes = document.body.querySelectorAll('div.main, div[id=main], div[id=aside]');
-  } else if (host === 'mediahub.cz') {
-    console.log('using rules for Mediahub');
-    nodes = document.body.querySelectorAll('section[id=section-content], section[id=section-sidebar], div.container');
-  } else if (host === 'cs.wikipedia.org') {
-    console.log('using rules for Česká Wikipedia');
-    nodes = document.body.querySelectorAll('div[id=bodyContent]');
-  } else if (host.endsWith('.novinky.cz')) {
-    console.log('using rules for Novinky');
-    nodes = document.body.querySelectorAll('div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]');
-  } else if (host.endsWith('.info.cz')) {
-    console.log('using rules for Info');
-    nodes = document.body.querySelectorAll('article');
-  } else if (host.endsWith('.tyden.cz')) {
-    console.log('using rules for Týden');
-    nodes = document.body.querySelectorAll('div.article, div.articles');
-  } else if (/^(www\.)?echo24\.cz$/.test(host)) {
-    console.log('using rules for Echo24');
-    nodes = document.body.querySelectorAll('div[id=content], article, section');
-  } else if (host.endsWith('parlamentnilisty.cz')) {
-    console.log('using rules for Parlamentni Listy');
-    nodes = document.body.querySelectorAll('div[id=main]');
-  } else if (/^(.+\.)?forum24\.cz$/.test(host)) {
-    console.log('using rules for Forum24');
-    nodes = document.body.querySelectorAll('article');
-  } else if (/^(.+\.)?euro\.cz$/.test(host)) {
-    console.log('using rules for Euro.cz');
-    nodes = document.body.querySelectorAll('div[id=article]');
-  } else if (/^(.+\.)?e15\.cz$/.test(host)) {
-    console.log('using rules for E15');
-    nodes = document.body.querySelectorAll('article');
-  } else if (/^(.+\.)?neovlivni\.cz$/.test(host)) {
-    console.log('using rules for Neovlivni');
-    nodes = document.body.querySelectorAll('section');
-  } else if (/^www\.sysifos\.cz$/.test(host)) {
-    console.log('using rules for sisyfos.cz');
-    document.getElementsByTagName('html')[0].setAttribute('lang', 'cs');
-    nodes = document.body.querySelectorAll('div[id=blok005a]');
-  } else if (/^(.+\.)?denikreferendum\.cz$/.test(host)) {
-    console.log('using rules for Deník Referendum');
-    nodes = document.body.querySelectorAll('div[id=content]');
-  } else if (/^(.+\.)?denik\.cz$/.test(host)) {
-    console.log('using rules for Deník');
-    nodes = document.body.querySelectorAll('div.content');
-  } else if (/^(.+\.)?irozhlas\.cz$/.test(host)) {
-    console.log('using rules for iRozhlas');
-    nodes = document.body.querySelectorAll('article');
-  } else if (/^(.+\.)?epravo\.cz$/.test(host)) {
-    console.log('using rules for epravo.cz');
-    nodes = document.body.querySelectorAll('.article, .article-detail');
-  } else if (/^www\.ahaonline\.cz$/.test(host)) {
-    console.log('using rules for ahaonline.cz');
-    nodes = document.body.querySelectorAll('article');
-  } else if (/^www\.christnet\.eu$/.test(host)) {
-    console.log('using rules for christnet.eu');
-    nodes = document.body.querySelectorAll('.article-text');
-  } else if (/^tn\.nova\.cz$/.test(host)) {
-    console.log('using rules for tn.nova.cz');
-    nodes = document.body.querySelectorAll('div.article');
-  } else if (/^www\.autoforum\.cz$/.test(host)) {
-    console.log('using rules for autoforum.cz');
-    nodes = document.body.querySelectorAll('div.article-detail, div#content-right');
-  } else {
-    console.log('No rule matched.');
-  }
-  console.log('Got ' + nodes.length + ' nodes.');
-  const hyphenateRe = /\bhyphenate\b/;
-  for (let i = 0; i !== nodes.length; ++i) {
-    const node = nodes[i];
-    if (!hyphenateRe.test(node.className)) {
-      node.className += ' hyphenate';
-    }
-  }
-
-  /** @license Hyphenator 5.2.0(devel) - client side hyphenation for webbrowsers
-  *  Copyright (C) 2015  Mathias Nater, Zürich (mathiasnater at gmail dot com)
-  *  https://github.com/mnater/Hyphenator
-  *
-  *  Released under the MIT license
-  *  http://mnater.github.io/Hyphenator/LICENSE.txt
-  */
-
-  /*
-  * Comments are jsdoc3 formatted. See http://usejsdoc.org
-  * Use mergeAndPack.html to get rid of the comments and to reduce the file size of this script!
-  */
-
-  /* The following comment is for JSLint: */
-  /* jslint browser: true, multivar: true */
-
-  /**
-  * @desc Provides all functionality to do hyphenation, except the patterns that are loaded externally
-  * @global
-  * @namespace Hyphenator
-  * @author Mathias Nater, <mathias@mnn.ch>
-  * @version 5.2.0(devel)
-  * @example
-  * &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-  * &lt;script type = "text/javascript"&gt;
-  *   Hyphenator.run();
-  * &lt;/script&gt;
-  */
-  const Hyphenator = function (window) {
-    'use strict';
-
-    /**
-    * @member Hyphenator~contextWindow
-    * @access private
-    * @desc
-    * contextWindow stores the window for the actual document to be hyphenated.
-    * If there are frames this will change.
-    * So use contextWindow instead of window!
-    */
-    let contextWindow = window;
-
-    /**
-    * @member {Object.<string, Hyphenator~supportedLangs~supportedLanguage>} Hyphenator~supportedLangs
-    * @desc
-    * A generated key-value object that stores supported languages and meta data.
-    * The key is the {@link http://tools.ietf.org/rfc/bcp/bcp47.txt bcp47} code of the language and the value
-    * is an object of type {@link Hyphenator~supportedLangs~supportedLanguage}
-    * @namespace Hyphenator~supportedLangs
-    * @access private
-    * //Check if language lang is supported:
-    * if (supportedLangs.hasOwnProperty(lang))
-    */
-    const supportedLangs = function () {
-      /**
-       * @typedef {Object} Hyphenator~supportedLangs~supportedLanguage
-       * @property {string} file - The name of the pattern file
-       * @property {number} script - The script type of the language (e.g. 'latin' for english), this type is abbreviated by an id
-       * @property {string} prompt - The sentence prompted to the user, if Hyphenator.js doesn't find a language hint
-       */
-
-      /**
-      * @lends Hyphenator~supportedLangs
-      */
-      const r = {};
-      /**
-       * @method Hyphenator~supportedLangs~o
-       * @desc
-       * Sets a value of Hyphenator~supportedLangs
-       * @access protected
-       * @param {string} code The {@link http://tools.ietf.org/rfc/bcp/bcp47.txt bcp47} code of the language
-       * @param {string} file The name of the pattern file
-       * @param {Number} script A shortcut for a specific script: latin:0, cyrillic: 1, arabic: 2, armenian:3, bengali: 4, devangari: 5, greek: 6
-       * gujarati: 7, kannada: 8, lao: 9, malayalam: 10, oriya: 11, persian: 12, punjabi: 13, tamil: 14, telugu: 15
-       * @param {string} prompt The sentence prompted to the user, if Hyphenator.js doesn't find a language hint
-       */
-      const o = function (code, file, script, prompt) {
-        r[code] = {
-          file: file,
-          script: script,
-          prompt: prompt
-        };
-      };
-      o('be', 'be.js', 1, 'Мова гэтага сайта не можа быць вызначаны аўтаматычна. Калі ласка пакажыце мову:');
-      o('ca', 'ca.js', 0, '');
-      o('cs', 'cs.js', 0, 'Jazyk této internetové stránky nebyl automaticky rozpoznán. Určete prosím její jazyk:');
-      o('da', 'da.js', 0, 'Denne websides sprog kunne ikke bestemmes. Angiv venligst sprog:');
-      o('bn', 'bn.js', 4, '');
-      o('de', 'de.js', 0, 'Die Sprache dieser Webseite konnte nicht automatisch bestimmt werden. Bitte Sprache angeben:');
-      o('el', 'el-monoton.js', 6, '');
-      o('el-monoton', 'el-monoton.js', 6, '');
-      o('el-polyton', 'el-polyton.js', 6, '');
-      o('en', 'en-us.js', 0, 'The language of this website could not be determined automatically. Please indicate the main language:');
-      o('en-gb', 'en-gb.js', 0, 'The language of this website could not be determined automatically. Please indicate the main language:');
-      o('en-us', 'en-us.js', 0, 'The language of this website could not be determined automatically. Please indicate the main language:');
-      o('eo', 'eo.js', 0, 'La lingvo de ĉi tiu retpaĝo ne rekoneblas aŭtomate. Bonvolu indiki ĝian ĉeflingvon:');
-      o('es', 'es.js', 0, 'El idioma del sitio no pudo determinarse autom%E1ticamente. Por favor, indique el idioma principal:');
-      o('et', 'et.js', 0, 'Veebilehe keele tuvastamine ebaõnnestus, palun valige kasutatud keel:');
-      o('fi', 'fi.js', 0, 'Sivun kielt%E4 ei tunnistettu automaattisesti. M%E4%E4rit%E4 sivun p%E4%E4kieli:');
-      o('fr', 'fr.js', 0, 'La langue de ce site n%u2019a pas pu %EAtre d%E9termin%E9e automatiquement. Veuillez indiquer une langue, s.v.p.%A0:');
-      o('ga', 'ga.js', 0, 'Níorbh fhéidir teanga an tsuímh a fháil go huathoibríoch. Cuir isteach príomhtheanga an tsuímh:');
-      o('grc', 'grc.js', 6, '');
-      o('gu', 'gu.js', 7, '');
-      o('hi', 'hi.js', 5, '');
-      o('hu', 'hu.js', 0, 'A weboldal nyelvét nem sikerült automatikusan megállapítani. Kérem adja meg a nyelvet:');
-      o('hy', 'hy.js', 3, 'Չհաջողվեց հայտնաբերել այս կայքի լեզուն։ Խնդրում ենք նշեք հիմնական լեզուն՝');
-      o('it', 'it.js', 0, 'Lingua del sito sconosciuta. Indicare una lingua, per favore:');
-      o('kn', 'kn.js', 8, 'ಜಾಲ ತಾಣದ ಭಾಷೆಯನ್ನು ನಿರ್ಧರಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ಮುಖ್ಯ ಭಾಷೆಯನ್ನು ಸೂಚಿಸಿ:');
-      o('la', 'la.js', 0, '');
-      o('lt', 'lt.js', 0, 'Nepavyko automatiškai nustatyti šios svetainės kalbos. Prašome įvesti kalbą:');
-      o('lv', 'lv.js', 0, 'Šīs lapas valodu nevarēja noteikt automātiski. Lūdzu norādiet pamata valodu:');
-      o('ml', 'ml.js', 10, 'ഈ വെ%u0D2C%u0D4D%u200Cസൈറ്റിന്റെ ഭാഷ കണ്ടുപിടിയ്ക്കാ%u0D28%u0D4D%u200D കഴിഞ്ഞില്ല. ഭാഷ ഏതാണെന്നു തിരഞ്ഞെടുക്കുക:');
-      o('nb', 'nb-no.js', 0, 'Nettstedets språk kunne ikke finnes automatisk. Vennligst oppgi språk:');
-      o('no', 'nb-no.js', 0, 'Nettstedets språk kunne ikke finnes automatisk. Vennligst oppgi språk:');
-      o('nb-no', 'nb-no.js', 0, 'Nettstedets språk kunne ikke finnes automatisk. Vennligst oppgi språk:');
-      o('nl', 'nl.js', 0, 'De taal van deze website kan niet automatisch worden bepaald. Geef de hoofdtaal op:');
-      o('or', 'or.js', 11, '');
-      o('pa', 'pa.js', 13, '');
-      o('pl', 'pl.js', 0, 'Języka tej strony nie można ustalić automatycznie. Proszę wskazać język:');
-      o('pt', 'pt.js', 0, 'A língua deste site não pôde ser determinada automaticamente. Por favor indique a língua principal:');
-      o('ru', 'ru.js', 1, 'Язык этого сайта не может быть определен автоматически. Пожалуйста укажите язык:');
-      o('sk', 'sk.js', 0, '');
-      o('sl', 'sl.js', 0, 'Jezika te spletne strani ni bilo mogoče samodejno določiti. Prosim navedite jezik:');
-      o('sr-cyrl', 'sr-cyrl.js', 1, 'Језик овог сајта није детектован аутоматски. Молим вас наведите језик:');
-      o('sr-latn', 'sr-latn.js', 0, 'Jezika te spletne strani ni bilo mogoče samodejno določiti. Prosim navedite jezik:');
-      o('sv', 'sv.js', 0, 'Spr%E5ket p%E5 den h%E4r webbplatsen kunde inte avg%F6ras automatiskt. V%E4nligen ange:');
-      o('ta', 'ta.js', 14, '');
-      o('te', 'te.js', 15, '');
-      o('tr', 'tr.js', 0, 'Bu web sitesinin dili otomatik olarak tespit edilememiştir. Lütfen dökümanın dilini seçiniz%A0:');
-      o('uk', 'uk.js', 1, 'Мова цього веб-сайту не може бути визначена автоматично. Будь ласка, вкажіть головну мову:');
-      o('ro', 'ro.js', 0, 'Limba acestui sit nu a putut fi determinată automat. Alege limba principală:');
-      return r;
-    }();
-
-    /**
-    * @member {Object} Hyphenator~locality
-    * @desc
-    * An object storing isBookmarklet, basePath and isLocal
-    * @access private
-    * @see {@link Hyphenator~loadPatterns}
-    */
-    const locality = function getLocality() {
-      const r = {
-        isBookmarklet: false,
-        basePath: '//mnater.github.io/Hyphenator/',
-        isLocal: false
-      };
-      const scripts = contextWindow.document.getElementsByTagName('script');
-      let i = 0;
-      let src;
-      const len = scripts.length;
-      let p;
-      let currScript;
-      while (i < len) {
-        currScript = scripts[i];
-        if (currScript.hasAttribute('src')) {
-          src = currScript.src;
-          p = src.indexOf('Hyphenator.js');
-          if (p !== -1) {
-            r.basePath = src.substring(0, p);
-            if (src.indexOf('Hyphenator.js?bm=true') !== -1) {
-              r.isBookmarklet = true;
-            }
-            if (window.location.href.indexOf(r.basePath) !== -1) {
-              r.isLocal = true;
-            }
-            break;
-          }
-        }
-        i += 1;
-      }
-      return r;
-    }();
-
-    /**
-    * @member {string} Hyphenator~basePath
-    * @desc
-    * A string storing the basepath from where Hyphenator.js was loaded.
-    * This is used to load the pattern files.
-    * The basepath is determined dynamically in getLocality by searching all script-tags for Hyphenator.js
-    * If the path cannot be determined {@link http://mnater.github.io/Hyphenator/} is used as fallback.
-    * @access private
-    * @see {@link Hyphenator~loadPatterns}
-    */
-    const basePath = locality.basePath;
-
-    /**
-    * @member {boolean} Hyphenator~isLocal
-    * @access private
-    * @desc
-    * This is computed by getLocality.
-    * isLocal is true, if Hyphenator is loaded from the same domain, as the webpage, but false, if
-    * it's loaded from an external source (i.e. directly from github)
-    */
-    const isLocal = locality.isLocal;
-
-    /**
-    * @member {boolean} Hyphenator~documentLoaded
-    * @access private
-    * @desc
-    * documentLoaded is true, when the DOM has been loaded. This is set by {@link Hyphenator~runWhenLoaded}
-    */
-    let documentLoaded = false;
-
-    /**
-    * @member {boolean} Hyphenator~persistentConfig
-    * @access private
-    * @desc
-    * if persistentConfig is set to true (defaults to false), config options and the state of the
-    * toggleBox are stored in DOM-storage (according to the storage-setting). So they haven't to be
-    * set for each page.
-    * @default false
-    * @see {@link Hyphenator.config}
-    */
-    let persistentConfig = false;
-
-    /**
-    * @member {boolean} Hyphenator~doFrames
-    * @access private
-    * @desc
-    * switch to control if frames/iframes should be hyphenated, too.
-    * defaults to false (frames are a bag of hurt!)
-    * @default false
-    * @see {@link Hyphenator.config}
-    */
-    let doFrames = false;
-
-    /**
-    * @member {Object.<string,boolean>} Hyphenator~dontHyphenate
-    * @desc
-    * A key-value object containing all html-tags whose content should not be hyphenated
-    * @access private
-    */
-    const dontHyphenate = {
-      video: true,
-      audio: true,
-      script: true,
-      code: true,
-      pre: true,
-      img: true,
-      br: true,
-      samp: true,
-      kbd: true,
-      var: true,
-      abbr: true,
-      acronym: true,
-      sub: true,
-      sup: true,
-      button: true,
-      option: true,
-      label: true,
-      textarea: true,
-      input: true,
-      math: true,
-      svg: true,
-      style: true
+const decode = (() => {
+    const utf16ledecoder = new TextDecoder("utf-16le");
+    return (ui16) => {
+        return utf16ledecoder.decode(ui16);
     };
+})();
+
+/**
+ * Create Object without standard Object-prototype
+ * @returns {object} empty object
+ */
+const empty = () => {
+    return Object.create(null);
+};
+
+const H = empty();
+
+H.supportedLanguages = [
+    "af",
+    "as",
+    "be",
+    "bg",
+    "bn",
+    "ca",
+    "cs",
+    "cy",
+    "da",
+    "de",
+    "de-x-syllable",
+    "el-monoton",
+    "el-polyton",
+    "en-gb",
+    "en-us",
+    "eo",
+    "es",
+    "et",
+    "eu",
+    "fi",
+    "fi-x-school",
+    "fo",
+    "fr",
+    "fur",
+    "ga",
+    "gl",
+    "gu",
+    "hi",
+    "hr",
+    "hsb",
+    "hu",
+    "hy",
+    "ia",
+    "id",
+    "is",
+    "it",
+    "ka",
+    "kmr",
+    "kn",
+    "la",
+    "lt",
+    "lv",
+    "mk",
+    "ml",
+    "mn-cyrl",
+    "mr",
+    "nb",
+    "nl",
+    "nn",
+    "no",
+    "oc",
+    "or",
+    "pa",
+    "pi",
+    "pl",
+    "pms",
+    "pt",
+    "rm",
+    "ro",
+    "ru",
+    "sh-cyrl",
+    "sh-latn",
+    "sk",
+    "sl",
+    "sq",
+    "sr-cyrl",
+    "sv",
+    "ta",
+    "te",
+    "th",
+    "tk",
+    "tr",
+    "uk",
+    "zh-latn-pinyin"
+];
+
+const languages = new Map();
+
+/**
+ * Create a Map with a default Map behind the scenes. This mimics
+ * kind of a prototype chain of an object, but without the object-
+ * injection security risk.
+ * @param {Map} defaultsMap - A Map with default values
+ * @returns {Proxy} - A Proxy for the Map (dot-notation or get/set)
+ */
+function createMapWithDefaults(defaultsMap) {
+    const userMap = new Map();
 
     /**
-    * @member {boolean} Hyphenator~enableCache
-    * @desc
-    * A variable to set if caching is enabled or not
-    * @default true
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let enableCache = true;
-
-    /**
-    * @member {string} Hyphenator~storageType
-    * @desc
-    * A variable to define what html5-DOM-Storage-Method is used ('none', 'local' or 'session')
-    * @default 'local'
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let storageType = 'local';
-
-    /**
-    * @member {Object|undefined} Hyphenator~storage
-    * @desc
-    * An alias to the storage defined in storageType. This is set by {@link Hyphenator~createStorage}.
-    * Set by {@link Hyphenator.run}
-    * @default null
-    * @access private
-    * @see {@link Hyphenator~createStorage}
-    */
-    let storage;
-
-    /**
-    * @member {boolean} Hyphenator~enableReducedPatternSet
-    * @desc
-    * A variable to set if storing the used patterns is set
-    * @default false
-    * @access private
-    * @see {@link Hyphenator.config}
-    * @see {@link Hyphenator.getRedPatternSet}
-    */
-    let enableReducedPatternSet = false;
-
-    /**
-    * @member {boolean} Hyphenator~enableRemoteLoading
-    * @desc
-    * A variable to set if pattern files should be loaded remotely or not
-    * @default true
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let enableRemoteLoading = true;
-
-    /**
-    * @member {boolean} Hyphenator~displayToggleBox
-    * @desc
-    * A variable to set if the togglebox should be displayed or not
-    * @default false
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let displayToggleBox = false;
-
-    /**
-    * @method Hyphenator~onError
-    * @desc
-    * A function that can be called upon an error.
-    * @see {@link Hyphenator.config}
-    * @access private
-    */
-    let onError = function (e) {
-      // window.alert("Hyphenator.js says:\n\nAn Error occurred at " + e.fileName + ":" + e.lineNumber + ":\n" + e.message);
-      console.error('Hyphenator.js says:\n\nAn Error occurred at ' + e.fileName + ':' + e.lineNumber + ':\n' + e.message);
-    };
-
-    /**
-    * @method Hyphenator~onWarning
-    * @desc
-    * A function that can be called upon a warning.
-    * @see {@link Hyphenator.config}
-    * @access private
-    */
-    let onWarning = function (e) {
-      window.console.log(e.message);
-    };
-
-    /**
-    * @method Hyphenator~createElem
-    * @desc
-    * A function alias to document.createElementNS or document.createElement
-    * @access private
-    */
-    function createElem(tagname, context) {
-      context = context || contextWindow;
-      let el;
-      if (window.document.createElementNS) {
-        el = context.document.createElementNS('http://www.w3.org/1999/xhtml', tagname);
-      } else if (window.document.createElement) {
-        el = context.document.createElement(tagname);
-      }
-      return el;
-    }
-    /**
-    * @method Hyphenator~forEachKey
-    * @desc
-    * Calls the function f on every property of o
-    * @access private
-    */
-    function forEachKey(o, f) {
-      let k;
-      if (Object.hasOwnProperty('keys')) {
-        Object.keys(o).forEach(f);
-      } else {
-        for (k in o) {
-          if (o.hasOwnProperty(k)) {
-            f(k);
-          }
-        }
-      }
+     * The get-trap: get the value from userMap or else from defaults
+     * @param {string} key - The key to retrieve the value for
+     * @returns {*} Value
+     */
+    function get(key) {
+        return (userMap.has(key))
+            ? userMap.get(key)
+            : defaultsMap.get(key);
     }
 
     /**
-    * @member {boolean} Hyphenator~css3
-    * @desc
-    * A variable to set if css3 hyphenation should be used
-    * @default false
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let css3 = false;
-
-    /**
-    * @method Hyphenator~css3_gethsupport
-    * @desc
-    * This function returns a {@link Hyphenator~css3_hsupport} object for the current UA
-    * @type function
-    * @access private
-    * @see Hyphenator~css3_h9n
-    */
-    // eslint-disable-next-line camelcase
-    function css3_gethsupport() {
-      let support = false;
-      const supportedBrowserLangs = {};
-      let property = '';
-      let checkLangSupport;
-      const createLangSupportChecker = function (prefix) {
-        const testStrings = [
-        // latin: 0
-        'aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz',
-        // cyrillic: 1
-        'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
-        // arabic: 2
-        'أبتثجحخدذرزسشصضطظعغفقكلمنهوي',
-        // armenian: 3
-        'աբգդեզէըթժիլխծկհձղճմյնշոչպջռսվտրցւփքօֆ',
-        // bengali: 4
-        'ঁংঃঅআইঈউঊঋঌএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহ়ঽািীুূৃৄেৈোৌ্ৎৗড়ঢ়য়ৠৡৢৣ',
-        // devangari: 5
-        'ँंःअआइईउऊऋऌएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलळवशषसहऽािीुूृॄेैोौ्॒॑ॠॡॢॣ',
-        // greek: 6
-        'αβγδεζηθικλμνξοπρσςτυφχψω',
-        // gujarati: 7
-        'બહઅઆઇઈઉઊઋૠએઐઓઔાિીુૂૃૄૢૣેૈોૌકખગઘઙચછજઝઞટઠડઢણતથદધનપફસભમયરલળવશષ',
-        // kannada: 8
-        'ಂಃಅಆಇಈಉಊಋಌಎಏಐಒಓಔಕಖಗಘಙಚಛಜಝಞಟಠಡಢಣತಥದಧನಪಫಬಭಮಯರಱಲಳವಶಷಸಹಽಾಿೀುೂೃೄೆೇೈೊೋೌ್ೕೖೞೠೡ',
-        // lao: 9
-        'ກຂຄງຈຊຍດຕຖທນບປຜຝພຟມຢຣລວສຫອຮະັາິີຶືຸູົຼເແໂໃໄ່້໊໋ໜໝ',
-        // malayalam: 10
-        'ംഃഅആഇഈഉഊഋഌഎഏഐഒഓഔകഖഗഘങചഛജഝഞടഠഡഢണതഥദധനപഫബഭമയരറലളഴവശഷസഹാിീുൂൃെേൈൊോൌ്ൗൠൡൺൻർൽൾൿ',
-        // oriya: 11
-        'ଁଂଃଅଆଇଈଉଊଋଌଏଐଓଔକଖଗଘଙଚଛଜଝଞଟଠଡଢଣତଥଦଧନପଫବଭମଯରଲଳଵଶଷସହାିୀୁୂୃେୈୋୌ୍ୗୠୡ',
-        // persian: 12
-        'أبتثجحخدذرزسشصضطظعغفقكلمنهوي',
-        // punjabi: 13
-        'ਁਂਃਅਆਇਈਉਊਏਐਓਔਕਖਗਘਙਚਛਜਝਞਟਠਡਢਣਤਥਦਧਨਪਫਬਭਮਯਰਲਲ਼ਵਸ਼ਸਹਾਿੀੁੂੇੈੋੌ੍ੰੱ',
-        // tamil: 14
-        'ஃஅஆஇஈஉஊஎஏஐஒஓஔகஙசஜஞடணதநனபமயரறலளழவஷஸஹாிீுூெேைொோௌ்ௗ',
-        // telugu: 15
-        'ఁంఃఅఆఇఈఉఊఋఌఎఏఐఒఓఔకఖగఘఙచఛజఝఞటఠడఢణతథదధనపఫబభమయరఱలళవశషసహాిీుూృౄెేైొోౌ్ౕౖౠౡ'];
-        const f = function (lang) {
-          let shadow;
-          let computedHeight;
-          let bdy;
-          let r;
-
-          // check if lang has already been tested
-          if (supportedBrowserLangs.hasOwnProperty(lang)) {
-            r = supportedBrowserLangs[lang];
-          } else if (supportedLangs.hasOwnProperty(lang)) {
-            // create and append shadow-test-element
-            bdy = window.document.getElementsByTagName('body')[0];
-            shadow = createElem('div', window);
-            shadow.id = 'Hyphenator_LanguageChecker';
-            shadow.style.width = '5em';
-            shadow.style.padding = '0';
-            shadow.style.border = 'none';
-            shadow.style[prefix] = 'auto';
-            shadow.style.hyphens = 'auto';
-            shadow.style.fontSize = '12px';
-            shadow.style.lineHeight = '12px';
-            shadow.style.wordWrap = 'normal';
-            shadow.style.visibility = 'hidden';
-            shadow.lang = lang;
-            shadow.style['-webkit-locale'] = "'" + lang + "'";
-            shadow.innerHTML = testStrings[supportedLangs[lang].script];
-            bdy.appendChild(shadow);
-            // measure its height
-            computedHeight = shadow.offsetHeight;
-            // remove shadow element
-            bdy.removeChild(shadow);
-            r = !!(computedHeight > 12);
-            supportedBrowserLangs[lang] = r;
-          } else {
-            r = false;
-          }
-          return r;
-        };
-        return f;
-      };
-      let s;
-      if (window.getComputedStyle) {
-        s = window.getComputedStyle(window.document.getElementsByTagName('body')[0], null);
-        if (s == null) {
-          // Nothing to do here.
-        } else if (s.hyphens !== undefined) {
-          support = true;
-          property = 'hyphens';
-          checkLangSupport = createLangSupportChecker('hyphens');
-        } else if (s['-webkit-hyphens'] !== undefined) {
-          support = true;
-          property = '-webkit-hyphens';
-          checkLangSupport = createLangSupportChecker('-webkit-hyphens');
-        } else if (s.MozHyphens !== undefined) {
-          support = true;
-          property = '-moz-hyphens';
-          checkLangSupport = createLangSupportChecker('MozHyphens');
-        } else if (s['-ms-hyphens'] !== undefined) {
-          support = true;
-          property = '-ms-hyphens';
-          checkLangSupport = createLangSupportChecker('-ms-hyphens');
-        }
-      } // else we just return the initial values because ancient browsers don't support css3 anyway
-
-      return {
-        support: support,
-        property: property,
-        supportedBrowserLangs: supportedBrowserLangs,
-        checkLangSupport: checkLangSupport
-      };
+     * The set-trap: set the value to userMap and don't touch defaults
+     * @param {string} key - The key for the value
+     * @param {*} value - The value
+     * @returns {*} - The value set
+     */
+    function set(key, value) {
+        userMap.set(key, value);
     }
-
-    /**
-    * @typedef {Object} Hyphenator~css3_hsupport
-    * @property {boolean} support - if css3-hyphenation is supported
-    * @property {string} property - the css property name to access hyphen-settings (e.g. -webkit-hyphens)
-    * @property {Object.<string, boolean>} supportedBrowserLangs - an object caching tested languages
-    * @property {function} checkLangSupport - a method that checks if the browser supports a requested language
-    */
-
-    /**
-    * @member {Hyphenator~css3_h9n} Hyphenator~css3_h9n
-    * @desc
-    * A generated object containing information for CSS3-hyphenation support
-    * This is set by {@link Hyphenator~css3_gethsupport}
-    * @default undefined
-    * @access private
-    * @see {@link Hyphenator~css3_gethsupport}
-    * @example
-    * //Check if browser supports a language
-    * css3_h9n.checkLangSupport(&lt;lang&gt;)
-    */
-    // eslint-disable-next-line camelcase
-    let css3_h9n;
-
-    /**
-    * @member {string} Hyphenator~hyphenateClass
-    * @desc
-    * A string containing the css-class-name for the hyphenate class
-    * @default 'hyphenate'
-    * @access private
-    * @example
-    * &lt;p class = "hyphenate"&gt;Text&lt;/p&gt;
-    * @see {@link Hyphenator.config}
-    */
-    let hyphenateClass = 'hyphenate';
-
-    /**
-    * @member {string} Hyphenator~urlHyphenateClass
-    * @desc
-    * A string containing the css-class-name for the urlhyphenate class
-    * @default 'urlhyphenate'
-    * @access private
-    * @example
-    * &lt;p class = "urlhyphenate"&gt;Text&lt;/p&gt;
-    * @see {@link Hyphenator.config}
-    */
-    let urlHyphenateClass = 'urlhyphenate';
-
-    /**
-    * @member {string} Hyphenator~classPrefix
-    * @desc
-    * A string containing a unique className prefix to be used
-    * whenever Hyphenator sets a CSS-class
-    * @access private
-    */
-    const classPrefix = 'Hyphenator' + Math.round(Math.random() * 1000);
-
-    /**
-    * @member {string} Hyphenator~hideClass
-    * @desc
-    * The name of the class that hides elements
-    * @access private
-    */
-    const hideClass = classPrefix + 'hide';
-
-    /**
-    * @member {RegExp} Hyphenator~hideClassRegExp
-    * @desc
-    * RegExp to remove hideClass from a list of classes
-    * @access private
-    */
-    const hideClassRegExp = new RegExp('\\s?\\b' + hideClass + '\\b', 'g');
-
-    /**
-    * @member {string} Hyphenator~hideClass
-    * @desc
-    * The name of the class that unhides elements
-    * @access private
-    */
-    const unhideClass = classPrefix + 'unhide';
-
-    /**
-    * @member {RegExp} Hyphenator~hideClassRegExp
-    * @desc
-    * RegExp to remove unhideClass from a list of classes
-    * @access private
-    */
-    const unhideClassRegExp = new RegExp('\\s?\\b' + unhideClass + '\\b', 'g');
-
-    /**
-    * @member {string} Hyphenator~css3hyphenateClass
-    * @desc
-    * The name of the class that hyphenates elements with css3
-    * @access private
-    */
-    const css3hyphenateClass = classPrefix + 'css3hyphenate';
-
-    /**
-    * @member {CSSEdit} Hyphenator~css3hyphenateClass
-    * @desc
-    * The var where CSSEdit class is stored
-    * @access private
-    */
-    let css3hyphenateClassHandle;
-
-    /**
-    * @member {string} Hyphenator~dontHyphenateClass
-    * @desc
-    * A string containing the css-class-name for elements that should not be hyphenated
-    * @default 'donthyphenate'
-    * @access private
-    * @example
-    * &lt;p class = "donthyphenate"&gt;Text&lt;/p&gt;
-    * @see {@link Hyphenator.config}
-    */
-    let dontHyphenateClass = 'donthyphenate';
-
-    /**
-    * @member {number} Hyphenator~min
-    * @desc
-    * A number wich indicates the minimal length of words to hyphenate.
-    * @default 6
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let min = 6;
-
-    /**
-    * @member {number} Hyphenator~leftmin
-    * @desc
-    * A number wich indicates the minimal length of characters before the first hyphenation.
-    * This value is only used if it is greater than the value in the pattern file.
-    * @default given by pattern file
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let leftmin = 0;
-
-    /**
-    * @member {number} Hyphenator~rightmin
-    * @desc
-    * A number wich indicates the minimal length of characters after the last hyphenation.
-    * This value is only used if it is greater than the value in the pattern file.
-    * @default given by pattern file
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let rightmin = 0;
-
-    /**
-    * @member {number} Hyphenator~rightmin
-    * @desc
-    * Control how compound words are hyphenated.
-    * "auto": factory-made -> fac-tory-made ('old' behaviour of Hyphenator.js)
-    * "all": factory-made -> fac-tory-[ZWSP]made ('made'.length < minWordLength)
-    * "hyphen": factory-made -> factory-[ZWSP]made (Zero Width Space inserted after '-' to provide line breaking opportunity)
-    * @default "auto"
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let compound = 'auto';
-
-    /**
-    * @member {number} Hyphenator~orphanControl
-    * @desc
-    * Control how the last words of a line are handled:
-    * level 1 (default): last word is hyphenated
-    * level 2: last word is not hyphenated
-    * level 3: last word is not hyphenated and last space is non breaking
-    * @default 1
-    * @access private
-    */
-    let orphanControl = 1;
-
-    /**
-    * @member {boolean} Hyphenator~isBookmarklet
-    * @desc
-    * This is computed by getLocality.
-    * True if Hyphanetor runs as bookmarklet.
-    * @access private
-    */
-    const isBookmarklet = locality.isBookmarklet;
-
-    /**
-    * @member {string|null} Hyphenator~mainLanguage
-    * @desc
-    * The general language of the document. In contrast to {@link Hyphenator~defaultLanguage},
-    * mainLanguage is defined by the client (i.e. by the html or by a prompt).
-    * @access private
-    * @see {@link Hyphenator~autoSetMainLanguage}
-    */
-    let mainLanguage = null;
-
-    /**
-    * @member {string|null} Hyphenator~defaultLanguage
-    * @desc
-    * The language defined by the developper. This language setting is defined by a config option.
-    * It is overwritten by any html-lang-attribute and only taken in count, when no such attribute can
-    * be found (i.e. just before the prompt).
-    * @access private
-    * @see {@link Hyphenator.config}
-    * @see {@link Hyphenator~autoSetMainLanguage}
-    */
-    let defaultLanguage = '';
-
-    /**
-    * @member {ElementCollection} Hyphenator~elements
-    * @desc
-    * A class representing all elements (of type Element) that have to be hyphenated. This var is filled by
-    * {@link Hyphenator~gatherDocumentInfos}
-    * @access private
-    */
-    const elements = function () {
-      /**
-       * @constructor Hyphenator~elements~ElementCollection~Element
-       * @desc represents a DOM Element with additional information
-       * @access private
-       */
-      const makeElement = function (element) {
-        return {
-          /**
-               * @member {Object} Hyphenator~elements~ElementCollection~Element~element
-               * @desc A DOM Element
-               * @access protected
-               */
-          element: element,
-          /**
-           * @member {boolean} Hyphenator~elements~ElementCollection~Element~hyphenated
-           * @desc Marks if the element has been hyphenated
-           * @access protected
-           */
-          hyphenated: false,
-          /**
-           * @member {boolean} Hyphenator~elements~ElementCollection~Element~treated
-           * @desc Marks if information of the element has been collected but not hyphenated (e.g. dohyphenation is off)
-           * @access protected
-           */
-          treated: false
-        };
-      };
-      /**
-       * @constructor Hyphenator~elements~ElementCollection
-       * @desc A collection of Elements to be hyphenated
-       * @access protected
-       */
-      const makeElementCollection = function () {
-        /**
-                 * @member {number} Hyphenator~elements~ElementCollection~counters
-                 * @desc Array of [number of collected elements, number of hyphenated elements]
-                 * @access protected
-                 */
-        const counters = [0, 0];
-        /**
-             * @member {Object.<string, Array.<Element>>} Hyphenator~elements~ElementCollection~list
-             * @desc The collection of elements, where the key is a language code and the value is an array of elements
-             * @access protected
-             */
-        const list = {};
-        /**
-             * @method Hyphenator~elements~ElementCollection.prototype~add
-             * @augments Hyphenator~elements~ElementCollection
-             * @access protected
-             * @desc adds a DOM element to the collection
-             * @param {Object} el - The DOM element
-             * @param {string} lang - The language of the element
-             */
-        const add = function (el, lang) {
-          const elo = makeElement(el);
-          if (!list.hasOwnProperty(lang)) {
-            list[lang] = [];
-          }
-          list[lang].push(elo);
-          counters[0] += 1;
-          return elo;
-        };
-        /**
-             * @callback Hyphenator~elements~ElementCollection.prototype~each~callback fn - The callback that is executed for each element
-             * @param {string} [k] The key (i.e. language) of the collection
-             * @param {Hyphenator~elements~ElementCollection~Element} element
-             */
-
-        /**
-             * @method Hyphenator~elements~ElementCollection.prototype~each
-             * @augments Hyphenator~elements~ElementCollection
-             * @access protected
-             * @desc takes each element of the collection as an argument of fn
-             * @param {Hyphenator~elements~ElementCollection.prototype~each~callback} fn - A function that takes an element as an argument
-             */
-        const each = function (fn) {
-          forEachKey(list, function (k) {
-            if (fn.length === 2) {
-              fn(k, list[k]);
-            } else {
-              fn(list[k]);
+    return new Proxy(defaultsMap, {
+        // eslint-disable-next-line jsdoc/require-jsdoc
+        "get": (_target, prop) => {
+            if (prop === "set") {
+                return set;
             }
-          });
-        };
-        return {
-          counters: counters,
-          list: list,
-          add: add,
-          each: each
-        };
-      };
-      return makeElementCollection();
-    }();
-
-    /**
-    * @member {Object.<sting, string>} Hyphenator~exceptions
-    * @desc
-    * An object containing exceptions as comma separated strings for each language.
-    * When the language-objects are loaded, their exceptions are processed, copied here and then deleted.
-    * Exceptions can also be set by the user.
-    * @see {@link Hyphenator~prepareLanguagesObj}
-    * @access private
-    */
-    const exceptions = {};
-
-    /**
-    * @member {Object.<string, boolean>} Hyphenator~docLanguages
-    * @desc
-    * An object holding all languages used in the document. This is filled by
-    * {@link Hyphenator~gatherDocumentInfos}
-    * @access private
-    */
-    const docLanguages = {};
-
-    /**
-    * @member {string} Hyphenator~url
-    * @desc
-    * A string containing a insane RegularExpression to match URL's
-    * @access private
-    */
-    const url = '(?:\\w*:\/\/)?(?:(?:\\w*:)?(?:\\w*)@)?(?:(?:(?:[\\d]{1,3}\\.){3}(?:[\\d]{1,3}))|(?:(?:www\\.|[a-zA-Z]\\.)?[a-zA-Z0-9\\-\\.]+\\.(?:[a-z]{2,4})))(?::\\d*)?(?:\/[\\w#!:\\.?\\+=&%@!\\-]*)*';
-    //      protocoll     usr     pwd                    ip               or                          host                 tld        port               path
-
-    /**
-    * @member {string} Hyphenator~mail
-    * @desc
-    * A string containing a RegularExpression to match mail-adresses
-    * @access private
-    */
-    const mail = '[\\w-\\.]+@[\\w\\.]+';
-
-    /**
-    * @member {string} Hyphenator~zeroWidthSpace
-    * @desc
-    * A string that holds a char.
-    * Depending on the browser, this is the zero with space or an empty string.
-    * zeroWidthSpace is used to break URLs
-    * @access private
-    */
-    const zeroWidthSpace = function () {
-      let zws;
-      const ua = window.navigator.userAgent.toLowerCase();
-      zws = String.fromCharCode(8203); // Unicode zero width space
-      if (ua.indexOf('msie 6') !== -1) {
-        zws = ''; // IE6 doesn't support zws
-      }
-      if (ua.indexOf('opera') !== -1 && ua.indexOf('version/10.00') !== -1) {
-        zws = ''; // opera 10 on XP doesn't support zws
-      }
-      return zws;
-    }();
-
-    /**
-    * @method Hyphenator~onBeforeWordHyphenation
-    * @desc
-    * This method is called just before a word is hyphenated.
-    * It is called with two parameters: the word and its language.
-    * The method must return a string (aka the word).
-    * @see {@link Hyphenator.config}
-    * @access private
-    * @param {string} word
-    * @param {string} lang
-    * @return {string} The word that goes into hyphenation
-    */
-    let onBeforeWordHyphenation = function (word) {
-      return word;
-    };
-
-    /**
-    * @method Hyphenator~onAfterWordHyphenation
-    * @desc
-    * This method is called for each word after it is hyphenated.
-    * Takes the word as a first parameter and its language as a second parameter.
-    * Returns a string that will replace the word that has been hyphenated.
-    * @see {@link Hyphenator.config}
-    * @access private
-    * @param {string} word
-    * @param {string} lang
-    * @return {string} The word that goes into hyphenation
-    */
-    let onAfterWordHyphenation = function (word) {
-      return word;
-    };
-
-    /**
-    * @method Hyphenator~onHyphenationDone
-    * @desc
-    * A method to be called, when the last element has been hyphenated.
-    * If there are frames the method is called for each frame.
-    * Therefore the location.href of the contextWindow calling this method is given as a parameter
-    * @see {@link Hyphenator.config}
-    * @param {string} context
-    * @access private
-    */
-    let onHyphenationDone = function (context) {
-      return context;
-    };
-
-    /**
-    * @name Hyphenator~selectorFunction
-    * @desc
-    * A function set by the user that has to return a HTMLNodeList or array of Elements to be hyphenated.
-    * By default this is set to false so we can check if a selectorFunction is set…
-    * @see {@link Hyphenator.config}
-    * @see {@link Hyphenator~mySelectorFunction}
-    * @default false
-    * @type {function|boolean}
-    * @access private
-    */
-    let selectorFunction = false;
-
-    /**
-    * @name Hyphenator~flattenNodeList
-    * @desc
-    * Takes a nodeList and returns an array with all elements that are not contained by another element in the nodeList
-    * By using this function the elements returned by selectElements can be 'flattened'.
-    * @see {@link Hyphenator~selectElements}
-    * @param {nodeList} nl
-    * @return {Array} Array of 'parent'-elements
-    * @access private
-    */
-    function flattenNodeList(nl) {
-      const parentElements = [];
-      let i = 1;
-      let j = 0;
-      let isParent = true;
-      parentElements.push(nl[0]); // add the first item, since this is always an parent
-
-      while (i < nl.length) {
-        // cycle through nodeList
-        while (j < parentElements.length) {
-          // cycle through parentElements
-          if (parentElements[j].contains(nl[i])) {
-            isParent = false;
-            break;
-          }
-          j += 1;
-        }
-        if (isParent) {
-          parentElements.push(nl[i]);
-        }
-        isParent = true;
-        i += 1;
-      }
-      return parentElements;
-    }
-
-    /**
-    * @method Hyphenator~mySelectorFunction
-    * @desc
-    * A function that returns a HTMLNodeList or array of Elements to be hyphenated.
-    * By default it uses the classname ('hyphenate') to select the elements.
-    * @access private
-    */
-    function mySelectorFunction(hyphenateClass) {
-      let tmp;
-      let el = [];
-      let i = 0;
-      if (window.document.getElementsByClassName) {
-        el = contextWindow.document.getElementsByClassName(hyphenateClass);
-      } else if (window.document.querySelectorAll) {
-        el = contextWindow.document.querySelectorAll('.' + hyphenateClass);
-      } else {
-        tmp = contextWindow.document.getElementsByTagName('*');
-        while (i < tmp.length) {
-          if (tmp[i].className.indexOf(hyphenateClass) !== -1 && tmp[i].className.indexOf(dontHyphenateClass) === -1) {
-            el.push(tmp[i]);
-          }
-          i += 1;
-        }
-      }
-      return el;
-    }
-
-    /**
-    * @method Hyphenator~selectElements
-    * @desc
-    * A function that uses either selectorFunction set by the user
-    * or the default mySelectorFunction.
-    * @access private
-    */
-    function selectElements() {
-      let elems;
-      if (selectorFunction) {
-        elems = selectorFunction();
-      } else {
-        elems = mySelectorFunction(hyphenateClass);
-      }
-      if (elems.length !== 0) {
-        elems = flattenNodeList(elems);
-      }
-      return elems;
-    }
-
-    /**
-    * @member {string} Hyphenator~intermediateState
-    * @desc
-    * The visibility of elements while they are hyphenated:
-    * 'visible': unhyphenated text is visible and then redrawn when hyphenated.
-    * 'hidden': unhyphenated text is made invisible as soon as possible and made visible after hyphenation.
-    * @default 'hidden'
-    * @see {@link Hyphenator.config}
-    * @access private
-    */
-    let intermediateState = 'hidden';
-
-    /**
-    * @member {string} Hyphenator~unhide
-    * @desc
-    * How hidden elements unhide: either simultaneous (default: 'wait') or progressively.
-    * 'wait' makes Hyphenator.js to wait until all elements are hyphenated (one redraw)
-    * With 'progressive' Hyphenator.js unhides elements as soon as they are hyphenated.
-    * @see {@link Hyphenator.config}
-    * @access private
-    */
-    let unhide = 'wait';
-
-    /**
-    * @member {Array.<Hyphenator~CSSEdit>} Hyphenator~CSSEditors
-    * @desc A container array that holds CSSEdit classes
-    * For each window object one CSSEdit class is inserted
-    * @access private
-    */
-    const CSSEditors = [];
-
-    /**
-    * @constructor Hyphenator~CSSEdit
-    * @desc
-    * This class handles access and editing of StyleSheets.
-    * Thanks to this styles (e.g. hiding and unhiding elements upon hyphenation)
-    * can be changed in one place instead for each element.
-    * @access private
-    */
-    function makeCSSEdit(w) {
-      w = w || window;
-      const doc = w.document;
-      /**
-       * @member {Object} Hyphenator~CSSEdit~sheet
-       * @desc
-       * A StyleSheet, where Hyphenator can write to.
-       * If no StyleSheet can be found, lets create one.
-       * @access private
-       */
-      const sheet = function () {
-        let i = 0;
-        const l = doc.styleSheets.length;
-        let s;
-        let element;
-        let r = false;
-        while (i < l) {
-          s = doc.styleSheets[i];
-          try {
-            if (s.cssRules) {
-              r = s;
-              break;
+            if (prop === "get") {
+                return get;
             }
-          } catch (ignore) {
-            // Empty.
-          }
-          i += 1;
+            return get(prop);
         }
-        if (r === false) {
-          element = doc.createElement('style');
-          element.type = 'text/css';
-          doc.getElementsByTagName('head')[0].appendChild(element);
-          r = doc.styleSheets[doc.styleSheets.length - 1];
-        }
-        return r;
-      }();
-
-      /**
-       * @typedef {Object} Hyphenator~CSSEdit~changes
-       * @property {Object} sheet - The StyleSheet where the change was made
-       * @property {number} index - The index of the changed rule
-       */
-
-      /**
-       * @member {Array.<changes>} Hyphenator~CSSEdit~changes
-       * @desc
-       * Sets a CSS rule for a specified selector
-       * @access private
-       */
-      const changes = [];
-
-      /**
-       * @typedef Hyphenator~CSSEdit~rule
-       * @property {number} index - The index of the rule
-       * @property {Object} rule - The style rule
-       */
-      /**
-       * @method Hyphenator~CSSEdit~findRule
-       * @desc
-       * Searches the StyleSheets for a given selector and returns an object containing the rule.
-       * If nothing can be found, false is returned.
-       * @param {string} sel
-       * @return {Hyphenator~CSSEdit~rule|false}
-       * @access private
-       */
-      const findRule = function (sel) {
-        let s;
-        let rule;
-        const sheets = w.document.styleSheets;
-        let rules;
-        let i = 0;
-        let j = 0;
-        let r = false;
-        while (i < sheets.length) {
-          s = sheets[i];
-          try {
-            // FF has issues here with external CSS (s.o.p)
-            if (s.cssRules) {
-              rules = s.cssRules;
-            } else if (s.rules) {
-              // IE < 9
-              rules = s.rules;
-            }
-          } catch (ignore) {
-            // Empty.
-          }
-          if (!!rules && !!rules.length) {
-            while (j < rules.length) {
-              rule = rules[j];
-              if (rule.selectorText === sel) {
-                r = {
-                  index: j,
-                  rule: rule
-                };
-              }
-              j += 1;
-            }
-          }
-          i += 1;
-        }
-        return r;
-      };
-      /**
-       * @method Hyphenator~CSSEdit~addRule
-       * @desc
-       * Adds a rule to the {@link Hyphenator~CSSEdit~sheet}
-       * @param {string} sel - The selector to be added
-       * @param {string} rulesStr - The rules for the specified selector
-       * @return {number} index of the new rule
-       * @access private
-       */
-      const addRule = function (sel, rulesStr) {
-        let i, r;
-        if (sheet.insertRule) {
-          if (sheet.cssRules) {
-            i = sheet.cssRules.length;
-          } else {
-            i = 0;
-          }
-          r = sheet.insertRule(sel + '{' + rulesStr + '}', i);
-        } else if (sheet.addRule) {
-          // IE < 9
-          if (sheet.rules) {
-            i = sheet.rules.length;
-          } else {
-            i = 0;
-          }
-          sheet.addRule(sel, rulesStr, i);
-          r = i;
-        }
-        return r;
-      };
-      /**
-       * @method Hyphenator~CSSEdit~removeRule
-       * @desc
-       * Removes a rule with the specified index from the specified sheet
-       * @param {Object} sheet - The style sheet
-       * @param {number} index - the index of the rule
-       * @access private
-       */
-      const removeRule = function (sheet, index) {
-        if (sheet.deleteRule) {
-          sheet.deleteRule(index);
-        } else {
-          // IE < 9
-          sheet.removeRule(index);
-        }
-      };
-      return {
-        /**
-         * @method Hyphenator~CSSEdit.setRule
-         * @desc
-         * Sets a CSS rule for a specified selector
-         * @access public
-         * @param {string} sel - Selector
-         * @param {string} rulesString - CSS-Rules
-         */
-        setRule: function (sel, rulesString) {
-          let i, cssText;
-          const existingRule = findRule(sel);
-          if (existingRule) {
-            if (existingRule.rule.cssText) {
-              cssText = existingRule.rule.cssText;
-            } else {
-              // IE < 9
-              cssText = existingRule.rule.style.cssText.toLowerCase();
-            }
-            if (cssText !== sel + ' { ' + rulesString + ' }') {
-              // cssText of the found rule is not uniquely selector + rulesString,
-              if (cssText.indexOf(rulesString) !== -1) {
-                // maybe there are other rules or IE < 9
-                // clear existing def
-                existingRule.rule.style.visibility = '';
-              }
-              // add rule and register for later removal
-              i = addRule(sel, rulesString);
-              changes.push({
-                sheet: sheet,
-                index: i
-              });
-            }
-          } else {
-            i = addRule(sel, rulesString);
-            changes.push({
-              sheet: sheet,
-              index: i
-            });
-          }
-        },
-        /**
-        * @method Hyphenator~CSSEdit.clearChanges
-        * @desc
-        * Removes all changes Hyphenator has made from the StyleSheets
-        * @access public
-        */
-        clearChanges: function () {
-          let change = changes.pop();
-          while (change) {
-            removeRule(change.sheet, change.index);
-            change = changes.pop();
-          }
-        }
-      };
-    }
-
-    /**
-    * @member {string} Hyphenator~hyphen
-    * @desc
-    * A string containing the character for in-word-hyphenation
-    * @default the soft hyphen
-    * @access private
-    * @see {@link Hyphenator.config}
-    */
-    let hyphen = String.fromCharCode(173);
-
-    /**
-    * @member {string} Hyphenator~urlhyphen
-    * @desc
-    * A string containing the character for url/mail-hyphenation
-    * @default the zero width space
-    * @access private
-    * @see {@link Hyphenator.config}
-    * @see {@link Hyphenator~zeroWidthSpace}
-    */
-    let urlhyphen = zeroWidthSpace;
-
-    /**
-    * @method Hyphenator~hyphenateURL
-    * @desc
-    * Puts {@link Hyphenator~urlhyphen} (default: zero width space) after each no-alphanumeric char that my be in a URL.
-    * @param {string} url to hyphenate
-    * @returns string the hyphenated URL
-    * @access public
-    */
-    function hyphenateURL(url) {
-      const tmp = url.replace(/([!#&,./:;?@_\-]+)/gi, '$&' + urlhyphen);
-      const parts = tmp.split(urlhyphen);
-      let i = 0;
-      while (i < parts.length) {
-        if (parts[i].length > 2 * min) {
-          parts[i] = parts[i].replace(/(\w{3})(\w)/gi, '$1' + urlhyphen + '$2');
-        }
-        i += 1;
-      }
-      if (parts[parts.length - 1] === '') {
-        parts.pop();
-      }
-      return parts.join(urlhyphen);
-    }
-
-    /**
-    * @member {boolean} Hyphenator~safeCopy
-    * @desc
-    * Defines wether work-around for copy issues is active or not
-    * @default true
-    * @access private
-    * @see {@link Hyphenator.config}
-    * @see {@link Hyphenator~registerOnCopy}
-    */
-    let safeCopy = true;
-
-    /**
-    * @method Hyphenator~zeroTimeOut
-    * @desc
-    * defer execution of a function on the call stack
-    * Analog to window.setTimeout(fn, 0) but without a clamped delay if postMessage is supported
-    * @access private
-    * @see {@link http://dbaron.org/log/20100309-faster-timeouts}
-    */
-    const zeroTimeOut = function () {
-      if (window.postMessage && window.addEventListener) {
-        return function () {
-          const timeouts = [];
-          const msg = 'Hyphenator_zeroTimeOut_message';
-          const setZeroTimeOut = function (fn) {
-            timeouts.push(fn);
-            window.postMessage(msg, '*');
-          };
-          const handleMessage = function (event) {
-            if (event.source === window && event.data === msg) {
-              event.stopPropagation();
-              if (timeouts.length > 0) {
-                // var efn = timeouts.shift();
-                // efn();
-                timeouts.shift()();
-              }
-            }
-          };
-          window.addEventListener('message', handleMessage, true);
-          return setZeroTimeOut;
-        }();
-      }
-      return function (fn) {
-        window.setTimeout(fn, 0);
-      };
-    }();
-
-    /**
-    * @member {Object} Hyphenator~hyphRunFor
-    * @desc
-    * stores location.href for documents where run() has been executed
-    * to warn when Hyphenator.run() executed multiple times
-    * @access private
-    * @see {@link Hyphenator~runWhenLoaded}
-    */
-    const hyphRunFor = {};
-
-    /**
-    * @method Hyphenator~runWhenLoaded
-    * @desc
-    * A crossbrowser solution for the DOMContentLoaded-Event based on
-    * <a href = "http://jquery.com/">jQuery</a>
-    * I added some functionality: e.g. support for frames and iframes…
-    * @param {Object} w the window-object
-    * @param {function()} f the function to call when the document is ready
-    * @access private
-    */
-    function runWhenLoaded(w, f) {
-      let toplevel;
-      const add = window.document.addEventListener ? 'addEventListener' : 'attachEvent';
-      const rem = window.document.addEventListener ? 'removeEventListener' : 'detachEvent';
-      const pre = window.document.addEventListener ? '' : 'on';
-      function init(context) {
-        if (hyphRunFor[context.location.href]) {
-          onWarning(new Error('Warning: multiple execution of Hyphenator.run() – This may slow down the script!'));
-        }
-        contextWindow = context || window;
-        f();
-        hyphRunFor[contextWindow.location.href] = true;
-      }
-      function doScrollCheck() {
-        try {
-          // If IE is used, use the trick by Diego Perini
-          // http://javascript.nwbox.com/IEContentLoaded/
-          w.document.documentElement.doScroll('left');
-        } catch (ignore) {
-          window.setTimeout(doScrollCheck, 1);
-          return;
-        }
-        // maybe modern IE fired DOMContentLoaded
-        if (!hyphRunFor[w.location.href]) {
-          documentLoaded = true;
-          init(w);
-        }
-      }
-      function doOnEvent(e) {
-        let i = 0;
-        let haveAccess;
-        if (!!e && e.type === 'readystatechange' && w.document.readyState !== 'interactive' && w.document.readyState !== 'complete') {
-          return;
-        }
-
-        // DOM is ready/interactive, but frames may not be loaded yet!
-        // cleanup events
-        w.document[rem](pre + 'DOMContentLoaded', doOnEvent, false);
-        w.document[rem](pre + 'readystatechange', doOnEvent, false);
-
-        // check frames
-        const fl = w.frames.length;
-        if (fl === 0 || !doFrames) {
-          // there are no frames!
-          // cleanup events
-          w[rem](pre + 'load', doOnEvent, false);
-          documentLoaded = true;
-          init(w);
-        } else if (doFrames && fl > 0) {
-          // we have frames, so wait for onload and then initiate runWhenLoaded recursevly for each frame:
-          if (!!e && e.type === 'load') {
-            // cleanup events
-            w[rem](pre + 'load', doOnEvent, false);
-            while (i < fl) {
-              // try catch isn't enough for webkit
-              try {
-                // opera throws only on document.toString-access
-                haveAccess = w.frames[i].document.toString();
-              } catch (ignore) {
-                haveAccess = undefined;
-              }
-              if (haveAccess) {
-                runWhenLoaded(w.frames[i], f);
-              }
-              i += 1;
-            }
-            init(w);
-          }
-        }
-      }
-      if (documentLoaded || w.document.readyState === 'complete') {
-        // Hyphenator has run already (documentLoaded is true) or
-        // it has been loaded after onLoad
-        documentLoaded = true;
-        doOnEvent({
-          type: 'load'
-        });
-      } else {
-        // register events
-        w.document[add](pre + 'DOMContentLoaded', doOnEvent, false);
-        w.document[add](pre + 'readystatechange', doOnEvent, false);
-        w[add](pre + 'load', doOnEvent, false);
-        toplevel = false;
-        try {
-          toplevel = !window.frameElement;
-        } catch (ignore) {
-          // Empty.
-        }
-        if (toplevel && w.document.documentElement.doScroll) {
-          doScrollCheck(); // calls init()
-        }
-      }
-    }
-
-    /**
-    * @method Hyphenator~getLang
-    * @desc
-    * Gets the language of an element. If no language is set, it may use the {@link Hyphenator~mainLanguage}.
-    * @param {Object} el The first parameter is an DOM-Element-Object
-    * @param {boolean} fallback The second parameter is a boolean to tell if the function should return the {@link Hyphenator~mainLanguage}
-    * if there's no language found for the element.
-    * @return {string} The language of the element
-    * @access private
-    */
-    function getLang(el, fallback) {
-      try {
-        return el.getAttribute('lang') ? el.getAttribute('lang').toLowerCase() : el.getAttribute('xml:lang') ? el.getAttribute('xml:lang').toLowerCase() : el.tagName.toLowerCase() !== 'html' ? getLang(el.parentNode, fallback) : fallback ? mainLanguage : null;
-      } catch (ignore) {
-        // Empty.
-      }
-    }
-
-    /**
-    * @method Hyphenator~autoSetMainLanguage
-    * @desc
-    * Retrieves the language of the document from the DOM and sets the lang attribute of the html-tag.
-    * The function looks in the following places:
-    * <ul>
-    * <li>lang-attribute in the html-tag</li>
-    * <li>&lt;meta http-equiv = "content-language" content = "xy" /&gt;</li>
-    * <li>&lt;meta name = "DC.Language" content = "xy" /&gt;</li>
-    * <li>&lt;meta name = "language" content = "xy" /&gt;</li>
-    * </li>
-    * If nothing can be found a prompt using {@link Hyphenator~languageHint} and a prompt-string is displayed.
-    * If the retrieved language is in the object {@link Hyphenator~supportedLangs} it is copied to {@link Hyphenator~mainLanguage}
-    * @access private
-    */
-    function autoSetMainLanguage(w) {
-      w = w || contextWindow;
-      const el = w.document.getElementsByTagName('html')[0];
-      const m = w.document.getElementsByTagName('meta');
-      let i = 0;
-      const getLangFromUser = function () {
-        let ml;
-        let text;
-        const dH = 300;
-        const dW = 450;
-        const dX = Math.floor((w.outerWidth - 450) / 2) + window.screenX;
-        const dY = Math.floor((w.outerHeight - 300) / 2) + window.screenY;
-        let ul;
-        let languageHint;
-        if (!!window.showModalDialog && w.location.href.indexOf(basePath) !== -1) {
-          ml = window.showModalDialog(basePath + 'modalLangDialog.html', supportedLangs, "dialogWidth: 450px; dialogHeight: 300px; dialogtop: " + dY + '; dialogleft: ' + dX + '; center: on; resizable: off; scroll: off;');
-        } else {
-          languageHint = function () {
-            let r = '';
-            forEachKey(supportedLangs, function (k) {
-              r += k + ', ';
-            });
-            r = r.substring(0, r.length - 2);
-            return r;
-          }();
-          ul = window.navigator.language || window.navigator.userLanguage;
-          ul = ul.substring(0, 2);
-          if (!!supportedLangs[ul] && supportedLangs[ul].prompt !== '') {
-            text = supportedLangs[ul].prompt;
-          } else {
-            text = supportedLangs.en.prompt;
-          }
-          text += ' (ISO 639-1)\n\n' + languageHint;
-          ml = window.prompt(window.unescape(text), ul).toLowerCase();
-        }
-        return ml;
-      };
-      mainLanguage = getLang(el, false);
-      if (!mainLanguage) {
-        while (i < m.length) {
-          // <meta http-equiv = "content-language" content="xy">
-          if (!!m[i].getAttribute('http-equiv') && m[i].getAttribute('http-equiv').toLowerCase() === 'content-language') {
-            mainLanguage = m[i].getAttribute('content').toLowerCase();
-          }
-          // <meta name = "DC.Language" content="xy">
-          if (!!m[i].getAttribute('name') && m[i].getAttribute('name').toLowerCase() === 'dc.language') {
-            mainLanguage = m[i].getAttribute('content').toLowerCase();
-          }
-          // <meta name = "language" content = "xy">
-          if (!!m[i].getAttribute('name') && m[i].getAttribute('name').toLowerCase() === 'language') {
-            mainLanguage = m[i].getAttribute('content').toLowerCase();
-          }
-          i += 1;
-        }
-      }
-      // get lang for frame from enclosing document
-      if (!mainLanguage && doFrames && !!contextWindow.frameElement) {
-        autoSetMainLanguage(window.parent);
-      }
-      // fallback to defaultLang if set
-      if (!mainLanguage && defaultLanguage !== '') {
-        mainLanguage = defaultLanguage;
-      }
-      // ask user for lang
-      if (!mainLanguage) {
-        mainLanguage = getLangFromUser();
-      }
-      el.lang = mainLanguage;
-    }
-
-    /**
-    * @method Hyphenator~gatherDocumentInfos
-    * @desc
-    * This method runs through the DOM and executes the process()-function on:
-    * - every node returned by the {@link Hyphenator~selectorFunction}.
-    * @access private
-    */
-    function gatherDocumentInfos() {
-      let elToProcess;
-      let urlhyphenEls;
-      let tmp;
-      let i = 0;
-      /**
-      * @method Hyphenator~gatherDocumentInfos
-      * @desc
-      * This method copies the element to the elements-variable, sets its visibility
-      * to intermediateState, retrieves its language and recursivly descends the DOM-tree until
-      * the child-Nodes aren't of type 1
-      * @param {Object} el a DOM element
-      * @param {string} plang the language of the parent element
-      * @param {boolean} isChild true, if the parent of el has been processed
-      */
-      function process(el, pLang, isChild) {
-        let n;
-        let j = 0;
-        let hyphenate = true;
-        let eLang;
-        const useCSS3 = function () {
-          css3hyphenateClassHandle = makeCSSEdit(contextWindow);
-          css3hyphenateClassHandle.setRule('.' + css3hyphenateClass, css3_h9n.property + ': auto;');
-          css3hyphenateClassHandle.setRule('.' + dontHyphenateClass, css3_h9n.property + ': manual;');
-          if (eLang !== pLang && css3_h9n.property.indexOf('webkit') !== -1) {
-            css3hyphenateClassHandle.setRule('.' + css3hyphenateClass, '-webkit-locale : ' + eLang + ';');
-          }
-          el.className = el.className + ' ' + css3hyphenateClass;
-        };
-        const useHyphenator = function () {
-          // quick fix for test111.html
-          // better: weight elements
-          if (isBookmarklet && eLang !== mainLanguage) {
-            return;
-          }
-          if (supportedLangs.hasOwnProperty(eLang)) {
-            docLanguages[eLang] = true;
-          } else {
-            if (supportedLangs.hasOwnProperty(eLang.split('-')[0])) {
-              // try subtag
-              eLang = eLang.split('-')[0];
-              docLanguages[eLang] = true;
-            } else if (!isBookmarklet) {
-              hyphenate = false;
-              onError(new Error('Language "' + eLang + '" is not yet supported.'));
-            }
-          }
-          if (hyphenate) {
-            if (intermediateState === 'hidden') {
-              el.className = el.className + ' ' + hideClass;
-            }
-            elements.add(el, eLang);
-          }
-        };
-        isChild = isChild || false;
-        if (el.lang && typeof el.lang == 'string') {
-          eLang = el.lang.toLowerCase(); // copy attribute-lang to internal eLang
-        } else if (!!pLang && pLang !== '') {
-          eLang = pLang.toLowerCase();
-        } else {
-          eLang = getLang(el, true);
-        }
-        if (!isChild) {
-          if (css3 && css3_h9n.support && !!css3_h9n.checkLangSupport(eLang)) {
-            useCSS3();
-          } else {
-            useHyphenator();
-          }
-        } else {
-          if (eLang !== pLang) {
-            if (css3 && css3_h9n.support && !!css3_h9n.checkLangSupport(eLang)) {
-              useCSS3();
-            } else {
-              useHyphenator();
-            }
-          } else {
-            if (!css3 || !css3_h9n.support || !css3_h9n.checkLangSupport(eLang)) {
-              useHyphenator();
-            } // else do nothing
-          }
-        }
-        n = el.childNodes[j];
-        while (n) {
-          if (n.nodeType === 1 && !dontHyphenate[n.nodeName.toLowerCase()] && n.className.indexOf(dontHyphenateClass) === -1 && n.className.indexOf(urlHyphenateClass) === -1 && !elToProcess[n]) {
-            process(n, eLang, true);
-          }
-          j += 1;
-          n = el.childNodes[j];
-        }
-      }
-      function processUrlStyled(el) {
-        let n;
-        let j = 0;
-        n = el.childNodes[j];
-        while (n) {
-          if (n.nodeType === 1 && !dontHyphenate[n.nodeName.toLowerCase()] && n.className.indexOf(dontHyphenateClass) === -1 && n.className.indexOf(hyphenateClass) === -1 && !urlhyphenEls[n]) {
-            processUrlStyled(n);
-          } else if (n.nodeType === 3) {
-            n.data = hyphenateURL(n.data);
-          }
-          j += 1;
-          n = el.childNodes[j];
-        }
-      }
-      if (css3) {
-        // eslint-disable-next-line camelcase
-        css3_h9n = css3_gethsupport();
-      }
-      if (isBookmarklet) {
-        elToProcess = contextWindow.document.getElementsByTagName('body')[0];
-        process(elToProcess, mainLanguage, false);
-      } else {
-        if (!css3 && intermediateState === 'hidden') {
-          CSSEditors.push(makeCSSEdit(contextWindow));
-          CSSEditors[CSSEditors.length - 1].setRule('.' + hyphenateClass, 'visibility: hidden;');
-          CSSEditors[CSSEditors.length - 1].setRule('.' + hideClass, 'visibility: hidden;');
-          CSSEditors[CSSEditors.length - 1].setRule('.' + unhideClass, 'visibility: visible;');
-        }
-        elToProcess = selectElements();
-        tmp = elToProcess[i];
-        while (tmp) {
-          process(tmp, '', false);
-          i += 1;
-          tmp = elToProcess[i];
-        }
-        urlhyphenEls = mySelectorFunction(urlHyphenateClass);
-        i = 0;
-        tmp = urlhyphenEls[i];
-        while (tmp) {
-          processUrlStyled(tmp);
-          i += 1;
-          tmp = urlhyphenEls[i];
-        }
-      }
-      if (elements.counters[0] === 0) {
-        // nothing to hyphenate or all hyphenated by css3
-        i = 0;
-        while (i < CSSEditors.length) {
-          CSSEditors[i].clearChanges();
-          i += 1;
-        }
-        onHyphenationDone(contextWindow.location.href);
-      }
-    }
-
-    /**
-    * @method Hyphenator~createCharMap
-    * @desc
-    * reads the charCodes from lo.characters and stores them in a bidi map:
-    * charMap.int2code =  [0: 97, //a
-    *                      1: 98, //b
-    *                      2: 99] //c etc.
-    * charMap.code2int = {"97": 0, //a
-    *                     "98": 1, //b
-    *                     "99": 2} //c etc.
-    * @access private
-    * @param {Object} language object
-    */
-    function makeCharMap() {
-      const int2code = [];
-      const code2int = {};
-      const add = function (newValue) {
-        if (!code2int[newValue]) {
-          int2code.push(newValue);
-          code2int[newValue] = int2code.length - 1;
-        }
-      };
-      return {
-        int2code: int2code,
-        code2int: code2int,
-        add: add
-      };
-    }
-
-    /**
-    * @constructor Hyphenator~ValueStore
-    * @desc Storage-Object for storing hyphenation points (aka values)
-    * @access private
-    */
-    function makeValueStore(len) {
-      const indexes = (() => {
-        const arr = new Uint32Array(3);
-        arr[0] = 1; // start position of a value set
-        arr[1] = 1; // next index
-        arr[2] = 1; // last index with a significant value
-        return arr;
-      })();
-      const keys = new Uint8Array(len);
-      const add = function (p) {
-        keys[indexes[1]] = p;
-        indexes[2] = indexes[1];
-        indexes[1] += 1;
-      };
-      const add0 = function () {
-        // just do a step, since array is initialized with zeroes
-        indexes[1] += 1;
-      };
-      const finalize = function () {
-        const start = indexes[0];
-        keys[indexes[2] + 1] = 255; // mark end of pattern
-        indexes[0] = indexes[2] + 2;
-        indexes[1] = indexes[0];
-        return start;
-      };
-      return {
-        keys: keys,
-        add: add,
-        add0: add0,
-        finalize: finalize
-      };
-    }
-
-    /**
-    * @method Hyphenator~convertPatternsToArray
-    * @desc
-    * converts the patterns to a (typed, if possible) array as described by Liang:
-    *
-    * 1. Create the CharMap: an alphabet of used character codes mapped to an int (e.g. a: "97" -> 0)
-    *    This map is bidirectional:
-    *    charMap.code2int is an object with charCodes as keys and corresponging ints as values
-    *    charMao.int2code is an array of charCodes at int indizes
-    *    the length of charMao.int2code is equal the length of the alphabet
-    *
-    * 2. Create a ValueStore: (typed) array that holds "values", i.e. the digits extracted from the patterns
-    *    The first value set starts at index 1 (since the trie is initialized with zeroes, starting at 0 would create errors)
-    *    Each value set ends with a value of 255; trailing 0's are not stored. So pattern values like e.g. "010200" will become […,0,1,0,2,255,…]
-    *    The ValueStore-Object manages handling of indizes automatically. Use ValueStore.add(p) to add a running value.
-    *    Use ValueStore.finalize() when the last value of a pattern is added. It will add the final 255, prepare the valueStore for new values
-    *    and return the starting index of the pattern.
-    *    To prevent doubles we could temporarly store the values in a object {value: startIndex} and only add new values,
-    *    but this object deoptimizes very fast (new hidden map for each entry); here we gain speed and pay memory
-    *
-    * 3. Create and zero initialize a (typed) array to store the trie. The trie uses two slots for each entry/node:
-    *    i: a link to another position in the array or -1 if the pattern ends here or more rows have to be added.
-    *    i + 1: a link to a value in the ValueStore or 0 if there's no value for the path to this node.
-    *    Although the array is one-dimensional it can be described as an array of "rows",
-    *    where each "row" is an array of length trieRowLength (see below).
-    *    The first entry of this "row" represents the first character of the alphabet, the second a possible link to value store,
-    *    the third represents the second character of the alphabet and so on…
-    *
-    * 4. Initialize trieRowLength (length of the alphabet * 2)
-    *
-    * 5. Now we apply extract to each pattern collection (patterns of the same length are collected and concatenated to one string)
-    *    extract goes through these pattern collections char by char and adds them either to the ValueStore (if they are digits) or
-    *    to the trie (adding more "rows" if necessary, i.e. if the last link pointed to -1).
-    *    So the first "row" holds all starting characters, where the subsequent rows hold the characters that follow the
-    *    character that link to this row. Therefor the array is dense at the beginning and very sparse at the end.
-    *
-    *
-    * @access private
-    * @param {Object} language object
-    */
-    function convertPatternsToArray(lo) {
-      let trieNextEmptyRow = 0;
-      let i;
-      const extract = function (patternSizeInt, patterns) {
-        let charPos = 0;
-        let charCode;
-        let mappedCharCode = 0;
-        let rowStart = 0;
-        let nextRowStart = 0;
-        let prevWasDigit = false;
-        while (charPos < patterns.length) {
-          charCode = patterns.charCodeAt(charPos);
-          if ((charPos + 1) % patternSizeInt != 0) {
-            // more to come…
-            if (charCode <= 57 && charCode >= 49) {
-              // charCode is a digit
-              valueStore.add(charCode - 48);
-              prevWasDigit = true;
-            } else {
-              // charCode is alphabetical
-              if (!prevWasDigit) {
-                valueStore.add0();
-              }
-              prevWasDigit = false;
-              if (nextRowStart === -1) {
-                nextRowStart = trieNextEmptyRow + trieRowLength;
-                trieNextEmptyRow = nextRowStart;
-                indexedTrie[rowStart + mappedCharCode * 2] = nextRowStart;
-              }
-              mappedCharCode = charMapc2i[charCode];
-              rowStart = nextRowStart;
-              nextRowStart = indexedTrie[rowStart + mappedCharCode * 2];
-              if (nextRowStart === 0) {
-                indexedTrie[rowStart + mappedCharCode * 2] = -1;
-                nextRowStart = -1;
-              }
-            }
-          } else {
-            // last part of pattern
-            if (charCode <= 57 && charCode >= 49) {
-              // the last charCode is a digit
-              valueStore.add(charCode - 48);
-              indexedTrie[rowStart + mappedCharCode * 2 + 1] = valueStore.finalize();
-            } else {
-              // the last charCode is alphabetical
-              if (!prevWasDigit) {
-                valueStore.add0();
-              }
-              valueStore.add0();
-              if (nextRowStart === -1) {
-                nextRowStart = trieNextEmptyRow + trieRowLength;
-                trieNextEmptyRow = nextRowStart;
-                indexedTrie[rowStart + mappedCharCode * 2] = nextRowStart;
-              }
-              mappedCharCode = charMapc2i[charCode];
-              rowStart = nextRowStart;
-              if (indexedTrie[rowStart + mappedCharCode * 2] === 0) {
-                indexedTrie[rowStart + mappedCharCode * 2] = -1;
-              }
-              indexedTrie[rowStart + mappedCharCode * 2 + 1] = valueStore.finalize();
-            }
-            rowStart = 0;
-            nextRowStart = 0;
-            prevWasDigit = false;
-          }
-          charPos += 1;
-        }
-      }; /*,
-         prettyPrintIndexedTrie = function (rowLength) {
-           var s = "0: ",
-               idx;
-           for (idx = 0; idx < indexedTrie.length; idx += 1) {
-               s += indexedTrie[idx];
-               s += ",";
-               if ((idx + 1) % rowLength === 0) {
-                   s += "\n" + (idx + 1) + ": ";
-               }
-           }
-           console.log(s);
-         }; */
-
-      lo.charMap = makeCharMap();
-      i = 0;
-      while (i < lo.patternChars.length) {
-        lo.charMap.add(lo.patternChars.charCodeAt(i));
-        i += 1;
-      }
-      const charMapc2i = lo.charMap.code2int;
-      const valueStore = makeValueStore(lo.valueStoreLength);
-      lo.valueStore = valueStore;
-      lo.indexedTrie = new Int32Array(lo.patternArrayLength * 2);
-      const indexedTrie = lo.indexedTrie;
-      const trieRowLength = lo.charMap.int2code.length * 2;
-      forEachKey(lo.patterns, function (i) {
-        extract(parseInt(i, 10), lo.patterns[i]);
-      });
-      // prettyPrintIndexedTrie(lo.charMap.int2code.length * 2);
-    }
-
-    /**
-    * @method Hyphenator~recreatePattern
-    * @desc
-    * Recreates the pattern for the reducedPatternSet
-    * @param {string} pattern The pattern (chars)
-    * @param {string} nodePoints The nodePoints (integers)
-    * @access private
-    * @return {string} The pattern (chars and numbers)
-    */
-    function recreatePattern(pattern, nodePoints) {
-      const r = [];
-      const c = pattern.split('');
-      let i = 0;
-      while (i <= c.length) {
-        if (nodePoints[i] && nodePoints[i] !== 0) {
-          r.push(nodePoints[i]);
-        }
-        if (c[i]) {
-          r.push(c[i]);
-        }
-        i += 1;
-      }
-      return r.join('');
-    }
-
-    /**
-    * @method Hyphenator~convertExceptionsToObject
-    * @desc
-    * Converts a list of comma seprated exceptions to an object:
-    * 'Fortran,Hy-phen-a-tion' -> {'Fortran':'Fortran','Hyphenation':'Hy-phen-a-tion'}
-    * @access private
-    * @param {string} exc a comma separated string of exceptions (without spaces)
-    * @return {Object.<string, string>}
-    */
-    function convertExceptionsToObject(exc) {
-      const w = exc.split(', ');
-      const r = {};
-      let i = 0;
-      const l = w.length;
-      let key;
-      while (i < l) {
-        key = w[i].replace(/-/g, '');
-        if (!r.hasOwnProperty(key)) {
-          r[key] = w[i];
-        }
-        i += 1;
-      }
-      return r;
-    }
-
-    /**
-    * @method Hyphenator~loadPatterns
-    * @desc
-    * Checks if the requested file is available in the network.
-    * Adds a &lt;script&gt;-Tag to the DOM to load an externeal .js-file containing patterns and settings for the given language.
-    * If the given language is not in the {@link Hyphenator~supportedLangs}-Object it returns.
-    * One may ask why we are not using AJAX to load the patterns. The XMLHttpRequest-Object
-    * has a same-origin-policy. This makes the Bookmarklet impossible.
-    * @param {string} lang The language to load the patterns for
-    * @access private
-    * @see {@link Hyphenator~basePath}
-    */
-    function loadPatterns(lang, cb) {
-      let location;
-      let xhr;
-      let head;
-      let script;
-      let done = false;
-      if (supportedLangs.hasOwnProperty(lang) && !Hyphenator.languages[lang]) {
-        location = basePath + 'patterns/' + supportedLangs[lang].file;
-      } else {
-        return;
-      }
-      if (isLocal && !isBookmarklet) {
-        // check if 'location' is available:
-        xhr = new XMLHttpRequest();
-        xhr.open('HEAD', location, true);
-        xhr.setRequestHeader('Cache-Control', 'no-cache');
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 2) {
-            if (xhr.status >= 400) {
-              onError(new Error('Could not load\n' + location));
-              delete docLanguages[lang];
-              return;
-            }
-            xhr.abort();
-          }
-        };
-        xhr.send(null);
-      }
-      if (createElem) {
-        head = window.document.getElementsByTagName('head').item(0);
-        script = createElem('script', window);
-        script.src = location;
-        script.type = 'text/javascript';
-        script.charset = 'utf8';
-        script.onreadystatechange = function () {
-          if (!done && (!script.readyState || script.readyState === 'loaded' || script.readyState === 'complete')) {
-            done = true;
-            cb();
-
-            // Handle memory leak in IE
-            script.onreadystatechange = null;
-            script.onload = null;
-            if (head && script.parentNode) {
-              head.removeChild(script);
-            }
-          }
-        };
-        script.onload = script.onreadystatechange;
-        head.appendChild(script);
-      }
-    }
-
-    /**
-    * @method Hyphenator~prepareLanguagesObj
-    * @desc
-    * Adds some feature to the language object:
-    * - cache
-    * - exceptions
-    * Converts the patterns to a trie using {@link Hyphenator~convertPatterns}
-    * @access private
-    * @param {string} lang The language of the language object
-    */
-    function prepareLanguagesObj(lang) {
-      const lo = Hyphenator.languages[lang];
-      let wrd;
-      if (!lo.prepared) {
-        if (enableCache) {
-          lo.cache = {};
-          // Export
-          // lo['cache'] = lo.cache;
-        }
-        if (enableReducedPatternSet) {
-          lo.redPatSet = {};
-        }
-        if (leftmin > lo.leftmin) {
-          lo.leftmin = leftmin;
-        }
-        if (rightmin > lo.rightmin) {
-          lo.rightmin = rightmin;
-        }
-        // add exceptions from the pattern file to the local 'exceptions'-obj
-        if (lo.hasOwnProperty('exceptions')) {
-          Hyphenator.addExceptions(lang, lo.exceptions);
-          delete lo.exceptions;
-        }
-        // copy global exceptions to the language specific exceptions
-        if (exceptions.hasOwnProperty('global')) {
-          if (exceptions.hasOwnProperty(lang)) {
-            exceptions[lang] += ', ' + exceptions.global;
-          } else {
-            exceptions[lang] = exceptions.global;
-          }
-        }
-        // move exceptions from the the local 'exceptions'-obj to the 'language'-object
-        if (exceptions.hasOwnProperty(lang)) {
-          lo.exceptions = convertExceptionsToObject(exceptions[lang]);
-          delete exceptions[lang];
-        } else {
-          lo.exceptions = {};
-        }
-        convertPatternsToArray(lo);
-        wrd = '[\\w' + lo.specialChars + lo.specialChars.normalize('NFD') + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
-        lo.genRegExp = new RegExp('(' + wrd + ')|(' + url + ')|(' + mail + ')', 'gi');
-        lo.prepared = true;
-      }
-    }
-
-    /****
-    * @method Hyphenator~prepare
-    * @desc
-    * This funtion prepares the Hyphenator~Object: If RemoteLoading is turned off, it assumes
-    * that the patternfiles are loaded, all conversions are made and the callback is called.
-    * If storage is active the object is retrieved there.
-    * If RemoteLoading is on (default), it loads the pattern files and repeatedly checks Hyphenator.languages.
-    * If a patternfile is loaded the patterns are stored in storage (if enabled),
-    * converted to their object style and the lang-object extended.
-    * Finally the callback is called.
-    * @access private
-    */
-    function prepare(callback) {
-      let tmp1;
-      function languagesLoaded() {
-        forEachKey(docLanguages, function (l) {
-          if (Hyphenator.languages.hasOwnProperty(l)) {
-            delete docLanguages[l];
-            if (storage) {
-              storage.setItem(l, window.JSON.stringify(Hyphenator.languages[l]));
-            }
-            prepareLanguagesObj(l);
-            callback(l);
-          }
-        });
-      }
-      if (!enableRemoteLoading) {
-        forEachKey(Hyphenator.languages, function (lang) {
-          prepareLanguagesObj(lang);
-        });
-        callback('*');
-        return;
-      }
-      // get all languages that are used and preload the patterns
-      forEachKey(docLanguages, function (lang) {
-        if (!!storage && storage.test(lang)) {
-          Hyphenator.languages[lang] = window.JSON.parse(storage.getItem(lang));
-          prepareLanguagesObj(lang);
-          if (exceptions.hasOwnProperty('global')) {
-            tmp1 = convertExceptionsToObject(exceptions.global);
-            forEachKey(tmp1, function (tmp2) {
-              Hyphenator.languages[lang].exceptions[tmp2] = tmp1[tmp2];
-            });
-          }
-          // Replace exceptions since they may have been changed:
-          if (exceptions.hasOwnProperty(lang)) {
-            tmp1 = convertExceptionsToObject(exceptions[lang]);
-            forEachKey(tmp1, function (tmp2) {
-              Hyphenator.languages[lang].exceptions[tmp2] = tmp1[tmp2];
-            });
-            delete exceptions[lang];
-          }
-          // Replace genRegExp since it may have been changed:
-          tmp1 = '[\\w' + Hyphenator.languages[lang].specialChars + Hyphenator.languages[lang].specialChars.normalize('NFD') + String.fromCharCode(173) + String.fromCharCode(8204) + '-]{' + min + ',}';
-          Hyphenator.languages[lang].genRegExp = new RegExp('(' + tmp1 + ')|(' + url + ')|(' + mail + ')', 'gi');
-          if (enableCache) {
-            if (!Hyphenator.languages[lang].cache) {
-              Hyphenator.languages[lang].cache = {};
-            }
-          }
-          delete docLanguages[lang];
-          callback(lang);
-        } else {
-          loadPatterns(lang, languagesLoaded);
-        }
-      });
-      // call languagesLoaded in case language has been loaded manually
-      // and remoteLoading is on (onload won't fire)
-      languagesLoaded();
-    }
-
-    /**
-    * @method Hyphenator~toggleBox
-    * @desc
-    * Creates the toggleBox: a small button to turn off/on hyphenation on a page.
-    * @see {@link Hyphenator.config}
-    * @access private
-    */
-    let toggleBox = function () {
-      let bdy;
-      let myTextNode;
-      const text = Hyphenator.doHyphenation ? 'Hy-phen-a-tion' : 'Hyphenation';
-      let myBox = contextWindow.document.getElementById('HyphenatorToggleBox');
-      if (myBox) {
-        myBox.firstChild.data = text;
-      } else {
-        bdy = contextWindow.document.getElementsByTagName('body')[0];
-        myBox = createElem('div', contextWindow);
-        myBox.setAttribute('id', 'HyphenatorToggleBox');
-        myBox.setAttribute('class', dontHyphenateClass);
-        myTextNode = contextWindow.document.createTextNode(text);
-        myBox.appendChild(myTextNode);
-        myBox.onclick = Hyphenator.toggleHyphenation;
-        myBox.style.position = 'absolute';
-        myBox.style.top = '0px';
-        myBox.style.right = '0px';
-        myBox.style.zIndex = '1000';
-        myBox.style.margin = '0';
-        myBox.style.backgroundColor = '#AAAAAA';
-        myBox.style.color = '#FFFFFF';
-        myBox.style.font = '6pt Arial';
-        myBox.style.letterSpacing = '0.2em';
-        myBox.style.padding = '3px';
-        myBox.style.cursor = 'pointer';
-        myBox.style.WebkitBorderBottomLeftRadius = '4px';
-        myBox.style.MozBorderRadiusBottomleft = '4px';
-        myBox.style.borderBottomLeftRadius = '4px';
-        bdy.appendChild(myBox);
-      }
-    };
-
-    /**
-    * @method Hyphenator~doCharSubst
-    * @desc
-    * Replace chars in a word
-    *
-    * @param {Object} loCharSubst Map of substitutions ({'ä': 'a', 'ü': 'u', …})
-    * @param {string} w the word
-    * @returns string The word with substituted characers
-    * @access private
-    */
-    function doCharSubst(loCharSubst, w) {
-      let r = w;
-      forEachKey(loCharSubst, function (subst) {
-        r = r.replace(new RegExp(subst, 'g'), loCharSubst[subst]);
-      });
-      return r;
-    }
-
-    /**
-    * @member {Array} Hyphenator~wwAsMappedCharCodeStore
-    * @desc
-    * Array (typed if supported) container for charCodes
-    * @access private
-    * @see {@link Hyphenator~hyphenateWord}
-    */
-    const wwAsMappedCharCodeStore = new Int32Array(64);
-
-    /**
-    * @member {Array} Hyphenator~wwhpStore
-    * @desc
-    * Array (typed if supported) container for hyphenation points
-    * @access private
-    * @see {@link Hyphenator~hyphenateWord}
-    */
-    const wwhpStore = new Uint8Array(64);
-
-    /**
-    * @method Hyphenator~hyphenateCompound
-    * @desc
-    * Treats compound words accordingly to the 'compound' setting
-    *
-    * @param {Object} lo A language object (containing the patterns)
-    * @param {string} lang The language of the word
-    * @param {string} word The word
-    * @returns string The (hyphenated) compound word
-    * @access private
-    */
-    function hyphenateCompound(lo, lang, word) {
-      let hw;
-      let parts;
-      let i = 0;
-      switch (compound) {
-        case 'auto':
-          parts = word.split('-');
-          while (i < parts.length) {
-            if (parts[i].length >= min) {
-              parts[i] = hyphenateWord(lo, lang, parts[i]);
-            }
-            i += 1;
-          }
-          hw = parts.join('-');
-          break;
-        case 'all':
-          parts = word.split('-');
-          while (i < parts.length) {
-            if (parts[i].length >= min) {
-              parts[i] = hyphenateWord(lo, lang, parts[i]);
-            }
-            i += 1;
-          }
-          hw = parts.join('-' + zeroWidthSpace);
-          break;
-        case 'hyphen':
-          hw = word.replace('-', '-' + zeroWidthSpace);
-          break;
-        default:
-          onError(new Error('Hyphenator.settings: compound setting "' + compound + '" not known.'));
-      }
-      return hw;
-    }
-
-    /**
-    * @method Hyphenator~hyphenateWord
-    * @desc
-    * This function is the heart of Hyphenator.js. It returns a hyphenated word.
-    *
-    * If there's already a {@link Hyphenator~hypen} in the word, the word is returned as it is.
-    * If the word is in the exceptions list or in the cache, it is retrieved from it.
-    * If there's a '-' it calls Hyphenator~hyphenateCompound
-    * The hyphenated word is returned and (if acivated) cached.
-    * Both special Events onBeforeWordHyphenation and onAfterWordHyphenation are called for the word.
-    * @param {Object} lo A language object (containing the patterns)
-    * @param {string} lang The language of the word
-    * @param {string} word The word
-    * @returns string The hyphenated word
-    * @access private
-    */
-    function hyphenateWord(lo, lang, word) {
-      let pattern;
-      let ww;
-      let wwlen;
-      const wwhp = wwhpStore;
-      let pstart = 0;
-      let plen;
-      let hp;
-      let hpc;
-      const wordLength = word.length;
-      let hw = '';
-      const charMap = lo.charMap.code2int;
-      let charCode;
-      let mappedCharCode;
-      let row;
-      let link;
-      let value;
-      let values;
-      const indexedTrie = lo.indexedTrie;
-      const valueStore = lo.valueStore.keys;
-      const wwAsMappedCharCode = wwAsMappedCharCodeStore;
-      word = onBeforeWordHyphenation(word, lang);
-      if (word === '') {
-        hw = '';
-      } else if (enableCache && lo.cache && lo.cache.hasOwnProperty(word)) {
-        // the word is in the cache
-        hw = lo.cache[word];
-      } else if (word.indexOf(hyphen) !== -1) {
-        // word already contains shy; -> leave at it is!
-        hw = word;
-      } else if (lo.exceptions.hasOwnProperty(word)) {
-        // the word is in the exceptions list
-        hw = lo.exceptions[word].replace(/-/g, hyphen);
-      } else if (word.indexOf('-') !== -1) {
-        hw = hyphenateCompound(lo, lang, word);
-      } else {
-        ww = word.toLowerCase();
-        ww = ww.normalize('NFC');
-        if (lo.hasOwnProperty('charSubstitution')) {
-          ww = doCharSubst(lo.charSubstitution, ww);
-        }
-        if (word.indexOf("'") !== -1) {
-          ww = ww.replace(/'/g, '’'); // replace APOSTROPHE with RIGHT SINGLE QUOTATION MARK (since the latter is used in the patterns)
-        }
-        ww = '_' + ww + '_';
-        wwlen = ww.length;
-        // prepare wwhp and wwAsMappedCharCode
-        while (pstart < wwlen) {
-          wwhp[pstart] = 0;
-          charCode = ww.charCodeAt(pstart);
-          wwAsMappedCharCode[pstart] = charMap.hasOwnProperty(charCode) ? charMap[charCode] : -1;
-          pstart += 1;
-        }
-        // get hyphenation points for all substrings
-        pstart = 0;
-        while (pstart < wwlen) {
-          row = 0;
-          pattern = '';
-          plen = pstart;
-          while (plen < wwlen) {
-            mappedCharCode = wwAsMappedCharCode[plen];
-            if (mappedCharCode === -1) {
-              break;
-            }
-            if (enableReducedPatternSet) {
-              pattern += ww.charAt(plen);
-            }
-            link = indexedTrie[row + mappedCharCode * 2];
-            value = indexedTrie[row + mappedCharCode * 2 + 1];
-            if (value > 0) {
-              hpc = 0;
-              hp = valueStore[value + hpc];
-              while (hp !== 255) {
-                if (hp > wwhp[pstart + hpc]) {
-                  wwhp[pstart + hpc] = hp;
-                }
-                hpc += 1;
-                hp = valueStore[value + hpc];
-              }
-              if (enableReducedPatternSet) {
-                if (!lo.redPatSet) {
-                  lo.redPatSet = {};
-                }
-                if (valueStore.subarray) {
-                  values = valueStore.subarray(value, value + hpc);
-                } else {
-                  values = valueStore.slice(value, value + hpc);
-                }
-                lo.redPatSet[pattern] = recreatePattern(pattern, values);
-              }
-            }
-            if (link > 0) {
-              row = link;
-            } else {
-              break;
-            }
-            plen += 1;
-          }
-          pstart += 1;
-        }
-        // create hyphenated word
-        hp = 0;
-        while (hp < wordLength) {
-          if (hp >= lo.leftmin && hp <= wordLength - lo.rightmin && wwhp[hp + 1] % 2 != 0) {
-            hw += hyphen + word.charAt(hp);
-          } else {
-            hw += word.charAt(hp);
-          }
-          hp += 1;
-        }
-      }
-      hw = onAfterWordHyphenation(hw, lang);
-      if (enableCache) {
-        // put the word in the cache
-        lo.cache[word] = hw;
-      }
-      return hw;
-    }
-
-    /**
-    * @method Hyphenator~removeHyphenationFromElement
-    * @desc
-    * Removes all hyphens from the element. If there are other elements, the function is
-    * called recursively.
-    * Removing hyphens is usefull if you like to copy text. Some browsers are buggy when the copy hyphenated texts.
-    * @param {Object} el The element where to remove hyphenation.
-    * @access public
-    */
-    function removeHyphenationFromElement(el) {
-      let h;
-      let u;
-      let i = 0;
-      let n;
-      switch (hyphen) {
-        case '|':
-          h = '\\|';
-          break;
-        case '+':
-          h = '\\+';
-          break;
-        case '*':
-          h = '\\*';
-          break;
-        default:
-          h = hyphen;
-      }
-      switch (urlhyphen) {
-        case '|':
-          u = '\\|';
-          break;
-        case '+':
-          u = '\\+';
-          break;
-        case '*':
-          u = '\\*';
-          break;
-        default:
-          u = urlhyphen;
-      }
-      n = el.childNodes[i];
-      while (n) {
-        if (n.nodeType === 3) {
-          n.data = n.data.replace(new RegExp(h, 'g'), '');
-          n.data = n.data.replace(new RegExp(u, 'g'), '');
-        } else if (n.nodeType === 1) {
-          removeHyphenationFromElement(n);
-        }
-        i += 1;
-        n = el.childNodes[i];
-      }
-    }
-    const copy = function () {
-      const makeCopy = function () {
-        const oncopyHandler = function (e) {
-          e = e || window.event;
-          let selection;
-          let range;
-          let rangeShadow;
-          let restore;
-          const target = e.target || e.srcElement;
-          const currDoc = target.ownerDocument;
-          const bdy = currDoc.getElementsByTagName('body')[0];
-          const targetWindow = currDoc.defaultView || currDoc.parentWindow;
-          if (target.tagName && dontHyphenate[target.tagName.toLowerCase()]) {
-            // Safari needs this
-            return;
-          }
-          // create a hidden shadow element
-          const shadow = currDoc.createElement('div');
-          // Moving the element out of the screen doesn't work for IE9 (https://connect.microsoft.com/IE/feedback/details/663981/)
-          // shadow.style.overflow = 'hidden';
-          // shadow.style.position = 'absolute';
-          // shadow.style.top = '-5000px';
-          // shadow.style.height = '1px';
-          // doing this instead:
-          shadow.style.color = window.getComputedStyle ? targetWindow.getComputedStyle(bdy, null).backgroundColor : '#FFFFFF';
-          shadow.style.fontSize = '0px';
-          bdy.appendChild(shadow);
-          if (window.getSelection) {
-            // FF3, Webkit, IE9
-            e.stopPropagation();
-            selection = targetWindow.getSelection();
-            range = selection.getRangeAt(0);
-            shadow.appendChild(range.cloneContents());
-            removeHyphenationFromElement(shadow);
-            selection.selectAllChildren(shadow);
-            restore = function () {
-              shadow.parentNode.removeChild(shadow);
-              selection.removeAllRanges(); // IE9 needs that
-              selection.addRange(range);
-            };
-          } else {
-            // IE<9
-            e.cancelBubble = true;
-            selection = targetWindow.document.selection;
-            range = selection.createRange();
-            shadow.innerHTML = range.htmlText;
-            removeHyphenationFromElement(shadow);
-            rangeShadow = bdy.createTextRange();
-            rangeShadow.moveToElementText(shadow);
-            rangeShadow.select();
-            restore = function () {
-              shadow.parentNode.removeChild(shadow);
-              if (range.text !== '') {
-                range.select();
-              }
-            };
-          }
-          zeroTimeOut(restore);
-        };
-        const removeOnCopy = function (el) {
-          const body = el.ownerDocument.getElementsByTagName('body')[0];
-          if (!body) {
-            return;
-          }
-          el = el || body;
-          if (window.removeEventListener) {
-            el.removeEventListener('copy', oncopyHandler, true);
-          } else {
-            el.detachEvent('oncopy', oncopyHandler);
-          }
-        };
-        const registerOnCopy = function (el) {
-          const body = el.ownerDocument.getElementsByTagName('body')[0];
-          if (!body) {
-            return;
-          }
-          el = el || body;
-          if (window.addEventListener) {
-            el.addEventListener('copy', oncopyHandler, true);
-          } else {
-            el.attachEvent('oncopy', oncopyHandler);
-          }
-        };
-        return {
-          oncopyHandler: oncopyHandler,
-          removeOnCopy: removeOnCopy,
-          registerOnCopy: registerOnCopy
-        };
-      };
-      return safeCopy ? makeCopy() : false;
-    }();
-
-    /**
-    * @method Hyphenator~checkIfAllDone
-    * @desc
-    * Checks if all elements in {@link Hyphenator~elements} are hyphenated, unhides them and fires onHyphenationDone()
-    * @access private
-    */
-    function checkIfAllDone() {
-      let allDone = true;
-      let i = 0;
-      const doclist = {};
-      elements.each(function (ellist) {
-        let j = 0;
-        const l = ellist.length;
-        while (j < l) {
-          allDone = allDone && ellist[j].hyphenated;
-          if (!doclist.hasOwnProperty(ellist[j].element.baseURI)) {
-            doclist[ellist[j].element.ownerDocument.location.href] = true;
-          }
-          doclist[ellist[j].element.ownerDocument.location.href] = doclist[ellist[j].element.ownerDocument.location.href] && ellist[j].hyphenated;
-          j += 1;
-        }
-      });
-      if (allDone) {
-        if (intermediateState === 'hidden' && unhide === 'progressive') {
-          elements.each(function (ellist) {
-            let j = 0;
-            const l = ellist.length;
-            let el;
-            while (j < l) {
-              el = ellist[j].element;
-              el.className = el.className.replace(unhideClassRegExp, '');
-              if (el.className === '') {
-                el.removeAttribute('class');
-              }
-              j += 1;
-            }
-          });
-        }
-        while (i < CSSEditors.length) {
-          CSSEditors[i].clearChanges();
-          i += 1;
-        }
-        forEachKey(doclist, function (doc) {
-          onHyphenationDone(doc);
-        });
-        if (!!storage && storage.deferred.length > 0) {
-          i = 0;
-          while (i < storage.deferred.length) {
-            storage.deferred[i].call();
-            i += 1;
-          }
-          storage.deferred = [];
-        }
-      }
-    }
-
-    /**
-    * @method Hyphenator~controlOrphans
-    * @desc
-    * removes orphans depending on the 'orphanControl'-setting:
-    * orphanControl === 1: do nothing
-    * orphanControl === 2: prevent last word to be hyphenated
-    * orphanControl === 3: prevent one word on a last line (inserts a nobreaking space)
-    * @param {string} part - The sring where orphans have to be removed
-    * @access private
-    */
-    function controlOrphans(part) {
-      let h, r;
-      switch (hyphen) {
-        case '|':
-          h = '\\|';
-          break;
-        case '+':
-          h = '\\+';
-          break;
-        case '*':
-          h = '\\*';
-          break;
-        default:
-          h = hyphen;
-      }
-      // strip off blank space at the end (omitted closing tags)
-      part = part.replace(/\s*$/, '');
-      if (orphanControl >= 2) {
-        // remove hyphen points from last word
-        r = part.split(' ');
-        r[1] = r[1].replace(new RegExp(h, 'g'), '');
-        r[1] = r[1].replace(new RegExp(zeroWidthSpace, 'g'), '');
-        r = r.join(' ');
-      }
-      if (orphanControl === 3) {
-        // replace spaces by non breaking spaces
-        r = r.replace(/ +/g, String.fromCharCode(160));
-      }
-      return r;
-    }
-
-    /**
-    * @method Hyphenator~hyphenateElement
-    * @desc
-    * Takes the content of the given element and - if there's text - replaces the words
-    * by hyphenated words. If there's another element, the function is called recursively.
-    * When all words are hyphenated, the visibility of the element is set to 'visible'.
-    * @param {string} lang - The language-code of the element
-    * @param {Element} elo - The element to hyphenate {@link Hyphenator~elements~ElementCollection~Element}
-    * @access private
-    */
-    function hyphenateElement(lang, elo) {
-      const el = elo.element;
-      let hyphenate;
-      let n;
-      let i;
-      let lo;
-      if (Hyphenator.languages.hasOwnProperty(lang) && Hyphenator.doHyphenation) {
-        lo = Hyphenator.languages[lang];
-        hyphenate = function (match, word, url, mail) {
-          let r;
-          if (!!url || !!mail) {
-            r = hyphenateURL(match);
-          } else {
-            r = hyphenateWord(lo, lang, word);
-          }
-          return r;
-        };
-        if (safeCopy && el.tagName.toLowerCase() !== 'body') {
-          copy.registerOnCopy(el);
-        }
-        i = 0;
-        n = el.childNodes[i];
-        while (n) {
-          if (n.nodeType === 3 // type 3 = #text
-          && /\S/.test(n.data) // not just white space
-          && n.data.length >= min) {
-            // longer then min
-            n.data = n.data.replace(lo.genRegExp, hyphenate);
-            if (orphanControl !== 1) {
-              n.data = n.data.replace(/\S+ \S+\s*$/, controlOrphans);
-            }
-          }
-          i += 1;
-          n = el.childNodes[i];
-        }
-      }
-      if (intermediateState === 'hidden' && unhide === 'wait') {
-        el.className = el.className.replace(hideClassRegExp, '');
-        if (el.className === '') {
-          el.removeAttribute('class');
-        }
-      }
-      if (intermediateState === 'hidden' && unhide === 'progressive') {
-        el.className = el.className.replace(hideClassRegExp, ' ' + unhideClass);
-      }
-      elo.hyphenated = true;
-      elements.counters[1] += 1;
-      if (elements.counters[0] <= elements.counters[1]) {
-        checkIfAllDone();
-      }
-    }
-
-    /**
-    * @method Hyphenator~hyphenateLanguageElements
-    * @desc
-    * Calls hyphenateElement() for all elements of the specified language.
-    * If the language is '*' then all elements are hyphenated.
-    * This is done with a setTimout
-    * to prevent a "long running Script"-alert when hyphenating large pages.
-    * Therefore a tricky bind()-function was necessary.
-    * @param {string} lang The language of the elements to hyphenate
-    * @access private
-    */
-
-    function hyphenateLanguageElements(lang) {
-      /* function bind(fun, arg1, arg2) {
-          return function () {
-              return fun(arg1, arg2);
-          };
-      } */
-      let i = 0;
-      let l;
-      if (lang === '*') {
-        elements.each(function (lang, ellist) {
-          let j = 0;
-          const le = ellist.length;
-          while (j < le) {
-            // zeroTimeOut(bind(hyphenateElement, lang, ellist[j]));
-            hyphenateElement(lang, ellist[j]);
-            j += 1;
-          }
-        });
-      } else {
-        if (elements.list.hasOwnProperty(lang)) {
-          l = elements.list[lang].length;
-          while (i < l) {
-            // zeroTimeOut(bind(hyphenateElement, lang, elements.list[lang][i]));
-            hyphenateElement(lang, elements.list[lang][i]);
-            i += 1;
-          }
-        }
-      }
-    }
-
-    /**
-    * @method Hyphenator~removeHyphenationFromDocument
-    * @desc
-    * Does what it says and unregisters the onCopyEvent from the elements
-    * @access private
-    */
-    function removeHyphenationFromDocument() {
-      elements.each(function (ellist) {
-        let i = 0;
-        const l = ellist.length;
-        while (i < l) {
-          removeHyphenationFromElement(ellist[i].element);
-          if (safeCopy) {
-            copy.removeOnCopy(ellist[i].element);
-          }
-          ellist[i].hyphenated = false;
-          i += 1;
-        }
-      });
-    }
-
-    /**
-    * @method Hyphenator~createStorage
-    * @desc
-    * inits the private var {@link Hyphenator~storage) depending of the setting in {@link Hyphenator~storageType}
-    * and the supported features of the system.
-    * @access private
-    */
-    function createStorage() {
-      let s;
-      function makeStorage(s) {
-        const store = s;
-        const prefix = 'Hyphenator_' + Hyphenator.version + '_';
-        const deferred = [];
-        const test = function (name) {
-          const val = store.getItem(prefix + name);
-          return !!val;
-        };
-        const getItem = function (name) {
-          return store.getItem(prefix + name);
-        };
-        const setItem = function (name, value) {
-          try {
-            store.setItem(prefix + name, value);
-          } catch (e) {
-            onError(e);
-          }
-        };
-        return {
-          deferred: deferred,
-          test: test,
-          getItem: getItem,
-          setItem: setItem
-        };
-      }
-      try {
-        if (storageType !== 'none' && window.JSON !== undefined && window.localStorage !== undefined && window.sessionStorage !== undefined && window.JSON.stringify !== undefined && window.JSON.parse !== undefined) {
-          switch (storageType) {
-            case 'session':
-              s = window.sessionStorage;
-              break;
-            case 'local':
-              s = window.localStorage;
-              break;
-            default:
-              s = undefined;
-              break;
-          }
-          // check for private mode
-          s.setItem('storageTest', '1');
-          s.removeItem('storageTest');
-        }
-      } catch (ignore) {
-        // FF throws an error if DOM.storage.enabled is set to false
-        s = undefined;
-      }
-      if (s) {
-        storage = makeStorage(s);
-      } else {
-        storage = undefined;
-      }
-    }
-
-    /**
-    * @method Hyphenator~storeConfiguration
-    * @desc
-    * Stores the current config-options in DOM-Storage
-    * @access private
-    */
-    function storeConfiguration() {
-      if (!storage) {
-        return;
-      }
-      const settings = {
-        STORED: true,
-        classname: hyphenateClass,
-        urlclassname: urlHyphenateClass,
-        donthyphenateclassname: dontHyphenateClass,
-        minwordlength: min,
-        hyphenchar: hyphen,
-        urlhyphenchar: urlhyphen,
-        togglebox: toggleBox,
-        displaytogglebox: displayToggleBox,
-        remoteloading: enableRemoteLoading,
-        enablecache: enableCache,
-        enablereducedpatternset: enableReducedPatternSet,
-        onhyphenationdonecallback: onHyphenationDone,
-        onerrorhandler: onError,
-        onwarninghandler: onWarning,
-        intermediatestate: intermediateState,
-        selectorfunction: selectorFunction || mySelectorFunction,
-        safecopy: safeCopy,
-        doframes: doFrames,
-        storagetype: storageType,
-        orphancontrol: orphanControl,
-        dohyphenation: Hyphenator.doHyphenation,
-        persistentconfig: persistentConfig,
-        defaultlanguage: defaultLanguage,
-        useCSS3hyphenation: css3,
-        unhide: unhide,
-        onbeforewordhyphenation: onBeforeWordHyphenation,
-        onafterwordhyphenation: onAfterWordHyphenation,
-        leftmin: leftmin,
-        rightmin: rightmin,
-        compound: compound
-      };
-      storage.setItem('config', window.JSON.stringify(settings));
-    }
-
-    /**
-    * @method Hyphenator~restoreConfiguration
-    * @desc
-    * Retrieves config-options from DOM-Storage and does configuration accordingly
-    * @access private
-    */
-    function restoreConfiguration() {
-      let settings;
-      if (storage.test('config')) {
-        settings = window.JSON.parse(storage.getItem('config'));
-        Hyphenator.config(settings);
-      }
-    }
-
-    /** EXPORTED VALUES**/
-
-    /**
-    * @member {string} Hyphenator.version
-    * @desc
-    * String containing the actual version of Hyphenator.js
-    * [major release].[minor releas].[bugfix release]
-    * major release: new API, new Features, big changes
-    * minor release: new languages, improvements
-    * @access public
-    */
-    const version = '5.2.0(devel)';
-
-    /**
-    * @member {boolean} Hyphenator.doHyphenation
-    * @desc
-    * If doHyphenation is set to false, hyphenateDocument() isn't called.
-    * All other actions are performed.
-    * @default true
-    */
-    const doHyphenation = true;
-
-    /**
-    * @typedef {Object} Hyphenator.languages.language
-    * @property {Number} leftmin - The minimum of chars to remain on the old line
-    * @property {Number} rightmin - The minimum of chars to go on the new line
-    * @property {string} specialChars - Non-ASCII chars in the alphabet.
-    * @property {Object.<number, string>} patterns - the patterns in a compressed format. The key is the length of the patterns in the value string.
-    * @property {Object.<string, string>} charSubstitution - optional: a hash table with chars that are replaced during hyphenation
-    * @property {string | Object.<string, string>} exceptions - optional: a csv string containing exceptions
-    */
-
-    /**
-    * @member {Object.<string, Hyphenator.languages.language>} Hyphenator.languages
-    * @desc
-    * Objects that holds key-value pairs, where key is the language and the value is the
-    * language-object loaded from (and set by) the pattern file.
-    * @namespace Hyphenator.languages
-    * @access public
-    */
-    const languages = {};
-
-    /**
-    * @method Hyphenator.config
-    * @desc
-    * The Hyphenator.config() function that takes an object as an argument. The object contains key-value-pairs
-    * containig Hyphenator-settings.
-    * @param {Hyphenator.config} obj
-    * @access public
-    * @example
-    * &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-    * &lt;script type = "text/javascript"&gt;
-    *     Hyphenator.config({'minwordlength':4,'hyphenchar':'|'});
-    *     Hyphenator.run();
-    * &lt;/script&gt;
-    */
-    function config(obj) {
-      const assert = function (name, type) {
-        let r;
-        const t = typeof obj[name];
-        if (t === type) {
-          r = true;
-        } else {
-          onError(new Error('Config onError: ' + name + ' must be of type ' + type));
-          r = false;
-        }
-        return r;
-      };
-      if (obj.hasOwnProperty('storagetype')) {
-        if (assert('storagetype', 'string')) {
-          storageType = obj.storagetype;
-        }
-        if (!storage) {
-          createStorage();
-        }
-      }
-      if (!obj.hasOwnProperty('STORED') && storage && obj.hasOwnProperty('persistentconfig') && obj.persistentconfig === true) {
-        restoreConfiguration();
-      }
-      forEachKey(obj, function (key) {
-        switch (key) {
-          case 'STORED':
-            break;
-          case 'classname':
-            if (assert('classname', 'string')) {
-              hyphenateClass = obj[key];
-            }
-            break;
-          case 'urlclassname':
-            if (assert('urlclassname', 'string')) {
-              urlHyphenateClass = obj[key];
-            }
-            break;
-          case 'donthyphenateclassname':
-            if (assert('donthyphenateclassname', 'string')) {
-              dontHyphenateClass = obj[key];
-            }
-            break;
-          case 'minwordlength':
-            if (assert('minwordlength', 'number')) {
-              min = obj[key];
-            }
-            break;
-          case 'hyphenchar':
-            if (assert('hyphenchar', 'string')) {
-              if (obj.hyphenchar === '&shy;') {
-                obj.hyphenchar = String.fromCharCode(173);
-              }
-              hyphen = obj[key];
-            }
-            break;
-          case 'urlhyphenchar':
-            if (obj.hasOwnProperty('urlhyphenchar')) {
-              if (assert('urlhyphenchar', 'string')) {
-                urlhyphen = obj[key];
-              }
-            }
-            break;
-          case 'togglebox':
-            if (assert('togglebox', 'function')) {
-              toggleBox = obj[key];
-            }
-            break;
-          case 'displaytogglebox':
-            if (assert('displaytogglebox', 'boolean')) {
-              displayToggleBox = obj[key];
-            }
-            break;
-          case 'remoteloading':
-            if (assert('remoteloading', 'boolean')) {
-              enableRemoteLoading = obj[key];
-            }
-            break;
-          case 'enablecache':
-            if (assert('enablecache', 'boolean')) {
-              enableCache = obj[key];
-            }
-            break;
-          case 'enablereducedpatternset':
-            if (assert('enablereducedpatternset', 'boolean')) {
-              enableReducedPatternSet = obj[key];
-            }
-            break;
-          case 'onhyphenationdonecallback':
-            if (assert('onhyphenationdonecallback', 'function')) {
-              onHyphenationDone = obj[key];
-            }
-            break;
-          case 'onerrorhandler':
-            if (assert('onerrorhandler', 'function')) {
-              onError = obj[key];
-            }
-            break;
-          case 'onwarninghandler':
-            if (assert('onwarninghandler', 'function')) {
-              onWarning = obj[key];
-            }
-            break;
-          case 'intermediatestate':
-            if (assert('intermediatestate', 'string')) {
-              intermediateState = obj[key];
-            }
-            break;
-          case 'selectorfunction':
-            if (assert('selectorfunction', 'function')) {
-              selectorFunction = obj[key];
-            }
-            break;
-          case 'safecopy':
-            if (assert('safecopy', 'boolean')) {
-              safeCopy = obj[key];
-            }
-            break;
-          case 'doframes':
-            if (assert('doframes', 'boolean')) {
-              doFrames = obj[key];
-            }
-            break;
-          case 'storagetype':
-            if (assert('storagetype', 'string')) {
-              storageType = obj[key];
-            }
-            break;
-          case 'orphancontrol':
-            if (assert('orphancontrol', 'number')) {
-              orphanControl = obj[key];
-            }
-            break;
-          case 'dohyphenation':
-            if (assert('dohyphenation', 'boolean')) {
-              Hyphenator.doHyphenation = obj[key];
-            }
-            break;
-          case 'persistentconfig':
-            if (assert('persistentconfig', 'boolean')) {
-              persistentConfig = obj[key];
-            }
-            break;
-          case 'defaultlanguage':
-            if (assert('defaultlanguage', 'string')) {
-              defaultLanguage = obj[key];
-            }
-            break;
-          case 'useCSS3hyphenation':
-            if (assert('useCSS3hyphenation', 'boolean')) {
-              css3 = obj[key];
-            }
-            break;
-          case 'unhide':
-            if (assert('unhide', 'string')) {
-              unhide = obj[key];
-            }
-            break;
-          case 'onbeforewordhyphenation':
-            if (assert('onbeforewordhyphenation', 'function')) {
-              onBeforeWordHyphenation = obj[key];
-            }
-            break;
-          case 'onafterwordhyphenation':
-            if (assert('onafterwordhyphenation', 'function')) {
-              onAfterWordHyphenation = obj[key];
-            }
-            break;
-          case 'leftmin':
-            if (assert('leftmin', 'number')) {
-              leftmin = obj[key];
-            }
-            break;
-          case 'rightmin':
-            if (assert('rightmin', 'number')) {
-              rightmin = obj[key];
-            }
-            break;
-          case 'compound':
-            if (assert('compound', 'string')) {
-              compound = obj[key];
-            }
-            break;
-          default:
-            onError(new Error('Hyphenator.config: property ' + key + ' not known.'));
-        }
-      });
-      if (storage && persistentConfig) {
-        storeConfiguration();
-      }
-    }
-
-    /**
-    * @method Hyphenator.run
-    * @desc
-    * Bootstrap function that starts all hyphenation processes when called:
-    * Tries to create storage if required and calls {@link Hyphenator~runWhenLoaded} on 'window' handing over the callback 'process'
-    * @access public
-    * @example
-    * &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-    * &lt;script type = "text/javascript"&gt;
-    *   Hyphenator.run();
-    * &lt;/script&gt;
-    */
-    function run() {
-      /**
-           *@callback Hyphenator.run~process process - The function is called when the DOM has loaded (or called for each frame)
-           */
-      const process = function () {
-        try {
-          if (contextWindow.document.getElementsByTagName('frameset').length > 0) {
-            return; // we are in a frameset
-          }
-          autoSetMainLanguage(undefined);
-          gatherDocumentInfos();
-          if (displayToggleBox) {
-            toggleBox();
-          }
-          prepare(hyphenateLanguageElements);
-        } catch (e) {
-          onError(e);
-        }
-      };
-      if (!storage) {
-        createStorage();
-      }
-      runWhenLoaded(window, process);
-    }
-
-    /**
-    * @method Hyphenator.addExceptions
-    * @desc
-    * Adds the exceptions from the string to the appropriate language in the
-    * {@link Hyphenator~languages}-object
-    * @param {string} lang The language
-    * @param {string} words A comma separated string of hyphenated words WITH spaces.
-    * @access public
-    * @example &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-    * &lt;script type = "text/javascript"&gt;
-    *   Hyphenator.addExceptions('de','ziem-lich, Wach-stube');
-    *   Hyphenator.run();
-    * &lt;/script&gt;
-    */
-    function addExceptions(lang, words) {
-      if (lang === '') {
-        lang = 'global';
-      }
-      if (exceptions.hasOwnProperty(lang)) {
-        exceptions[lang] += ', ' + words;
-      } else {
-        exceptions[lang] = words;
-      }
-    }
-
-    /**
-    * @method Hyphenator.hyphenate
-    * @access public
-    * @desc
-    * Hyphenates the target. The language patterns must be loaded.
-    * If the target is a string, the hyphenated string is returned,
-    * if it's an object, the values are hyphenated directly and undefined (aka nothing) is returned
-    * @param {string|Object} target the target to be hyphenated
-    * @param {string} lang the language of the target
-    * @returns {string|undefined}
-    * @example &lt;script src = "Hyphenator.js" type = "text/javascript"&gt;&lt;/script&gt;
-    * &lt;script src = "patterns/en.js" type = "text/javascript"&gt;&lt;/script&gt;
-    * &lt;script type = "text/javascript"&gt;
-    * var t = Hyphenator.hyphenate('Hyphenation', 'en'); //Hy|phen|ation
-    * &lt;/script&gt;
-    */
-    function hyphenate(target, lang) {
-      let turnout, n, i;
-      const lo = Hyphenator.languages[lang];
-      if (Hyphenator.languages.hasOwnProperty(lang)) {
-        if (!lo.prepared) {
-          prepareLanguagesObj(lang);
-        }
-        turnout = function (match, word, url, mail) {
-          let r;
-          if (!!url || !!mail) {
-            r = hyphenateURL(match);
-          } else {
-            r = hyphenateWord(lo, lang, word);
-          }
-          return r;
-        };
-        if (typeof target == 'object' && !(typeof target == 'string' || target.constructor === String)) {
-          i = 0;
-          n = target.childNodes[i];
-          while (n) {
-            if (n.nodeType === 3 // type 3 = #text
-            && /\S/.test(n.data) // not just white space
-            && n.data.length >= min) {
-              // longer then min
-              n.data = n.data.replace(lo.genRegExp, turnout);
-            } else if (n.nodeType === 1) {
-              if (n.lang !== '') {
-                Hyphenator.hyphenate(n, n.lang);
-              } else {
-                Hyphenator.hyphenate(n, lang);
-              }
-            }
-            i += 1;
-            n = target.childNodes[i];
-          }
-        } else if (typeof target == 'string' || target.constructor === String) {
-          return target.replace(lo.genRegExp, turnout);
-        }
-      } else {
-        onError(new Error('Language "' + lang + '" is not loaded.'));
-      }
-    }
-
-    /**
-    * @method Hyphenator.getRedPatternSet
-    * @desc
-    * Returns the reduced pattern set: an object looking like: {'patk': pat}
-    * @param {string} lang the language patterns are stored for
-    * @returns {Object.<string, string>}
-    * @access public
-    */
-    function getRedPatternSet(lang) {
-      return Hyphenator.languages[lang].redPatSet;
-    }
-
-    /**
-    * @method Hyphenator.getConfigFromURI
-    * @desc
-    * reads and sets configurations from GET parameters in the URI
-    * @access public
-    */
-    function getConfigFromURI() {
-      let loc = null;
-      const re = {};
-      const jsArray = contextWindow.document.getElementsByTagName('script');
-      let i = 0;
-      let j = 0;
-      const l = jsArray.length;
-      let s;
-      let gp;
-      let option;
-      while (i < l) {
-        if (jsArray[i].getAttribute('src')) {
-          loc = jsArray[i].getAttribute('src');
-        }
-        if (loc && loc.indexOf('Hyphenator.js?') !== -1) {
-          s = loc.indexOf('Hyphenator.js?');
-          gp = loc.substring(s + 14).split('&');
-          while (j < gp.length) {
-            option = gp[j].split('=');
-            if (option[0] !== 'bm') {
-              if (option[1] === 'true') {
-                option[1] = true;
-              } else if (option[1] === 'false') {
-                option[1] = false;
-              } else if (isFinite(option[1])) {
-                option[1] = parseInt(option[1], 10);
-              }
-              if (option[0] === 'togglebox' || option[0] === 'onhyphenationdonecallback' || option[0] === 'onerrorhandler' || option[0] === 'selectorfunction' || option[0] === 'onbeforewordhyphenation' || option[0] === 'onafterwordhyphenation') {
-                // eslint-disable-next-line no-new-func
-                option[1] = new Function('', option[1]);
-              }
-              re[option[0]] = option[1];
-            }
-            j += 1;
-          }
-          break;
-        }
-        i += 1;
-      }
-      return re;
-    }
-
-    /**
-    * @method Hyphenator.toggleHyphenation
-    * @desc
-    * Checks the current state of the ToggleBox and removes or does hyphenation.
-    * @access public
-    */
-    function toggleHyphenation() {
-      if (Hyphenator.doHyphenation) {
-        if (css3hyphenateClassHandle) {
-          css3hyphenateClassHandle.setRule('.' + css3hyphenateClass, css3_h9n.property + ': none;');
-        }
-        removeHyphenationFromDocument();
-        Hyphenator.doHyphenation = false;
-        storeConfiguration();
-        toggleBox();
-      } else {
-        if (css3hyphenateClassHandle) {
-          css3hyphenateClassHandle.setRule('.' + css3hyphenateClass, css3_h9n.property + ': auto;');
-        }
-        Hyphenator.doHyphenation = true;
-        hyphenateLanguageElements('*');
-        storeConfiguration();
-        toggleBox();
-      }
-    }
-    return {
-      version: "5.2.0(devel)",
-      doHyphenation: true,
-      languages: languages,
-      config: config,
-      run: run,
-      addExceptions: addExceptions,
-      hyphenate: hyphenate,
-      getRedPatternSet: getRedPatternSet,
-      isBookmarklet: isBookmarklet,
-      getConfigFromURI: getConfigFromURI,
-      toggleHyphenation: toggleHyphenation
-    };
-  }(window);
-
-  // Export properties/methods (for google closure compiler)
-  /** ** to be moved to external file
-  Hyphenator['languages'] = Hyphenator.languages;
-  Hyphenator['config'] = Hyphenator.config;
-  Hyphenator['run'] = Hyphenator.run;
-  Hyphenator['addExceptions'] = Hyphenator.addExceptions;
-  Hyphenator['hyphenate'] = Hyphenator.hyphenate;
-  Hyphenator['getRedPatternSet'] = Hyphenator.getRedPatternSet;
-  Hyphenator['isBookmarklet'] = Hyphenator.isBookmarklet;
-  Hyphenator['getConfigFromURI'] = Hyphenator.getConfigFromURI;
-  Hyphenator['toggleHyphenation'] = Hyphenator.toggleHyphenation;
-  window['Hyphenator'] = Hyphenator;
-  */
-
-  /*
-  * call Hyphenator if it is a Bookmarklet
-  */
-  if (Hyphenator.isBookmarklet) {
-    Hyphenator.config({
-      displaytogglebox: true,
-      intermediatestate: 'visible',
-      storagetype: 'local',
-      doframes: true,
-      useCSS3hyphenation: true
     });
-    Hyphenator.config(Hyphenator.getConfigFromURI());
-    Hyphenator.run();
-  }
+}
 
-  // For questions about the Czech hyphenation patterns
-  // ask Martin Hasoň (martin dot hason at gmail dot com)
-  Hyphenator.languages.cs = {
-    leftmin: 2,
-    rightmin: 3,
-    specialChars: 'ěščřžýáíéúůťď',
-    patterns: {
-      2: 'a11f1g1k1n1pu11vy11zé11ňó11š1ť1ú1ž',
-      3: '_a2_b2_c2_d2_e2_g2_h2_i2_j2_k2_l2_m2_o2_p2_r2_s2_t2_u2_v2_z2_č2_é2_í2_ó2_š2_ú2_ž22a_a2da2ga2ia2ka2ra2sa2ta2u2av2aya2ča2ňa2ť2b_b1db1h1bib1j2bkb1m2bn1bob2z1bá1bí2bň2c_1ca2cc1ce1ci2cl2cn1coc2p2ctcy21cá1cí2cň1ců2d_1dad1bd1d1de1did1j2dkd1m2dn1dod1t1dud2v1dy1dá1dé1dě1dí2dň1dů1dý2e_e1ae1be1ee1ie2ke1o2ere1se1te1ue1áe2ňe1ře2šeú12f_f2l2fn2fr2fs2ft2féf2ú2g_2gngo12h_h2bh2c2hd2hkh2mh2rh1č2hňhř2h2ž2i_i1ai1bi1di1hi1ji1li1mi2ni1oi1ri1ti1xi1ái2ďi1éi1ói1ři2ši2ž2j_j2d1jij1j2jkj2m2jn2jp2jz2jď1jí2jž2k_k2dk2e2kf2kkk2l2kn2ks2kčk2ň2l_2lf2lg2lh1li2lj2lk2ll2ln2lp2lv2lz2lň1lů1lý2m_1ma1me2mf1mim2l2mn1mo2mp1mu2mv2mz2mčm2ž2n_2nb2nf2ngn1j2nk2nn2nz2nď2nónů22nž2o_o1ao1cog2o1ho1io1jo1lo1mo2no1oo1to2uo1xo2zo1čo2ňo1ř2p_2pkp2l2pn2pp2ptpá12pč2pš2pťqu22r_r1br1cr1d2rkr1l2rn2rrr1x2rzr1č2ró2rš2s_s2cs2d1se2sf1sis2js2k2sn1sos2p1sr2ss1sus2v1sé1sí2sň2sť1sůs2ž2t_1te2tf2tg1ti2tl2tm2tn1to2tpt2vt2č1té1tě2tř2tš1tů2u_u2b2ufu2ku2mu2nu2pu2ru2su2vu2zu2ču2ďu2ňu2šu2ž2v_2vkv2l2vm2vnv2p2vňwe22x_2xf2xnx1ty2ay2ey2sy2ňy2šyž22z_2zbz2ez2j2zl2ztz2v2zzzá12zč2zňz2řá1bá1dá1já1sá2ňá1řá2š2č_1ča2čb1če1či2čk2čn1čoč2p2čs1ču1čá1čí1čů2ď_1ďa1ďoé2dé2fé2lé2mé2sé2té2šé2žě1cě1lě2vě2zě1řě2šě2ťě2ží1bí1hí1jí1lí1rí1tí2ňí1ří2š2ň_2ňa2ňk2ňmň1só2z2ř_2řc2řdři12řk2řn1řoř2v2řz2řš2š_2šl2šnš2p2štš2vš2ň2ť_2ťk2ťm2ťtú2dú2kú2lú2nú2pú2tú2vú2zú2čú2žů1bů1cůt2ů2vů2zů2žý1bý1dý1hý1jý1lý2ný1rý1tý1uý1ř2ž_2žk2žl2žnž2v2žď2žň2žš',
-      4: '_ch2_ná1_st2_us2_ut2_vy3_vý1_za3_zd2a3daa3dea3dia3doa3dua3dya3dáa3déa3děa3día3důa3dýa3gaa3goa3gua3gáah3va3ina3iva2jda2jmaj2oa3kea3kia3kla3koa3kra3kua3kya3káa3kéa3kóa3kůa3kýap3ta3raa3rea3ria3roa3rua3rya3ráa3róa3růa3rýa3saa3sea3sha3soa3sua3sva3sya3sáa3séa3sía3sůa3taa3tea3tia3toa3tra3tua3tva3tya3táa3téa3těa3tía3tóat1řa3tůa3týa3uja3učav3dav3taz3ka3zpa3čaa3čea3čia3čla3čoa3čua3čáa3čía3čůa3ňoa3ňua3říaú3t3ba_2b1cbe3pbis33bl_3blk2brib2ru2b1tbu2c3by_bys32b1č1bě_3bínb3řab1ří2bš2ce2u2ch_1cha3che2chl2cht1chu1chy1chá2chř2ck2c3lac3léc2tict2nc3tvc2těcuk11c2vda3dd2bad2bá2d1cde1xde2z2d1hd3kv3dl_d1lad3li1dlnd2lud1léd2lů1dmddo1ddo3hdo3pdo1sdo3tdo3čd1red3réd3rýd3tld3třdu3p2durd3ved3vld3vrd3vyd3vád3věd3víd3zbd3zdd3zn2d1č3dějd1řad1ří2dš2d3škd3št3dů_dů3sd2ž2e2are2břed1led3ve1hae1hee1hoe1hre1hue1hye1háe1hýe1jeej1mej1oej1uej3ve3kae3kee3koe3kre3kue3kye3káe3kée3kóe3kře3kůe1lae1lee1loe1lue1lye1láe1lée1líe1mle1mre1mye3máe1měe1míe3mře3můe1mýeo1seo3ze2plepy3e1rae1ree1rie1roer3se1rue1rye1ráe1rée1růe1rýe2ske2sles2me2stet1řeu3beu3deu3keu3meu3neu3peu3reu3teu3veu3zeu3že3vdevy3e3xue3zeez2te3zíe3zře1čte3ňoe3ňue3ňáe3óne3říe3šee3šie3šle3šoe3šíeú3neú3peú3teú3čf3líf1rige2s3gic3gin2g1mgu3mgu3vhe2she2uhe3x2hli2hlý2h2nh3ne2h1th2tě2h2vhyd1hys3ia3dib2li1chid2li1emi1eni1etif1ri2hlih3ni3imi2klik3milu3i3nai3nei3nii3noi3nui3nyi3nái3néi3něi3níi3nůi3nýi2psi1sais3cis1ti1syi3sáit1ri2tvi1umiv3di3zpiz1ri1člič3ti1íci1ími3šei3šiiš3ki3šoi3šui3šái3šíi3žai3žei3žii3žoi3žui3žája3dja3gj1b22j1cj3drj3dáj3důj3efj3ex2j1hj3kv2j1lj3maj3mi2jmíjne3j1obj1odj1ohj1opj1osj2ov2j1rj3sn2j1tj3tlju3pj1usju3tju3vju3zj1už2jv2j3vdj3vnj3zbj3zdj3zkj3znj3zp2j1čj3štj3šť2jú1jú3njú3čjú3ž3kaj3kat3kav3kač3kař2k1c3ket3kl_k3lék3lók3lý2k2mk3mě3kof3kovkr2s2k1tkt2r3kujku3v2k2v3kyn3kác3kár3kářk2ř23ků_1la_2l1b2l1c2l1dle2i1lej1lel3lio2ližl2kl2l1m1loslo3zl2pěls3n2l1t1lá_2l1č1lé_1lík1líř2lš2l3štlý2t2l2ž2m1b2m1cm2dl3me_me3x2mk22mleml3h2mlim3nam3nám3ném3nýmo2kmo2smoú3m2psmp2tmr2s2m1tmu3n2muš3má_má2sm2čemí1c2m2šmš3ť3mů_3mý_3na_na3hnat2na3zna3š2n1c2n1dne1dne1hne2jne3pne3zn3frng1l3nio2n1lno3z2nožn2sa2n1t2nub3ny_3nák2n1č2nív2níž2nš2n3što1bao1beob1lob1ro1buob3zo3béocy3od3bod1lod3vod1řo1e2oe3go2flo3gnoj2o2okaom2no3nao3neo3nio3noo3nuo3nyo3náo3něo3nío3nůo3nýo2pso1rao1reo1rio1roo1ruo1ryo1ráo3réo1růo3rýo1sao1sko1slo1syo3tío3třou3mou3vo3zaoz1bo3zeoz1ho3zioz3joz3koz1loz3mo3zooz3poz3to3zuo3zío3zůoč2ko3ňao3ňoo3ško3šlo3žl2p1c3pečp2kl3pl_pl3hp2nu3podpo3hpo3ppoč2pr2cpro1pr2sprů3p3tupá2c2př_při31ra_2rakr2blrca3r1harh3nr1hor3hur1há1ricr2kl2r1mro3h2r1sr2st2r1tr2thrtu31ru_1ry_ryd2rz3drz3l1rák1rářrč3t3ré_3rý_s2b2s3casch2s3cis3císe3h3sel3semset2se3zs3fo3sfés3fú3sic3sif3sik3sits3jus3ků3sl_3slns2lys1lís2mas2mos2nas2nes2ná2st_2stns2tvs2tás1tísy3csá2d3sáh2s2čs3čis3ťo1ta_1tajt1ao2t1b2t1c3te_2tihtiú32tiž2tk2t2klt2ká3tl_t1le3tlmtlu3t1lyt1lét2mat3níto3b2toj2trč2trý2t1sts2t2t1t1tu_1tuj2tup2tve1ty_3tá_t3či2tčí3tém2těh2těp1tíc1tím2tín2tírt1řut2řát3št1tý_1tým1týř3týšu2atu3bau3beu3biu3bou3buu3báu3bů2u2du3deu3diu3dou3duu3dyu3díu2hlu2inu2jmu3keu3kou3kuu3kyu3kůul1hu3mau3meu3miu3muu3má3umřu3neu3nou3nuu3něu3níu3nůu3pau3peu3piu3puu3pyu3páu3pěu3píu3půu3rau3reu3riu3ruu3rá1urču3růus1lu3sou3syu3sáu3síu3sůu3viu3vuu3zeu3ziuz1lu3zou3zuu3zíu3čau3čeu3čiu3čouč3tu3čuu3čáu3číu3šeu3šiu3šou3šuu3šáu3šíu3žeu3žou3žuu3žáu3ží2v1b2v1cv2ch2v2dv3di3venve2pv2kr2vlovo3bvo2svou3vr2cv1ro2vs2v1sk2v2tvy3cvyp2vy3tvy3čvyš2v2z22v2čv3čáv3čí3vín2vřív2š23výsvý3tv2ž23war3xovy2bly2chy2dry2gry3hny2kly3niy2přyr2vy3say3sey3siy3smy3soy3spys2ty3suy3svy3syy3sáy3séy3síyu3žy3vsy3zby3zdy3zky3zny3zpyč2kyř3by3říy3šey3šiy3škyš1ly3šoy3špy3šuy3šíy3ždza3hza3iza3jza3kzat2za3zza3šz2by2z1c2z2dz3dize3hzet2zev2ze3z2z2fz1ház3jí2z2kz3kyz3kéz3kůz3ký3zl_z2m22zmez3mnz3my2z2nz3noz3nuz3nyz3néz3něz3níz3ný2z2pz3ptz3tř3zu_zu3šz3vi3zy_záh23zápzá3zzáš2z3čl2zš2z3škz3štzú3čzú3žzů3sá2blá2dlád1řá1haá3heáh1láh3ná1hoá1hrá1háá1laá1leá1loá1luá1lyá3léá1líá3myá3méá1měá3míá3mýá1raá1reár2má1roá1ruá3růá2scá2smá2stát3kát1rá1tuá1tyá1tíá3týáz3ká3šeá3ší2č1c3če_če1cč3koč3kuč3ky2č1mč2neč1sk2č2t3čtvč3tí2ď1t3ďujé3dié3doé3foéf1ré2klé3maé3meé3mié3moé3mué3můé3taé3toé3táěd3rě3haě3heěh3ně1hoě3huě3hůě3jaě1jeě1joě3jůě1raě1reě1roěr3sě1ruě1ryě1růěs3kěs3nět1lě1trět3vě1tíě3vaě3veě3vlě3voě3vuě3váěv3čě3zeě3ziěz3ně3zoě3zíě3šeě3šiě3šoě3šuě3šáě3šíěš3ťě3ťoě3žeě3žiě3žoě3žuě3žííb3říd1lí2hlíh3ní2krí1máí3méí1měí1saít3kíz3kí3šeí3šií3šoí3šíňa3d3ňov2ň1tó3zaó3zió3zoó3zy2ř2bře1h2řesřia3ři3hřis2ři3zři3řř2kl2ř1l2ř1m2řou2ř2p2ř1s2ř1t2ř1č2řídří1sř3štšab32š1c2š2kš3kaš3ke3škrš3kyš2laš2liš2lošlá2š2léš2lý2š1m2š1sší3dš3ší2š2ťš3ťoš3ťuš3ťá3ťalú2c2úz3k3účeů1hlů3jdů1leů1myů1měů1raů1s2ů2stů3vaů3voů3věů3zoů3žeů3žiů3žoý1mlý1měý3noý1s2ý2ský3zký3znýš3lža3d3žač2ž1b2ž1c2ž1d3žil3žlo2ž1mžon22ž1t',
-      5: '_a4da_a4de_a4di_a4do_a4dé_a4kl_a4ko_a4kr_a4ku_a4ra_a4re_a4ri_a4ro_a4ry_a4rá_a4sa_a4se_a4so_a4sy_a4ta_a4te_at3l_a4to_a4tr_a4ty_a4ve_cyk3_dez3_d4na_dne4_d4ny_dos4_d4ve_d4vě_d4ví_e4ch_e4ko_es3k_es3t_e4ve_f4ri_h4le_h4ne_i4na_i4ni_i4no_is3l_j4ak_j4se_j4zd_jád4_k4li_k4ly_ne3c_neč4_ne3š_ni2t_n4vp_o4bé_ode3_od3l_o4ka_o4ko_o4na_o4ne_o4ni_o4no_o4nu_o4ny_o4ně_o4ní_o4pe_o4po_o4se_o4sl_ot3v_o4tí_o4tř_o4za_o4zi_o4zo_o4zu_o4šk_o4šl_o4ži_p4ro_p4rý_p4se_pu3b_rej4_re3s_ro4k_s4ch_s4ci_sem4_s4ke_sk4l_s4ká_s4le_s4na_s4ny_s4pe_s4po_s4tá_s4ži_u4ba_u4be_u4bi_u4bo_u4de_u4di_u4do_u4du_u4dí_uh4n_uj4m_u4ko_u4ku_ul4h_u4ma_u4me_u4mi_u4mu_u4ne_u4ni_u4pa_u4pe_u4pi_up4n_u4po_u4pu_u4pá_u4pě_u4pí_u4ra_u4ro_u4rá_u4so_u4st_u4sy_u4sí_u4vi_u4ze_u4če_u4či_u4čí_u4še_u4ši_u4šk_uš4t_u4ší_u4ži_už4n_u4žo_u4ží_v4po_v4zá_v4ži_y4or_y4ve_zar2_zač2_z4di_z4dr_z4ky_z4mn_z4no_z4nu_z4ně_z4ní_z4pe_z4po_z4tř_z4ve_z4vi_č4te_še3t_š4ka_š4ke_š4ky_š4ťo_š4ťá_ú4důaa3t2ab4lýab3riab4sbab2stac4ciad2laa4dlia4dláa4dléad4mead4muado4sad3ria3drža4dužad3voad4úzad4úřae4viafi2aag4faag3roah4liai4reaj4meak4nial4fbal4klal4tzal3žíam4bdam4klam4nuamo3sam4žia4naean4dtaneu4an4scan4sgan4slan4sman2span4svan4tčan4žhao4edao4hmao4tčap4r_a4psoa4př_ar4dwa4rerar4glar4kha4roxar3star2vaar3š2ar4šrarůs3a3sinas3náas3pia4stkas4tmas3tvat4cha4tioat4klat3loat3rea4truat4ráat4thau4gsauj4maus3tav4d_av3loa4vlua4vlíav4tiay4onaz3laaz4léaz3niač4máaře4ka4špla4špyba4brba3kaba4sebe4efbe4etbej4mbeu4rbe2z3beze3bi2b3bist4bi4trbl4blb2lemb2lesb4lánb2lémbo4etbo4jmbo4okbo4trbou3sbo4škb2ralb2ranb4roubroz4b3ru_b3rubb2rán2b1s2bs3trbtáh4bu4enby4smby4tčby4znbé4rcbě3tabí4rcb3ře_bře4scad4lca4escech4ced4lcelo3ce4nsce4ovce4pscer4v4che_ch4lych4mb2ch3n4chtech4u_cik4lc4ketco4atco4mmco4žpctis4ct4lací4plda4jšda4klda4trdch4ldd4hade3hnde3jdde3klde3kvde2nade2ozde3slde4smde4sode2spdes4tde4xtde3zndez3ode3čtde4žpdi4gg4dinddis3kdi4sodj4usd4labd4lakd2loud3lučd4láž2d1lídmýš44dobldo3bydo3bědo3býdod4ndoj4m4dokn4dolydo3mndo4pcdop4ndor2vdos4pdo3ukdo3učdo3z2doz4ndoč4tdo4žp4drand4rapd4rend3rosd3roud3rošdr4scd3rušd4rýv2d1s2ds4kůds4podum3řdu3nadu4pndu3sidu4í_d4vacdy4sudře4kd4řepd4řevd2řítea3dreb4erebez2eb4lie4ch_e4chme3choe2chre3chve4chťed4beed4kved2mae3dmned4říee4thee3xieg4giehno4eh4něej3age3jase3jede3jezej3ine3jisej3moe3jmue4klye4lauel4dvel4zee4mlíemo3kem3žeen4dven4scen4sient3reo3byeod3leo4due4oleeo2steo4třeo4zbeo4zdeoše3epa3te4pniep2noe4pnýep4tlep4tmep4tne4ptuer4a_er4s_er4sne4sage2scee4sinesi4ses4k_es3kyes3kée4slye4sp_es4pee4st_e4stee4tkie4tkre4tlie4tlyet3riet3roet3růet4úneu3cteu4m_eu4r_e4uraeu4rgeu3s2eu4tseve4še3v2ke4vskex4taey4orey4ovez4apez4boez3deez3duez4děez4ejez4elez4erez4esez4ezez4ešezis4ez4itez4leez4náez4něez4pyez4ácez4áhez4čeez4řeeč4tee4čtie4čtíeře4keř4kue4škaeš4láeš4toeúmy4ežíš4fe4infene4fe4uefi4emfi4flfló4rfm4nof4ranf4ras3frekfs4tefu4chga4učghou4gi4ímg4lomg4noig4nosgo4hm3grafgu4elgu4itgu4m_gus4tha4agha4arha4blha4brha3dlha4kehas3tha4ydhe4brhe4idhej4shi4anhi3erhi4ghhi4re4hla_h4ledh3lenh3lobh3loph3lovh3luj2h1ly4hlá_h4lásh3lí_4hlíkh4nedh3nivh4noj3hněd4hovehra4ph4tinh4títhu4chhu3mohu4tňhy4dohy4pshy4zdhř4byhý4blia3g2i4al_ias4tia4tri2b1ri4chžid4gei4dlýig4nei3hl_i4hliih4naijed4ij4meij4miik3leik4ryi4kveik4úřil4bai4lnui4mlai4mlyi4munina3din4cmin4dl3infein4ghin4gpin4gsin4gtin4špio4skiro4sis4chis4k_is3kais3keis3kris3kuis3kvis3kyis3lois3léis3plis3pois4thist3vis3tíit4rhit4rpit4seit4suix4tdič4tlič4toiř4kliř4čeiš4kriš4kviš4toja2b2jac4kja4cqj3aktj3dobj3dokj3dosjd4říjech4jg4raji4chjih3lji4mžj4inajis3kji2zvjod2řj4orajo3svj3ovljpor42j1s2j4semj4si_j4sk_js4kojs4kájs4poju4anju3naju3spju4t_ju4xtju3žijád2rjš4tika4blka4chka3dlka3ka3kami3kaněka2pska4pvka2přkas3tka4učkaš3lka4špke4blke3joke4prke4psk3lejk4libk3lic4klo_k3los2k3lyk3lá_kna4sko3byko4jmko2přko4skko3zá4kroak3robk3rofkr4ú_kuch4ku4fřku4hrku3seku3siku3suku4thk4vrňky2prkyp3řky4znká4plk3řejkš4tila4brlab4sla3kala4nqla4psla4všla4y_la2zmld4nele4adle4auleh3nle3jole4prle4psle4scle4smle4svlet3mle2trle4tčle4ukle4vhle4vkle3xilez3n3lhanli4azli4blli4bvli4dmlind4li4tňli4vrl4katlk4nul4nullo3brlo4idlo4islo3splo3svlo2trlo4třlo4u_loz4dlo4šk2l1s2l4slalst4nl4stílt4ralt4rult4rylu4idlu4j_lu4k_lu4lklu4m_lu4mnlu3prlu3valu3vllu3vylu3vílá4jšlá4všlí4pllí4znl4štýmaj4sma4klma4kr4maldmas3kmat3rma4všmaz3l2m1d2me4gome4ismh4lemid3lmik3rmi4xt3m2klmk4lamk4li4mla_ml4h_ml4scml4sk4mlu_mna4sm4nohm3nosm4noz3množm4nézm3nějmod3rmo2hlmo4s_mot3ř4moutmoza4mo3zřm4plompo4smp4se2m1s2m4stlmu4flmu4n_mu4ndmu4nnmu4nsmu4nšmy4škmálo3mí4rňmš4čina3chna4dona4emna4h_na3jdna3kana3p2na3s2na4s_na3tlna3třnaz4kna4zšna4č_naž4nn4chcnd4hindo4tnd2rend4rind4říne4glnej3tnej3une3klne3kvne4m_ne3s2ne4s_ne4ssne3tlnet4rne3udne3v2ne4v_nez4nne3škne3šťng4lang4leng4lín4grong4vinik4tni4mrni4mž3nisk2nitřno3b2no4bsno3hnno4hsno4irno4mžno3smnot4rno4zdno4šk2n1s2ns3akns4kon4socns3pont4r_nt3runt3ránu4ggná3s2ná4s_nš4ťooang4obe3jobe3sobe3zob4rňobys4o4chlo2chroc4keoc4koo4ct_oct3noc4únode3pode3so4docodos4od3raod3růo3držoe3tioh4neoi4ceo4into4jaro4jmio4jmuo4jmůo4juzok2teol4glol4toom4klona4soo4hřoote2o4ptuopá4to4př_o4raeor4dmor3stor4váorůs3o4saiose4sosi4do4skuosk3vo4skáo4skýos4laos4lios4lýos3moos4muo4st_o4stgo4stmo4stéo4stšo4stýot4klo4tlýoto3sot3root3víot3řiou3běou3děou4flou4ilou4isou4k_ou3kao4uklou3krou3káoup3noupo4ou4s_ou3saou3seou4skou3smou4tvou4vlou4vnouz3do4učkou3žio4vskovy2po2vštoz4d_oz3dáoz3děoz3díozer4oz4koo4zn_oz4pyoz4pěoz4píoz3rooz3ruoz3růo4zutoz3vroz3váozů4soč4kaoři2so4škuo4škyoš4láoš4mooš4tioš4ťuož4mopa4edpa4espa4klpa3sipa4t_pe4alpede4pe4igpe4npperi3pi4krpi4plpl4h_4plo_po1b2po3c2poly3po3m2po4mppo4olpo4p_po4pmpo1s2pos4ppo3t2po4t_po4tnpo3ukpo3učpo3už3po3vpo3z2po4zdpo3čkpo3řípo4šv4pra_prob2pro3ppro3z4pránpse4s2p1skp4sutp4tejp4terp4tevpt4rip4tá_pu4dlpu4trpyt3lpád3lpá4nvpá4slpé4rhpře3hpře3jpře3zpřih4pš4tira4brra4emra4esra4ffra4hlra4hmra4jgra4jšra4nhra3sira4vvra4wlra4y_ra4yora4ďm4ražir3char3chorc4kir4dlardo2sre4adre4aured4rre4etre3klre4mrre2sbres3lret4rre4umr3hl_ri4bbri4dgri4drri4flri4ghri4zmr4miorn4drro4adro3byrod2l3rofyro4h_ro4jbro4kšrom3nro2sbro3svro3tiro3tlro4tčro3vd3rovýroz3droz3nro4zoroz3vro3záro4čprpa3drr4harr4hor4stur4trárt4smr2t3vrt4zuru3seru3sirus3kru3žirych3rys3try4zkry4znry4í_ry4škrád4lrá4džrá3rirš4nírů4m_rů4v_rý4znsa4pfsa4prsas3ks3ce_sch4lsch4nsci4ese4ause4igse4ilsej4mse4kuse3lhse3s2ses4kse4ssse3tkse3třse4urse3čtsi4fl4skacs4kak4skams4kok2skonskos44skotsk4rask4rusk4ry4skvesk4vos3káns4lavs3le_s4leds3lems3lens3lets4libs3ly_s4meks3nats3ne_sn4tls3ná_s4nídsob4lso3brso4skso4tvsou3hsou3ssouz4so4šks4polss4sr4sta_s3tajs2tanst4at4stecs4tepst4er2stil4stičst3lo4sto_4str_4strnst4ve3ství4sty_s4tyl3styš4stá_s3tář4stě_s4těd3stěhs2těrs2těž2stí_su4basu4bosuma4su3vesá2klta2blt2a3dta4jfta4jg4talt4tand3taně2tarktast4ta4čkte4akte4flte4inteob4tep3lters4te4trte4ucte4urte4utti4grti3kltin4gti4plti3slti4tr2titutiz4r4tizít4kalt4kattk4latk4li4tkně4tla_tles3t3lo_t4loutlu4sto4astob4lto3drto4hmto4irtol4sto4ol4top_4topt4topu2torn2toupt4reat4reftre4ttrip4t4ritt4rogt3rolt4rou4trunt4rus4trášt3růmt3růvts4kott4chtt4ritu4fftu4lktu4r_tu3rytu4s_tu4ť_tu3ži2t3vit4višt4výcty4gřty2laty4řety4řhty4řjty4řoty4řrty4řútá4flté2bl2těnn4tíc_4tícet4řebt2řelt2řict3řiltř4ti3třábtří4stš4tiubs4tu3bí_uc4tíu3druue4fauh3láuh3nou3ka_uk4ajuk4aluk4atuk3lauk3leuk4á_ul4faul4píum4plum4ruun4dlun4žru3pln2u3rou3ry_us3kyus3káus3kéus3kýus2lou4steu4styu4stéu4stěu3střu4stšu4stýu3su_u4trou4tráuš4kluš3tíva3dlva4jťva4klv4dalv4děkv4děčve3jdve3psvep3řves3lve4smves4pvi4chvide2vi4drvi4etvi4krvi2tr4vle_4vlemv4nadvo4icvo4javo4jbvo4jdvo4jjvo4jmvo4jřvo4třvous2vr2dl4vrnyvr4stv3stvvy3d2vy3s2vy4snvys4tvyč4kvy4š_vy4šmvy4ššvy4žlvz4novz4névz4něvz4nívá3riv4čírvě4cmvíce3v3řínvše3s3vý3zwa4fdwa4rexand4xisk4xt4raxy4smyb3riy4chry2d1lyd4láyd4y_yh4neyj4mayj4meyk3layk4lyym4klyna4sype4ryp4siyp4táys3luys3teyst4ryt4meyvě4tyz4něyz4níyz4poyřk4nyř4čezab2lza4bsza4dkza3dlza4dnza4jkza4ktzal4kzam4nza3p2za3s2za3tlzat4rza4utzaz4nza4zšza4č_zaš4kza4šszban4zbys4zd4rezd4víze3p2ze3s2zes4pze3vnze4z_z4inez3ka_zlik3z3ly_z4měn3znakz4nalz3ne_z3nicz4nělz4nítz4nívzo4trzo4škz4pát3zrak2z1s2z4trázu3mozu3mězu3mízva4dz3vařzvik4zv4něz3vodz3vojz4vonzv4roz4vánz4věsz3víjzá3s2zřej3z3řezz3řešzš4ka2z2ú1áb4ryá4bř_á3choádo4sá3hl_á4jmuáj4můá4kliák4niáne4vá2s3kás4k_ás4klás4kná2slaás4lyás4poáv4siáv4síáz3niáz4viář4keář4kůča4brčes3kč3ka_čs4lačs4srčt4la4čtěnčís3lďs4te4ére_ě3hl_ěh3loě4kléě3k2těra3děrs4tět1a3ět4acět3raět3říěš4ťsí3choích4tíjed4íj4můí2s3kís4klís4knís4l_ís3leís4lnísáh2íz3daíz3deí3znařa4plřa4ďmře3chře3jdře3klře3kvřeo4rře3p2ře4p_ře4pkře4pčřer4vře2spře4srře3tlřet4řře3zdře3zk4řezlře3čtři4h_ři4hnři4jďři4l_ři4lbřil2n4řineři4v_ři4vkři4vnřič4tři4š_řk4lařk4liřk4lyřk4nořs4tořá4plřá2slří4křřš4tiša4vlšej4dšep3tši4mr4škovšk4roš3ku_š3livšmi4dš4tipšt4kašt4klš4těkš2těsš4těvš4típťáč4kúj4maút4koúře4zúš4tiůr4vaůr4vyůs3teů3tklý3choýd4laýt4kuýt4kyý4vliý4zvuýč4něža4tvže2b3žeh3nže4mlže4zgži4dlži4jmži2vlžk4niž4lic2ž1s2žá4bržá4nrží4znžš4tižš4tě',
-      6: '_ale3x_as3t3_je4dl_kří3d_le4gr_li3kv_moud3_na3č4_nář4k_od3rá_os4to_os4tě_ot3rá_ově4t_oz3do_pa4re_pa3tř_po3č4_roze3_roz3r_ru4dl_se3pn_va4dl_zao3sab3lona3d3ra3a3dvaa4nameane4skao4střas4tatat3ronat3rova4tří_ba4chr4chalgcien4c4dbat_3dch4nde4bredej4mode3strd3lou_4doboj4do4dd4do4djdomoh44do4čn3drobndře4pne3chl_eilus3ej3eleeju3steoch3repoč3te4s4knes3ku_e4s3lies3tižes4toles3táneu4rase4u4t_eu4traevy4čkevě4trezaos3ez3dovez4ed2eč4kateštíh4ha4dlahatos44h3lo_3hodinho3strhos4tě4hovna4hovny4hovná4hovněhy2t3rid4lo_ik3lo_ilič4nis3ko_i3slavis4talis4tatié4re_jbyst3jez3díjit4rojmou3dj1o3z2jpo4zvjpříz4j4s4kůj4s4mej4sou_j4soucj4s4teka2p3lka2p3rkast3r4k3la_4k3li_ko2t3vkous3k4la3silech3t4lejšk4lenchlepa3dlepo4slet4lilo3střma4tramet3remezi3smys3lonam4nene3h4nne4krones4le4nestino4skyno3strnst4rant4lemob3řezodej4modo4tkod4ranofrek4oje4dlo4jmovont4raopoč3topro4sopřej4o4s3keos4toros3trůoze3d2pat4ripes3t3pe4tra4p3la_4p3li_po3drupo3drápost4rpoč3tepra3stpro3t4pře3t4pře3č2rast4rre3kviretis4ric4kurna4všro3d4rromy4sropát4ro4skvro4skyrově4trs3tvěrs3tvý3rvanírys3kyrůs3ta3schopser4vase4střsig4nosi3ste4s3la_s4liči4s3lo_spro4ss4teros4tichs4tink4stit_s4tona4stou_4strams4trik4strács3třejsych3rsy4nesta3str4tenémtes3tatis4tr4t2kant3rant4tric_tro4sk4trouh4troň_4t4ružt3rálnt4vinntě3d4ltřeh3nupe2r3ve3dleve3stave3t4řve2z3m2v3la_vrst3vvy4dravě3t4aví4hatv3ští_y3klopymané4z4doba4zerotzlhos4ztros3zá4kl_ác3ti3ázni4cč4tenýě4trají3t3řeí3z3nií3zněnře4dobře4kříře3skaře3skořes3poře3staře3stuře3stáře3stř3ři4t_š3k3li4š3kouůs3tánýpo3č4',
-      7: '_dneš4k_mi3st4_no4s3t_os3t3r_polk4la4stru_b4roditckte4rýdob4ratdos4tivenitos4epro4zře4strouevyjad4evypá4t4kličkamš4ťan_nte4r3aonář4kaopře4jmovi4dlapodbě4hpod4nes4rčitý_se4strase4stru4stupnitac4tvovrs4tvězdně4níz4dobnýádos4tič4tené_č4tový_ů4jmový'
-    },
-    patternChars: '_abcdefghijklmnopqrstuvwxyzáéíóúýčďěňřšťůž',
-    patternArrayLength: 91005,
-    valueStoreLength: 12949
-  };
-  Hyphenator.config({
-    minwordlength: 5,
-    defaultlanguage: 'cs',
-    displaytogglebox: true,
-    remoteloading: false,
-    persistentconfig: true,
-    intermediatestate: 'visible',
-    useCSS3hyphenation: true
+const events = empty();
+
+(() => {
+    // Events known to the system
+    const definedEvents = new Map();
+
+    /**
+     * Create Event Object
+     * @param {string} name The Name of the event
+     * @param {Function|null} defFunc The default method of the event
+     * @param {boolean} cancellable Is the default cancellable
+     * @returns {undefined}
+     */
+    function define(name, defFunc, cancellable) {
+        definedEvents.set(name, {
+            cancellable,
+            "default": defFunc,
+            "register": []
+        });
+    }
+
+    define(
+        "error",
+        (e) => {
+            // eslint-disable-next-line no-console
+            console.error(e.msg);
+        },
+        true
+    );
+
+    define(
+        "engineReady",
+        null,
+        false
+    );
+
+    /**
+     * Dispatch event <name> with arguments <data>
+     * @param {string} name The name of the event
+     * @param {object|undefined} data Data of the event
+     * @returns {undefined}
+     */
+    function dispatch(name, data) {
+        data.defaultPrevented = false;
+        // eslint-disable-next-line jsdoc/require-jsdoc
+        data.preventDefault = (() => {
+            data.defaultPrevented = true;
+        });
+        definedEvents.get(name).register.forEach((currentHandler) => {
+            currentHandler(data);
+        });
+        if (!data.defaultPrevented && definedEvents.get(name).default) {
+            definedEvents.get(name).default(data);
+        }
+    }
+
+    /**
+     * Add EventListender <handler> to event <name>
+     * @param {string} name The name of the event
+     * @param {Function} handler Function to register
+     * @returns {undefined}
+     */
+    function addListener(name, handler) {
+        if (definedEvents.has(name)) {
+            definedEvents.get(name).register.push(handler);
+        } else {
+            events.dispatch(
+                "error",
+                {"msg": `unknown Event "${name}" discarded`}
+            );
+        }
+    }
+
+    events.dispatch = dispatch;
+    events.addListener = addListener;
+})();
+
+/**
+ * Default loader emits error
+ * @returns {null} - there's no default loader
+ */
+function defaultLoader() {
+    events.dispatch("error", {
+        "msg": "loader/loaderSync has not been configured."
+    });
+    return null;
+}
+
+const settings = createMapWithDefaults(new Map([
+    ["compound", "hyphen"],
+    ["exceptions", new Map()],
+    ["hyphen", "\u00AD"],
+    ["leftmin", 0],
+    ["leftminPerLang", new Map()],
+    ["loader", defaultLoader],
+    ["loaderSync", defaultLoader],
+    ["minWordLength", 6],
+    ["mixedCase", true],
+    ["normalize", false],
+    ["orphanControl", 1],
+    ["require", []],
+    ["rightmin", 0],
+    ["rightminPerLang", new Map()],
+    ["substitute", new Map()],
+    ["sync", false]
+]));
+
+/**
+ * Create lang Object
+ * @param {string} lang The language
+ * @returns {object} The newly created lang object
+ */
+function createLangObj(lang) {
+    if (!languages.has(lang)) {
+        languages.set(lang, empty());
+    }
+    return languages.get(lang);
+}
+
+/**
+ * Setup a language object (lo) and dispatch "engineReady"
+ * @param {string} lang The language
+ * @param {Function} hyphenateFunction The hyphenateFunction
+ * @param {string} alphabet List of used characters
+ * @param {number} patternLeftmin leftmin as defined in patterns
+ * @param {number} patternRightmin rightmin as defined in patterns
+ * @returns {undefined}
+ */
+function prepareLanguagesObj(
+    lang,
+    hyphenateFunction,
+    alphabet,
+    patternLeftmin,
+    patternRightmin
+) {
+    alphabet = alphabet.replace(/\\*-/g, "\\-");
+    const lo = createLangObj(lang);
+    if (!lo.engineReady) {
+        lo.cache = new Map();
+        const exc = [];
+        if (settings.exceptions.has(lang)) {
+            exc.push(...settings.exceptions.get(lang).split(", "));
+        }
+        if (settings.exceptions.has("global")) {
+            exc.push(...settings.exceptions.get("global").split(", "));
+        }
+        lo.exceptions = new Map(exc.map((e) => {
+            return [e.replace(/-/g, ""), e];
+        }));
+
+        lo.alphabet = alphabet;
+        lo.reNotAlphabet = RegExp(`[^${alphabet}]`, "i");
+        lo.lm = Math.max(
+            patternLeftmin,
+            settings.leftmin,
+            settings.leftminPerLang.get(lang) || 0
+        );
+        lo.rm = Math.max(
+            patternRightmin,
+            settings.rightmin,
+            settings.rightminPerLang.get(lang) || 0
+        );
+        lo.hyphenate = hyphenateFunction;
+        lo.engineReady = true;
+    }
+    events.dispatch("engineReady", {"msg": lang});
+}
+
+/**
+ * Setup env for hyphenateFunction
+ * @param {object} buf baseData
+ * @param {Function} hyphenateFunc hyphenateFunction
+ * @returns {Function} hyphenateFunction with closured environment
+ */
+function encloseHyphenateFunction(buf, hyphenateFunc) {
+    const wordStore = new Uint16Array(buf, 0, 64);
+
+    /**
+     * The hyphenateFunction that encloses the env above
+     * Copies the word to wasm-Memory, calls wasm.hyphenateFunc and reads
+     * the hyphenated word from wasm-Memory (eventually replacing hyphenchar)
+     * @param {string} word - the word that has to be hyphenated
+     * @param {string} hyphencc - the hyphenate character
+     * @param {number} leftmin - min number of chars to remain on line
+     * @param {number} rightmin - min number of chars to go to new line
+     * @returns {string} the hyphenated word
+     */
+    return ((word, hyphencc, leftmin, rightmin) => {
+        wordStore.set([
+            ...[...word].map((c) => {
+                return c.charCodeAt(0);
+            }),
+            0
+        ]);
+        const len = hyphenateFunc(leftmin, rightmin, hyphencc);
+        if (len > 0) {
+            word = decode(new Uint16Array(buf, 0, len));
+        }
+        return word;
+    });
+}
+
+/**
+ * Instantiate Wasm Engine
+ * @param {string} lang The language
+ * @param {ArrayBuffer} wasmdata Uint8Array buffer
+ */
+function instantiateWasmEngine(lang, wasmdata) {
+    /**
+     * Register character substitutions in the .wasm-hyphenEngine
+     * @param {number} alphalen - The length of the alphabet
+     * @param {object} exp - Export-object of the hyphenEngine
+     * @returns {number} - The new length of the alphabet
+     */
+    function registerSubstitutions(alphalen, exp) {
+        if (settings.substitute.has(lang)) {
+            const subst = settings.substitute.get(lang);
+            subst.forEach((substituer, substituted) => {
+                const substitutedU = substituted.toUpperCase();
+                const substitutedUcc = (substitutedU === substituted)
+                    ? 0
+                    : substitutedU.charCodeAt(0);
+                alphalen = exp.subst(
+                    substituted.charCodeAt(0),
+                    substitutedUcc,
+                    substituer.charCodeAt(0)
+                );
+            });
+        }
+        return alphalen;
+    }
+
+    /**
+     * Instantiate the hyphenEngine
+     * @param {WebAssembly.Instance} inst - a wasm instance
+     */
+    function handleWasm(inst) {
+        const exp = inst.exports;
+        let alphalen = exp.lct.value;
+        alphalen = registerSubstitutions(alphalen, exp);
+        prepareLanguagesObj(
+            lang,
+            encloseHyphenateFunction(
+                exp.mem.buffer,
+                exp.hyphenate
+            ),
+            decode(new Uint16Array(exp.mem.buffer, 1664, alphalen)),
+            exp.lmi.value,
+            exp.rmi.value
+        );
+    }
+    if (settings.sync) {
+        const heInstance = new WebAssembly.Instance(
+            new WebAssembly.Module(wasmdata)
+        );
+        handleWasm(heInstance);
+    } else {
+        WebAssembly.instantiate(wasmdata).then((res) => {
+            handleWasm(res.instance);
+        });
+    }
+}
+
+/**
+ * Read a .wasm file and call instantiateWasmEngine on success
+ * @param {string} lang - The language
+ * @returns {undefined}
+ */
+function loadHyphenEngine(lang) {
+    const file = `${lang}.wasm`;
+    // eslint-disable-next-line jsdoc/require-jsdoc
+    const cb = (err, data) => {
+        if (err) {
+            events.dispatch("error", {
+                "key": lang,
+                "msg": `${lang}.wasm not found.`
+            });
+        } else {
+            instantiateWasmEngine(lang, new Uint8Array(data).buffer);
+        }
+    };
+
+    if (typeof settings.loader !== "function") {
+        events.dispatch("error", {
+            "msg": "Loader must be a function."
+        });
+        return;
+    }
+
+    if (settings.sync) {
+        cb(null, settings.loaderSync(file, new URL('./patterns/', __webpack_require__.b)));
+    } else {
+        settings.loader(file, new URL('./patterns/', __webpack_require__.b)).then(
+            (res) => {
+                cb(null, res);
+            },
+            (err) => {
+                cb(err, null);
+            }
+        );
+    }
+}
+
+const wordHyphenatorPool = new Map();
+
+/**
+ * Factory for hyphenatorFunctions for a specific language and class
+ * @param {object} lo Language-Object
+ * @param {string} lang The language
+ * @returns {Function} The hyphenate function
+ */
+function createWordHyphenator(lo, lang) {
+    if (wordHyphenatorPool.has(lang)) {
+        return wordHyphenatorPool.get(lang);
+    }
+
+    /**
+     * HyphenateFunction for non-compound words
+     * @param {string} word The word
+     * @returns {string} The hyphenated word
+     */
+    function hyphenateNormal(word) {
+        if (word.length > 61) {
+            events.dispatch("error", {"msg": "found word longer than 61 characters"});
+        } else if (!lo.reNotAlphabet.test(word)) {
+            return lo.hyphenate(
+                word,
+                settings.hyphen.charCodeAt(0),
+                lo.lm,
+                lo.rm
+            );
+        }
+        return word;
+    }
+
+    /**
+     * HyphenateFunction for compound words
+     * @param {string} word The word
+     * @returns {string} The hyphenated compound word
+     */
+    function hyphenateCompound(word) {
+        let joiner = "-";
+        const parts = word.split(joiner).map((p) => {
+            if (settings.compound !== "hyphen" &&
+                p.length >= settings.minWordLength) {
+                return createWordHyphenator(lo, lang)(p);
+            }
+            return p;
+        });
+        if (settings.compound !== "auto") {
+            // Add Zero Width Space
+            joiner += "\u200B";
+        }
+        return parts.join(joiner);
+    }
+
+    /**
+     * Checks if a string is mixed case
+     * @param {string} s The string
+     * @returns {boolean} true if s is mixed case
+     */
+    function isMixedCase(s) {
+        return Array.prototype.map.call(s, (c) => {
+            return (c === c.toLowerCase());
+        }).some((v, i, a) => {
+            return (v !== a[0]);
+        });
+    }
+
+    /**
+     * HyphenateFunction for words (compound or not)
+     * @param {string} word The word
+     * @returns {string} The hyphenated word
+     */
+    function hyphenator(word) {
+        let hw = lo.cache.get(word);
+        if (!hw) {
+            if (lo.exceptions.has(word)) {
+                hw = lo.exceptions.get(word).replace(
+                    /-/g,
+                    settings.hyphen
+                );
+            } else if (!settings.mixedCase && isMixedCase(word)) {
+                hw = word;
+            } else if (word.includes("-")) {
+                hw = hyphenateCompound(word);
+            } else {
+                hw = hyphenateNormal(word);
+            }
+            lo.cache.set(word, hw);
+        }
+        return hw;
+    }
+    wordHyphenatorPool.set(lang, hyphenator);
+    return hyphenator;
+}
+
+const orphanController = (() => {
+    /**
+     * Function template
+     * @param {string} ignore unused result of replace
+     * @param {string} leadingWhiteSpace The leading whiteSpace
+     * @param {string} lastWord The last word
+     * @param {string} trailingWhiteSpace The trailing whiteSpace
+     * @returns {string} Treated end of text
+     */
+    function controlOrphans(
+        ignore,
+        leadingWhiteSpace,
+        lastWord,
+        trailingWhiteSpace
+    ) {
+        let h = settings.hyphen;
+        if (".\\+*?[^]$(){}=!<>|:-".indexOf(settings.hyphen) !== -1) {
+            h = `\\${settings.hyphen}`;
+        }
+        if (settings.orphanControl === 3 && leadingWhiteSpace === " ") {
+            // \u00A0 = no-break space (nbsp)
+            leadingWhiteSpace = "\u00A0";
+        }
+        /* eslint-disable security/detect-non-literal-regexp */
+        return leadingWhiteSpace + lastWord.replace(new RegExp(h, "g"), "") + trailingWhiteSpace;
+        /* eslint-enable security/detect-non-literal-regexp */
+    }
+    return controlOrphans;
+})();
+
+/**
+ * Encloses hyphenateTextFunction
+ * @param {string} lang - The language
+ * @returns {Function} The hyphenateText-function
+ */
+function createTextHyphenator(lang) {
+    const lo = languages.get(lang);
+    const wordHyphenator = (wordHyphenatorPool.has(lang))
+        ? wordHyphenatorPool.get(lang)
+        : createWordHyphenator(lo, lang);
+
+    /*
+     * Transpiled RegExp of
+     * /[${alphabet}\p{Letter}-]{${minwordlength},}/gui
+     */
+    const reWord = RegExp(
+        `[${lo.alphabet}a-z\u0300-\u036F\u0483-\u0487\u00DF-\u00F6\u00F8-\u00FE\u0101\u0103\u0105\u0107\u0109\u010D\u010F\u0111\u0113\u0117\u0119\u011B\u011D\u011F\u0123\u0125\u012B\u012F\u0131\u0135\u0137\u013C\u013E\u0142\u0144\u0146\u0148\u014D\u0151\u0153\u0155\u0159\u015B\u015D\u015F\u0161\u0165\u016B\u016D\u016F\u0171\u0173\u017A\u017C\u017E\u017F\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u0219\u021B\u02BC\u0390\u03AC-\u03CE\u03D0\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF\u03F2\u0430-\u044F\u0451-\u045C\u045E\u045F\u0491\u04AF\u04E9\u0561-\u0585\u0587\u0905-\u090C\u090F\u0910\u0913-\u0928\u092A-\u0930\u0932\u0933\u0935-\u0939\u093D\u0960\u0961\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A85-\u0A8B\u0A8F\u0A90\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AE0\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B60\u0B61\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB5\u0BB7-\u0BB9\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D28\u0D2A-\u0D39\u0D60\u0D61\u0D7A-\u0D7F\u0E01-\u0E2E\u0E30\u0E32\u0E33\u0E40-\u0E45\u10D0-\u10F0\u1200-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u1E0D\u1E37\u1E41\u1E43\u1E45\u1E47\u1E6D\u1F00-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB2-\u1FB4\u1FB6\u1FB7\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD2\u1FD3\u1FD6\u1FD7\u1FE2-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CC9\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E-]{${settings.minWordLength},}`, "gui"
+    );
+
+    /**
+     * Hyphenate text
+     * @param {string} text The text
+     * @returns {string} Hyphenated text
+     */
+    return ((text) => {
+        if (settings.normalize) {
+            text = text.normalize("NFC");
+        }
+        let tn = text.replace(reWord, wordHyphenator);
+        if (settings.orphanControl !== 1) {
+            tn = tn.replace(
+                /(\u0020*)(\S+)(\s*)$/,
+                orphanController
+            );
+        }
+        return tn;
+    });
+}
+
+/**
+ * API exposed config
+ * @param {object} userConfig - the user supplied configuration
+ * @returns {Map} - userConfig complemented with defaults
+ */
+H.config = ((userConfig) => {
+    Object.entries(userConfig).forEach(([key, value]) => {
+        switch (key) {
+        case "exceptions":
+        case "leftminPerLang":
+        case "paths":
+        case "rightminPerLang":
+            Object.entries(value).forEach(([k, v]) => {
+                settings.get(key).set(k, v);
+            });
+            break;
+        case "substitute":
+            Object.entries(value).forEach(([lang, subst]) => {
+                settings.substitute.set(
+                    lang,
+                    new Map(Object.entries(subst))
+                );
+            });
+            break;
+        default:
+            settings.set(key, value);
+        }
+    });
+    if (settings.handleEvent) {
+        Object.entries(settings.handleEvent).forEach(([name, fn]) => {
+            events.addListener(name, fn);
+        });
+    }
+    const result = new Map();
+    if (settings.require.length === 0) {
+        events.dispatch(
+            "error",
+            {"msg": "No language has been required. Setup config according to documenation."}
+        );
+    }
+    settings.require.forEach((lang) => {
+        if (settings.sync) {
+            events.addListener("engineReady", (e) => {
+                if (e.msg === lang) {
+                    result.set(lang, createTextHyphenator(lang));
+                }
+            });
+        } else {
+            const prom = new Promise((resolve, reject) => {
+                events.addListener("engineReady", (e) => {
+                    if (e.msg === lang) {
+                        resolve(createTextHyphenator(lang));
+                    }
+                });
+                events.addListener("error", (e) => {
+                    if (e.key === lang) {
+                        reject(e.msg);
+                    }
+                });
+            });
+            result.set(lang, prom);
+        }
+        loadHyphenEngine(lang);
+    });
+    return result;
+});
+
+/* harmony default export */ const hyphenopoly_module = (H);
+
+;// ./node_modules/hyphenopoly/patterns/cs.wasm
+const cs_namespaceObject = "data:application/wasm;base64,AGFzbQEAAAABGwVgA39/fwF/YAF/AX9gAn9/AGACf38Bf2AAAAMJCAECAQAAAwAEBQMBAAEGEAN/AEECC38AQQMLfwFBAAsHLQYDbG1pAwADcm1pAwEDbGN0AwIFc3Vic3QAAwloeXBoZW5hdGUABgNtZW0CAAgBBwwBAQq0CQgSACAAQfGXAWxB55gBb0H/AXELRAEBfyAAEABBAnQiAigCgAMEQEGACCECA0AgAigCgAMEQCACQQRqIgJBgApOBEAACwwBCwsLIAIgAEEQdCABajYCgAMLVAECfyAAEABBAnQoAoADIgJFBEBB/wEPCyACQRB2IABGBEAgAkH/AXEPCwNAIAEvAYILIABHBEAgAUEEaiIBQYACTgRAQf8BDwsMAQsLIAEvAYALCzQAIAIQAiICQf8BRwRAIAAgAhABIAEEQCABIAIQAQsjAkEBdCAAOwGADSMCQQFqJAILIwILtQECBH4GfyABIQcDQCAIQQJIBEAgACAIaiEAA0AgACAJSgRAIAIgB0gEQEEADwtBwAAgBykDACIDe6drIgsgCWohCSAHQQhqIQcMAQsLIAMhBULBACADe30gACAJIAtra6x9IQYgAyEEA0AgBCAFhCIFQgF8IQQgBkIBfSIGQgBSDQALIAogByABa0EDdCAEeqdrQQFrIgwgCBshCiAIQQFqIQgMAQsLIAwgCmtBAWsgCkEIdGoLUQIBfgF/IAEgAEEGdUEDdGohAwNAIAEgA0gEQCACIAEpAwB7fCECIAFBCGohAQwBCwsgAEE/cSIABH4gAiABKQMAQsAAIACsfYh7fAUgAgunC6AEAQx/QYABQQBBgAL8CwBBAC8BACEIA0AgCARAIAgQAiIFQf8BRgRAQQAPCyADIAU6AIEBIANBAXQgCDsBgAIgA0EBaiIDQQF0LwEAIQgMAQsLIANBAmohDANAIAQgDEgEQCAEIQNBASEHA0AgAyAMSARAAkAgB0HwEkGYHRAEIgVBCHUgB2siByAFQf8BcWohBQNAIAUgB0oEQCAHLQCYHSADLQCAAUcEQCAHQQFqIQcMAgsLCyAFIAdGDQAgB0EDdSIFQQdqIAVBB3FBAXRrLQC4RkEHIAdBB3FrdUEBcQRAIAdBAWpBuMYAEAVB0MsAQc/WABAEIgZBCHVB0MsAEAUhBSAGQf8BcSEGIAVBAXUiCC0A0FYiDUEPcSANQQR2IAVBAXEiCRsgBGohCkEBIQ4DQCAGIA5KBEAgCQR/IAhBAWoiCC0A0FYiDUEEdgUgDUEPcQshBSAJQQFzIQkgBSAKLQDAAUoEQCAKIAU6AMABCyAOQQFqIQ4gCkEBaiEKDAELCwsgB0ECaiEHIANBAWohAwwCCwsLIARBAWohBAwBCwtBACEDIAxBAmsiBCABa0EBayEBA0AgAyAESARAIAMgC2pBAXQgA0EBdC8BgAI7AQAgAyAAQQFrTiABIANOcQRAIAMtAMIBQQFxBEAgC0EBaiILIANqQQF0IAI7AQALCyADQQFqIQMMAQsLIAMgC2pBAXRBADsBACAEIAtqC6QBAQV/QQEhAEHMESEBIwJBAXQkAkEuQQAQAQNAIAFB8BJIBEAgAS8BACECIAEvAQIiAwR/IAMQAgVB/wELIQQgAhACQf8BRwRAIAMgAhACEAEjAiADOwGADQUgBEH/AUYEQCACIAAQASADBEAgAyAAEAELBSACIAAQAQsjAiACOwGADSAAQQFqIQALIwJBAmokAiABQQRqIQEMAQsLIwJBAXUkAgsLqWMBAEGAEQuhY0h5cGhlbmF0aW9uIHBhdHRlcm5zIGZvciBDemVjaApDb3B5cmlnaHQgKEMpIDE5OTUgUGF2ZWwgYGV2ZQ1lawpsaWNlbmNlOiBHUExhAEEAYgBCAGMAQwBkAEQAZQBFAGYARgBnAEcAaABIAGkASQBqAEoAawBLAGwATABtAE0AbgBOAG8ATwBwAFAAcQBRAHIAUgBzAFMAdABUAHUAVQB2AFYAdwBXAHgAWAB5AFkAegBaAOEAwQDpAMkA7QDNAPMA0wD6ANoA/QDdAA0BDAEPAQ4BGwEaAUgBRwFZAVgBYQFgAWUBZAFvAW4BfgF9Af//9/////+////f////7//v////3////f/7v//3///////9////9//////3///3//v//7/////3/6///+////////7//7////////7///v//////v///u3/6//vf////f9/v////v/3/37///3/f399m96bv///9////Lvv/37b9f9fF9fwb7/33u97/9/dfuve///7//v//fhxPj7a/tft//4ZZxZv9a/O/9UeQp+zXP9+29//n/3vr//arxvbCf/7+/f+73//L/9f+/1/37/SVUin7fR3t3fd85/3w5+vb+9bq1v7iD7/ZpZV96/6/+xfT/70Pn1+4/+Pcfr2X/8q3vWX+6/+x+svzr/4/8V/6/KLP0Sv468/Wu3Mqffv977/4Lv+v5f/Vtvf918YNu337//77f9t+7Ov9f9/3v/37d3P/7++9s+/379d/z90euntT/er/n9Lf79+9//5zLVD4ub+/7Lvu//Vv/c//o//vb23vftv+8/+3b+a/vov+vHvt/7773//fX65vr/L+f6uqSRm2e7qn7+nb/X/621VvfdV/j77/9O7lvbTv5u2/3L9fr++v/V34/actorTT9skXUoNRZUg3s/eXxLE78hzhyHy9ef7++1/zeSGhP2//9fV1iLkkod+79f7oiHWezhqVXVVq+tKv+3r3f7tqrqqWn2vtm5rq21XSb3vyrv/9q49tGZXtfZqqgpAEBFJYbAFqVRSVfVbq6USgJ5KAF8KllJalQkQ0NRVJqmSamdVVaoEVVGFUkVVBRWjVa2vtmqiUq+1Zm2V+2XqTxN0IEClhaAAhGy3gFEMeXVq1apVAJwjott+s28FIGVa+3tt6hIVqbRSVaZQuNOzqlBVtamqrKioUpVqVWUE4KVqqsqWFjJqiLDxdv+SIoSqqkhcMQCVECAppdKrpioF2StWQ/oqVdUo0qRTyaVKSq1qvXuZWoqivFZ1k2q3VPJq0qpSUdWpqigi5Ssqq+qs2tOttCptKUSuqlJdrbK8qiTcOdkWyRUk1EoVREiVvvlWpSr/dl+LstyJsEdVtZVDFaWqWi1VKlW6JM9quW2rVaNWy9ZSn7tWtapUK0hbyKhN6kTZ6rsK0i7VpEurUmpVibJvtHtH9bVb3+m7p+rpqqpSWVOIqupKVdAU7dhWK001SWnsvrtCIlBpJwGY8gBJQCgkYR4VAAkAgEF/egjyS5Zq1ZuaVFVVBarXZZKUImAIVKpbUiml1hpV3AAkGkplUAsVSEpRIVXoAFF1NcewMkB2gACgBhTAWbqBwiAAg4qqQJGiCVUKIAAAIoFIALrk0jXdXtelCLhWELWoklQBWEWlKgJog1BVIAAAAgAABqQCEjoAICQAAAAAAAAAhAAAAAQIACAQGBABAASABAAAAAgAAAgAQAKAACIEIAIBAgQAEIAgAApQABAEEAgBABCqEAGgCiAAAQAAgAACAIBAAACeBQAAEAACGAQBACAIAgAAAxRIQCCKAAAAAAEIAAAAACAAAECggCAAAAAAFAQACQAASAgAgBRAglAQIACoAAAAQAEAgFCsgIAAAAAAEEAAAAAAEAIEgIApAAKCEAACI0CACEACDKEUIAAAAQCAQAgCoiAAUEoAhApCAAAACAAAAAAAAQAIACABAAACAgABAAAAkACAQIAAAgAEAARiAcgAAAQAgAAAAAAA8DQQAqAAABIAQAgAAAohAhIQQSBEAAACgAAAAAAhAGAIAABFAFAiABJBAgEASNmqqioAAAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxgZGhscHR4fICEiIyQlJicoKQECAwQFBgcICQoLDA0ODxASExQVFhkaHB0eHyEmKQABAgMEBQYHCAkKCwwNDg8QEhMUFRYZGh8hJCUmJwABAwQFCAkKCwwNDg8SExQVGRobHB0hIyQlJgABAwUICQsMDg8QFBUWGRsdJCgAAQIDBAUICQoLDA0ODxITFBUWGRobHB0gISMkJSYoKQABAgMEBQcICQoLDA0ODxASExQVFhgZGhseHyEkJSYpAAUJDA0OEhMUFRwfAAEFCAkMDQ4PEhUAAQIDBAUJCwwNDg8SFBUWGSAhJCUpAAECAwQFBgcICQoLDA0ODxASExQVFhgaGxwdHiEiJSYpAAECAwQFBwgJCgsMDQ4PEBITFBUWGhsdHyEiJikAAQMEBQYLDA0ODxITFBUWGRshJCUmKAABAgMEBQYHCAkKCwwNDg8QExQVFhobHB0gISQmKCkAAQIDBAUGCAkLDA4PEBITFBUWGRobHSAhJigpAAECAwQFBgcJCgsMDg8TFBUZGhsdHiEiJigpAAECAwQFBgcICQoLDA0ODxASExQVFhgaISQlJikAAQMFCQsMDg8QEhMUFRkbHCElJicVAAECAwQFCAkLDA0ODxASExQVFhgZGhscHiAhJigAAQIDBAUGCQoLDA0ODxASExQVFhkbHB0hJCcoKQABAgMFBgcJCwwNDg8QEhMUFRYZGxwdICEjJSYoAAECAwQFBggJCgsMDQ4QEhMUFhohIiQmKQABAgMEBQkLDA0ODxASExQZGhsdICEjJCUmKQEFAAEGCQ4PFBkBAgMEBQcICgsNDhASExQVFhohJCUmKQABAgMEBQYICQoLDA0ODxASExQVFhkaGx8hJCUmKAIDBAgKCwwNDhITFBYaJCUmBAYLDA0SExQmKQIDBAgKCwwNEhMUGiQlJhoDBAoLDA4QFBYaISUmKQIDBAgKDA0OEBITFBUWGiElJgABAgMFCQsNDg8QExQVGx0oAAEPExQVAwQICgsMEhMUFholJicpAAELDQ8TFAABAgMEBQkLDA0ODxATFBYaGx0hJgABAwUJCwwNDhATFBYdJCYnAAELDRQbAgMICgwNEhMUFhopAAECAwQFCQsMDQ4PExQWGx0iJCYECwwSExQWCBkFDg8WAwsTFhIMDg4TAQUTGhsMDyUFCQkPAQUJDxYbAgQLDhATFBYaJikBDxITFQUPFQMFCwwOEBQpAgQICgsMDQ4QEhMUFhohJikBEBkaICkPFgEECw0OEBQWBAgUBQsnFAwSEwMBBQkMDQ8SFRYZGxwdHyAjKBYJAQYPEhUbDBYOEhYEDQ8FCQwODxIVGRscHiAoBgsUKQILDg8pAQQFExQpBQgTFBITFCUBBAUHCQsPExUWGRseICYoAQUICQ4PEBQVFhkbHB0oAQMFCQsMDxIUFRYZGxwdHiAjJSgHChMhBAwUDwsMDhAUAQUJDA0PFRsdKA8VBR0QAAIDCxMFChAVGgITFAACBQsbHAUKDxQVJgEJDxUbFBsDBQATFBoSDhIAFAEFHQQFAwQMDg8QEhUAAQUMDQ4UFRkbJQULBRQBHAENKQkMDhYjCxAECgsUARsICAIICgsODxMYGiEpBw4TFRYAAQkODxUbHB0oBCACBAgKCwwNEBITFBUaISkBBQ8TFRwgCxAMJQ0OEBITHQEFDBIZGx0jEwIEDgoBBR0LFAATBBIFDCUIAgsMDRYlFBgHAQUODxIVGRsgDAEFCQ0PFRYBBQwPEhUZGxweJSgBBAUPFRkaGxwdDA8SGRsdICMlKCkECRMUAgMEDBMUGiYBDA4PEhQZAQUJDxMVGRscICgBAwkLDA0QFAsMEh8lAgMECw0OEBITFBYaKQQFCxMZIxQVDwECBAUJDA4QFBsdISUODQ4QFCELFA8VGwULHQUJCwwPFB0dCQ4VBQYdHg4BBQkUAxUTDwMOHQ8PCAEFCQ0TFgECBAsTFBkCCQoTFRgBBQcSAQUJDxUZGx0gBQkPIwQTFgEJHSMDDRQEEBMUGgICBAcMExQMEggHDA0OFBIODA4NBQ0MDRIWHwIJDhUMFQEDBAUGBwkPFRkbHB0gIyYoExMPAQMLDBAUGRsSExYNBBQQEhIDDQwUCyEFCQsPFBUbHQEFCQ8VGwIDBAcLGQ8SGyUoAwYYGhIDCA0OExQaFgEJDx0FAgQIEBITFhoPJQUJCw0ODxAUDAEOEBMUFhgaKQQOAgQLDhAEDiEpFCcCAwQKCw0OEBMUFRYhJSYCChAUAAEFCQ8ZGxweICMBAgYKEBMUFRYaDxMfEgMGCAoTFBYSDhAaAxASJQUUAAACCw4QExYZGg4BAwgJCgwOEBMUFRYYGgEBAgQODxQWKQEMDhUCCRMUFRomIwwOFBIJCgsMDRAWAAoWAAsQGiUUFAoLDBMUFhoMAAcJFBgaDAQLGAwBBQgJExUBDxscICMECAsTFBUaHwwPExQTFAYOJhMmAAwTAxIABSEnAAADBAUICgsNEBMUGiEmKQgIDxIlBAcICgsNEBMUFRYaJhIMEhYLDQ8TFAIICQ0TFBomKQELDxAUBQwSAgcACxMWKRQnDgEFDBIVGRocJQgLFBkfAgUMDxIWJQcUDBIODgMOAQUNDxUBFAcUCw4BBQkPFBUZGx0gIygIFA8SExQbJQEEBQkPExUWGRscICgBBQkLDA0UGQsMDxIWHSUCBAYJCw0QExQWGiEpCRMZJgECBAUICQoLDA0ODxASFBUWHSgLAQ8JCwwNFCcMDQULExQBBAkOEhMUIQsQDAABCAkPFQIDBAgMDQ8QExQVFhohJSYBAw8TGygFCxUFEhUbBBQUAwQOExIABQkUAAIFBggKCw4TFhcZIikMAQgLDA8BBAULDRMUFQEMDg8VGwIDBAYHGgwJAQQBAgQGCAoLDRATFBYaIQEIFAgSExUWGgATKQEAAwQTGh0mBAwECxIlAAAaCRQODRMWEBMBBQgJHQEICQoLDA0SExQVGiEPHB8DBgcLExQVAQ8SFhsoAAEFCQ4PGR0BBQ8BBRQbHQITFBUmDxITAAEFCQwODxIVFhkbHSMlAg0WAw4ECAsJDwACAwQKDA4PEhMhAAEGCQ4PEBITFBUHCAsOEBMUGh8pAQwOGwABBQ0PFRkcAR0BAgQICQoMDxASFQEFCQ8VGyAhKAsUAxIABgoMEBITJykFCSAABwwlAAYCDQMNDhIADSUmCR0ECA4QBQkUFRsdFBQBBQkPExUbHSgUBQkPEhUZHQYMDg4NAQUMDxUZGygGCBABBQkQEhUbJQQFDxUdIygpAQUJDBUZGx0jKAEFCQ8VGRshKAsMDxQVGRsdKBIJFQUJDA8VHQEFCQ8UFRsdBQkLDxQVGx0FDxUbHQQKCwgBCSMECg4QExQaAwQFCxQSAQUPAQIJChMUFQMEDg8TCxQDBBATFCEmKQ4SAwgOExQaGx0DFB0FFAYSDhMWEhMMEggMEhkSDg0MAQsBCQUTFCUWAQUJDA0PEBQVFhkbHB0NKRMjAgQLDhALAgsdIQUJCwwPEBUdBAIECAkKCwwNEBMUFRohJgEZCQ4PEhYIEBITFBYaGw4dARkcICgACAkZBQ4ZIwEFCQ8VGRwdICMUJhQbARIlAA0mAQkODxIbHSMACAsQExomISkMBQsUEwwSJQgUDA8lAQUMDg8SGw0MDgEFDxUZHB0ZHB0gIwUBBQ0PFSgDCwwNEBQLEhUZHSATCw4WCwUdCQ8PEgwBBQkPFSgFAQ8bJQgMDA4FDRIbHCMBCwwbCyUECw4FCQ8dAQkPGQ0LCwUFFAgMDCMPDwsLDAsOFg4MAgADEwEPFRkFCwwTBQwPFh0jExQKEgEFDA4PFSgBBQ8oDBQBBQ8TFRkoCw4BDBIWHSUBBQwPFRshBQkODx0FCQ8VGx0nDwUJDxUdBBYQIgMECAoLDxASExQaIQEICgwOExQWGiElJgwOFRQQEwQLExQCFgoQDQEFDA8SFRkBCQ8bHCAJCQsdIwQdDxUbDCEMBA0FGSMBFhQLAQ8jDwUJDwQUIQIIDRoECgwWDgkPDgIOGhQBBQkPHAwPEhUFAQUJDxkbAQUPFBkBBQwPEhkFCxoBBRkTBR0jCA8LFAUJBQUBCQ8MCwQFBAQJGQUdBwsTFSEDISYUExAlHAUMEgEPAQUJDxUZHSMFDwUMFBIWHSUjAQQJDxULDAkSFAwhDyAFAgoTCxoECAkNEAUMGwUBGQUPGwkBBQkPBQkPFR0ODQ8VCAEFCRUFCQEFCQ4PFRsdIwEPGw8UGR0JBQUJHQUJCxQdCQ4PHQQPGwkSBQ8SIQkSGQ4PFR0jBQ8lBQkoDAUUAQUZDxsPIAkCFAkBCRscBRUTAQkpKQEPGiUJAQEPCQUFCQIMGh0EDBUTCQUNFBMVAwcMDRAWIQgEDRQhAA8AFxIMCBgUARITDhsJAQsNEhYIDwwPBQ8VGwgdEw0UAA8VHQkOARwJGwsMGRIIAQUGFA0SBRQSDA0TDg0UDQsSEwsMDgQVGgACDhIIDg0hDgMDAQATDBMIDA8TFhMWDAAZAgUADgwUBRQNEBMBDCYMEhQMDgESDgQNDBYBGgwNDxAUFA4PFBAHBAsPEwILFSEpJgwPEhkgIwQKDg0OGQ4PAw4WEBQLIQ4OFBAOEA4CExUmAyYWKA8lAQ4JAAMVCxAWFBISGgkADA0PEhYnBRYBDh0ICQkPIxUHEwQMGg4TDxUTGRUWBR0LBRYUAwkSGQgMFQUUJQIEBRQJDyAhDwwNDhUAAA4HBQ4TAA4VGRwJGQAFAAUJDxIbCRIJGQkPKA4UAAABBwASEyYLChAhFAESFg8QDwUPFSMECgwSExomExQFGyMZAwgFBRkBBQkdCxUBGw8dJg4FBQ0MEg8OEwsFCCEVDQ0JEw0GDBQAFAcSDBIMBRQPBBIEEw4SCAUABA4AAhAWCgATAAsEFgoECRQFDhAOFAgPJA8TEgQMGQAUEikFDyAFAAkBBAUJBQ8ZBSUBIRUBGQ4EDQwFCBATFBALEwgAAQUPEhUWGQEPHAwPAQgWHQgQBRUEBQwPDAUSFg8LERQTAgsTHQgEAQgMKQELEhYVJQEWDBIaHQ0AAA8bKAUVDwUOARAAFAkSCQwIDAEJIwwSExYlFCEMEAwPEhMACgACAyEAEwATGQ0lCxYTGwECBgAIJRIFCRUIJBIlDgwKCRITARETCSYADQUEFQgODyYDAQ8SEwMNFgwNEiELCAsJDg4aDBYNBCQSFBUMEgQTEBQWEiUABAsBDh0BFRkEAAALAA4SAQwZHSYmDA4gEwwSBAsSJgwPExIJBQwSFAEJAAADCwATCBMaKRoKEgwAJRQBJQ8TBQwMAAQOEyYMCw8kCQEIDw0ABAEOAAwlCyYADgMJFAUJHQwOFBUMEhYAAAwTFAwSBAAOCycBBR0PCRQSKQslEw4TEikLDRQSBAsLDwMPEhIFABUbBwAPBwoTGiQTBQwSBQ8ADg4KEBMDExQBKCkJBQUFFBIECQ8VKBoFDA8MExIlJQUhDxUUAAUFDRQbEwkTBAUVFhsgAQkgDxUABw0PEhwgJgwgEw8dCSMjDAwTAAEMEhsODwABBQsNFgwOBAsJBAsQFAAbHSMEEg8AGR0jDxUoFBIbEwETFRkbDwkVDwQTDAkAEgwFBxAJFBISDAAAAAACDhIZEAwADRAUAA4LISkECxQdFgATAhAUGg4TFAoSFgkADBIMDBYMCAgKFBohCAkSDRMGDA0HJggJFBYMAA8NCQEPCQETBBUSFAwWEgIMCRINAAILBxIMCA0PFhIEGQwSGQACJg4ZGwILFgkMIQQgIwQODxYbEAQBDxUWGw0VBQkLCQ4ICxQLDgALDCkJDhQdABQABhILAAwODwUVBwwNFQgWCxMUCyUSFAwOFAMLDQsOExQBFRkFDw4AFgAEDQ4UAiEAAAsUAAwABAwSCxYIExoLDA8SAAoOFAMQEgMMDhQhDwAOFQABCQ4bEAUdAAwmACUAAAQIEikFAQ8BBQgFDAwUBgcUBCMLFAsLDA4cAgwTFBIDEhQSDAcMDBQSFRIdDA4UAQkjABMAFRMTDBINEhMMABQVDhAOAQYUAxAUBwwTFSQOEykMJg0WDwgJBgsAGQAACQ4mAyUBBQgKDxIfDAwABQwOAggMAwwJAhMJFAAdFQEbDwAKDBQBBQABHQwVDBISDgAZGxwgDwUZHCAjJSYADxsMHQwnDAwLIQwEEyUMDRAUJQ0IBRIUEhIAAA0EAwECBAoNJSUTDBkUFhIOFAsADSYMDxwdIwkFARINAQ4THQQFBAsBDQkSGwAFAQUBDxkODBMSCRsVBRIFFB0jDw4FDBMLDA4LFAsODBIUDiYACxMOEyMCBR0PEA4ABQAPCwAOCwwAAxQWDBILFAsPGw8dIwQlCyMECg4PDgoTDAoaJgEZAA8JEwAVKAkJFgAMDgEZDwkdCQkFKAAPFAQoDA4ABQ4IBQEFAQkjAQ8aCQ8BIRUZCRUjEgsAARIOARYODAUADxwEFAMBHRMMDQgPBAwWJRIACyEWCxASFAwlBAsMFAAOIgACDgUAAAsOFAABCRkPDwwMJQkMBBQSCRUWDwAWBBABDBALExYLDwEZBRsMFg4MBwwNDAkDEhIOCSMYJgwGBBIWFAQUCxsPEiMbFA8FJQsKBRIMDgwTDw4FCyUUFQ4WABIJBwMSAAUPEgAKAQgJDg4AEwUUDxIUGgApDA8OEwEBGwsSExYUCAETDhIjARkbIwAADgAWDBQAFB0PBBYaAAMSCwsUCwgEEwklAQUTDw4FDwUJGRIBAQ0aDQsOCwwWAQsUEwoSKAwJASMFFRsSBRQSCRMVJhMUFhkUICMdGSABEAESJQ8FCRMPCAsAAQANCwMOChITFhINARIUAAsIAA4ODgUBFgEUABAcDgEOFBMTABQDDhwgIAoCHQEPDwEVGyUWDgsJDAUQABQgFBYTJRUEFAEAAQ0BCBMAARUJDyMdIAkAACADCyUJIR0FDiEOHQsUAAEZABkAAAAAAAAAAP7+fgtrhhJD2uzeZn5Qif9Kfn/f/f/7+6ctl4N76Qove3t/7mupV/T3/7H773Kaf/Fe/ZO93Ubvaynnca+kU76oftL+3z/7/ICo2orWc/++9hFUf63Pd0H/L15v/v2q+Z/O/939j1D/AAg499wPduswAAIAAAgAAH9buVcOAWAUf/JfVQEAwH90gfr7qfV/s4vh9wFUsSiAGdnCvD4wgNH75TcU6fv+mMf/Qwrg33v/2nlvhZD6f0MAJoEDUMAiBKv/JIG57xiKO4A19r/n7R4YLojvvycC9wAOALOUKEFeF8SAMwFUQglZoEfcljkxLqfCPr+ABQmbIPPrIvx9KFAJALFv+xsQwQYEFULUcdenhqIZAAGhFwC6i8H62ugCuYEAiMwtWIQAP9FQyQCIvq3fubrWXfuN+vGv//89u/+7SeQHf2UpAUZ5/utv//uIdkCN/OH4+obV/vr3//gX3t90mH/Jz73/j//9//17DD7LGS6qxCjC////MIL96+0Hf+sD3/////+///+df/w6/7//v+////////6v/////9/f/3///91v//9v99++/////v+//97//P///t/7993/3/9/d7j/H/79f//+/////fv///f++/8v///n6/f97997//+///7////3//v///uw////////8/////r//3X///u9M/967/39P/6/////f/7/v/f34/f7////3v3/+////3/bf/3975f//f7/+///fPv7u/+b9/9JTv//3/Xu/////v//////3/9/+/6/////fv/vm//////1///////f/9////bd/1////31/+/+/////3f79dv7fv7////+3////z//3f/v/v/Pvv//f9r/2uv/AAAAAOASAPy2bdu2bdu2bW3btm3btm3bbbtt27Zt27betu3ttt3btm233bZt223bu73ttm3b3ra2bdu2bdu2bbbtbrdt23bbbdu2bdu2bdtve/du22273Xbb3Xbbttt2t+3edtu27e63bW/bu9tub73dtt1tu227tm3bbtv2dtu2bdu27bZt27bttm27227b3W3bbtu2bdtt27bdbdvett3dtm3btm27bdu2u93d27bbu7vdbnfbttu2bdu2t+1t27Ztt23btm1tu23bbtu2bdu27bZt223b7ra7bbvdtm2223bb7W677fd2291t227b27bttm3btm22bdu2bdu2bbbttm3btm3bbdu2bdu2bdvbtm3btm3btm3btm3btt1ttm3btm3btr3btu22bdtt27Zt27Zt27Ztbdu2bdu2bdvbtm3btm3btrZt27Zt27Zt27Ztu23bbdu2bdu2bdu2bW3btt1u27bb27Zt27Zt27a2bdu2bdu2bbZt27Zt27bb27Zt27Zt2/bbtm3bttu2bbZt27Zt27Zttm3btm3btt227W7btt1t29u2bdu227bttm3btm3btm1t27Zt27Zt29u2bdu2bdu2ttu23bvbbXe23bZt27Zt27Ztu23btm3bbdu2bdu2bdtt27Zt27bdtm3btm27bdu227Zt27Zt27a2bdu2bdu2bbZt23bbtm3bbdu2bdu2bdvdtm3btm3btm27bdv2tm2727Zt27Zt27bdbdu2bdu2bbZt27Ztd9u2tm23bdu2bdtt27Zt27Zt223btu22bdu227Zt27Zt27bbtm3btm27bbZt27Zt27Zt27Ztt23bttu2bdu2bdu2bbZt27Zt23bbbdu2bdu2bdtt27Zt23bbtm3btm3bbtu227Zt27Zt27bbtm3btm3bdtu2bbdt27Zttm3btm3btm1t27Zt27Zt29u2bdu2bdu2tm3btm3btm223bZt27Zt27Zt27Zt27btbdu2bdu2bdvbtm3btm3btrZt27Zt27Ztbdu2bdu2bdvbtm3btm3btrZt37Zt27Ztbdu2bdu2bdtt27Zt23vbtrZt27Zt27btbdu2bdu2bdvbtm3btm3btrZt27Zt27Zt27Zt27bbbtu2t23btu22bW3btm3btm3b27Zt27Zt27a2bdu2bdu2bbZt27Zt27bbtm3btm3bdttt27Zt27Zt29u2bdu2bdu2tm3btm3btm1t27btdrdt29tt27Ztu9u2bdu27bZt27a2bW/btm3btm3btm3btm3b27Zt27Zt27a2bdu2bdu2bW3btm3btm3b27Zt27Zt27a2bdu2bdu2bbZt27Zt27btbdu2bdu2bdvbtm3btm3btrZt27Zt27Zttm3btm27bdtt27Zt27Zt223bbdu2bdu227Zt27Zt27a2bdtut922bbZt23bbtm3b27Ztu922bdu2bdu2bdu2bbZtt23btm3bbdu2bdu2bdvbtm3btm3btrZt27Zt27Zt27bdtm27bdu2bdu2bdu2bW3btm3btm3b27Zt27Zt27bbtm3bttu2bdtt27Zt27Zttm3btm3btm22bdu2bdtu27Zt223btm3bbdu2bdu2bdvbtm27bdvutrZt27Zt27Zttm3btm3btt1t27Zt27Zt29u2bdu2bdu2tm3btm3btm3btm1727Zt27Zt27Zt27Ztbdu23bZtt+3btm3btm3btr1t27Zt27Ztdrdt27Zt27Zt27Zt27Zt29t2e9u2bdu227Zt27Zt27a2bdu2bdu2bW3btm3btm3b27Zt27Zt27bbtm3bbdu2bbZt27Zt27Ztbdu2bdu2bdvbtm3btm3btrZt27Zt27Ztbdu2bdu2bdv+3//7v23btgAAAADA//f/EQEBAQEBEQERARERAQEBAQEiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiICEhISEhISEhICAhISEgICEREQERAhECAQISAhEgEBAhAgICAgECAQECAgICARICASIgEBAgECARECERAQIQERAhECAQISEQESAQEBAQECEBAgICARIgIREREREhECERERESESERICEgICAgICEgICECIQISEgICEgIhICECIRAiISAhERERERERESERERERERERIREhICESAhEgIQERAgIRICAgIQISAhAgICAQIBAhAgICAhEhICAhICICAgIQIgISEiAgIQIQIQICAgECAgICECAgISAhAgIBAhAgICAQIgIBAhAhAhIBAgECAhICAQICEgIQECAgICISAgICECECAhECAhAgISAhAgICECAgIiAgIREREiIRERERERIRERIREhESEQICECEgICAiECAgIiAhEREQIRAhAgICECERAgIRAgISISEgECARISAgESAQIBEgEBAiAgIBEgICECEBAgIBAgICAgIBAgIQIRIBEgECAgECEgIgISEhISEhISEhISEhISAgIQIQIgISAgISAgICISICICEiEiIgICAhESEhISEiICAgIQIhICISAiAhIgIgIgISAhICIQIhAgISAgIREREREhESEhISEhISEhIRERERERESERISEiEhISEhISEhISEhEREREREhERIRERECAQICEBAQICECARICAiAQEBAQIBAQIREREhIREhISAgICAhECECAiAgIhAgIQIQIBAiAhAhEgICECAgIQIgICECEgIQISEgIgICAgIREREiISEhICAhAhAhAgICECAhICESAgICMjEyMjIzMTMyIyExMTExMTExMTExMTExMTEyMTExISIhMTExMTExMTExMTEyMTExMTExMTExMjITExMTExMTExMTExMTExMTExMTExMTExMTEyETExMjIyMTIxMTExMTExMTExMTEwMjIjIjMwMDAhIiAzMDARMRIgIBAwICAwIBAQECExMSIhMSMSMSEiEiEwMREwESEQIRIBISMjISMjIjERMTExMjAhMTExMTExMTExMDERETEwMjEhIhIxERERERERERESEhISMTExMTExMTExMTExERERERERERERERExERERMTISMSMxEREREjEREREREREhIiEiEjIyMjIyMjIyIyMjIxMTIzExMiExMTIyMjIxETExMTExMTExMTESIDAyMjIiIjAgIQITEjEzIyMiISERIhERESESIxMSIzMTExMTExMTExMTExMSESMhERMhEhEjEyEREREjExMjExMTExMTExMTEyIiMjExMTExMTExMCMxEREREREhEyExMjESMjIxETExMTExMTIyMjExMDAwMDAwMDAjExMTEwMDIiIDIwMDAwMDASIBAQMCEgEjEiMBAQEBIhMSAyMDICIwITExMTIiIzEiIiIwIDIiEDEiMDAyMjIjIyIyMhISIjIyIyIxMhAyMiMCEgIDAyMgICExERISERIxMzIyEjISMSEyICIhMTExMTExMTExMTEhERERERERETExERERERExMjIxMhEyETIyMhIxMjIxMTEyITExMTEwMSAyMSISIyAyMjIjISIyAwMjIyIjEiMwIRMiAjMBAhIzESMRExEBEiMSEjMSMBATIjIwEBAwMjEzITEyMDAyMjIjEwMTAwMDAxMTAwMSERISEhISAgISEhEjIgMTEwESMBEQMCMwISEgMRAzMRERITIwICAiIBAQICAjAQMDAQECAgEBAQMTAgICERITEhMTExMTExMTExMTExMSEhITExMTEyETExMTEwMTExMTExMTExMTExMTExMTExMCMTEwETIRMTExMTExMTEyETExMTExMTIxMTExMTExMTExMTExMTEhMDIhICIyIzIhERIyMjIjIjIzIDAyMDAxMTAgMDEhISESEhMSExIiExMTExMTIhMTExMTEyMTExMTExMiIxMTExMhExMTExMjIyMjIyIyMiMjEhMjIyIyMjIjERMTExMTAwITExMTExMTExMTEwMjEwMyAyMiMyIyMTExMjEhIhERMhIxERERERERERExETExMTERERIhERExISMSEiMhEREREyMTExMTEyESExMTExMTExMTIyESIxIRExEREjIyMTExMTExMTEyMDERETEhMTIwMhExMTEhEDEwMjExMjERMTExERExMhERESMREREjIyEyERIxETExMTExMjExMjExMTExMTExMjExMTExMTIwMhIyAjMjMiMjEgICIRMzExMDExISEjISEiMTExMTAxETERERERITExMTExMTIwMiMDAzIkJCQkJCQkJCQkJCQkJCQkJCQzMkJCQzJCQkJENDJEQkRCQkJCQkMzMkJCQkJCQkMyQkJEQkJDNDNEMzIkJEMzJCQkJCQkJCQkJCQkJCQzJCQkJCQkJCQkM0JCQkM0QzNCQkRCQ0JCQkJCQkJCQkJCQkJCQkJCQ0NCQkNCQkJCQkJCQkJDQkJCQkJCQkJCQkJCQkJCQkJCQkJDQkJDQkJCQkJCQkQkIkJCQkJCQkJCQkJCQkJCQzJCQkJCQkIyQiJCIUFBQkJDQTMjExQDMjJCQkMiQjJCQkJCQkJCMkJCQzJBQkRCQkJCQiJCQkJCQkJBQUJBQkJBQjIiRDEyMjFCQjJBQkIyMUJCQkNDMkIxQUJCQjJCMkNBQUJCMkJCQ0NENEJCQSEhQSJCQkJDMkEhIURBMTEiNEJCQkJCQkIxM0NCRENEMkJCQ0BCQkBCQ0FCQkJEQkJCQkJDQDAEJCMjIyMiIiMkJCI0JCMzIyQkBDMkJBQUEhMURAQjIyMEBAQENDQEBCMkNDI0IyM0BAQ0JAQUFBMTEyQTFCQkMyMkIyQUJDQUFBIjJEIkFBQTEhMUJCQiEyQkIyREJCMTExMjEyMTFBQkJBQzIyQkJDMjMyQUIiQkJEMzFCIUJCQkFCQkJBQSFDQkFEIyMUMUFCQUFBQUFBQjIyMkIyQkFCQUQkNBQkJCQkJCMjJCQCJCQkJCQkRCQkJCQkJCQkJEQkFBQ0JBQkJEQkRCQkJDQkFBQDJCQkRCQUFBQkAyQkJDQkJCQkIyQzJCQkNCQjJCQEFBMEMTExMTBBQTBBQTFAMENBQUJCMkJCQiMkJCQUNCQUJBQkExQkRCQkIyQUJCQUFBQUMyQkAyQkJCQkJDQkJCMjIyMjIyMjIyMkMyMkJCQkJCQkJCQkJCQ0JBMTExMkRCQkMyQUMyIyFCMTRBQUFCQkFEFEJBRCQjIyQkIzIkJCQjIwMDIjIjIiQiMyQzJCQjJCQEMTBDFBMEExM0IyQiJCIyMEExMkRCQkIyMjJBQiMyQkEyQkNCMkJAQDJCQiJCQkMyMkJCQkJDMiJCQkJCMzAyQkJCREJCQUJBQjJCQjIyIkJDQkFDQUJCQkJCQkJCQkIyMjIyMkJCQkFDQkJAQzMyQzJCQkMzMkJCQEJCQkBDQUExQDFBMzIiQzBEQjFDQkFCQkJCQkJCRDJCQjJCQkIyMkIyM0JCQ0FCQ0IiQkJCNDMzIyMkJCQjNCMkNCMjJCQkFCQ0JCQDAiQjJCQkIzQkJCMkFCMkIyMkJCREMzMzJEQUEiQkFDMkMzMURCMjEyMkJBQUFBQUFCIkJCQ0JEIUNBQUJCMkQxQ0NBQxQzFBQkJCQjJBQUFBQUFCQUMyMjIyMjJCQkJCMUIyMzRCQjIyQjJCQkMxQjFDISJCMjIzMkQkFCQkJCMjIxQjIzQkMhQUJCQkJCQkJCQjJCREJCRDMzJCQEMkBDBEMkJCQkNCQkIyMjJCMjJARCMzNDMENBQUFBQkFCQkMzMkJCQzMzNDMzJEJCQkJCQkJCQkJCMkJCQkJAQTEyQUMiQkNCQjJCIzNCQTJCQkJCQkFCQkIzIjQDJCQkMyIjIyMkIwMzMyQzIyQzJCQUFCQkIyMzI0MzJCQkJDQkIyQkJCQkJDMTNDQ0JCQkNCQjNCQjIyQjJAQUBBQCRAQkJCQEJBMEMUExQTExMUBDExQTEyQTFDQjJCQzM0QkFCQEExIkBBQkAgQjBAQEJAMEFAMEEwIEFAMSEiQkRCMiIiQkBAQDAkQkJCQkRDNEJCQkJCQjNCQjJAI0BBQEIUJCQEBEMTFDQkNCMkJDQkBAQEAgIUFDREFBQTFAQUBEBBMTJCQkJCQkIyQkIxQUJCIkJCQkJCQkIgQEI0AhQSEhMkAzQkNBMkEyQjIxMkJCQjIyQkJCQkJCQyMTEyMjIyMiFBQUFBQTFBMUFCQjIyQkFBQUIyMzMyQ0I0IjJEIkJCQiAjBAQUJCQkJCQkJCRCIgQkEyQ0NCQkJCQkJCQkI0MUJCNBMzJCRERCQkIxQkJCQkJCMkJDQ0JCQjIzQkNCQkJDQkMiQkIyQkJDQ0IzQkNCQkNCRERCQkNCMkFBNDExQDFBMTFBQUJCQUAxQjIyM0E0QkExMUJBQTFEMTEyQkFBMjAzQTFCQUJDQkJCQSJCQkJCMkJCQEEzREJCQkJCMkQhMyMjExMyQkNCQTJDNCQkFBQkJDMTJCQkBDMkEyMUMzQkIyMkJCQjIyMjNCQkJDQiJCM0IyMEIyQkJCQkMgQDBCQkJDQkJCQkJCQkIiQkJDQzJBMwQwQkExM0FCQkFBQSFDQkJCMTJDMkJCQkIiQUJCQkJCRDNEM0MzMEUzQ0QzNDMzQzRDM0M1NDNDM0QyMUNCQkIyMUJAREBCQ0IxMEVAM0E1MjM0NDIyMkIyQkNDRTIyRUJFQDIzQEBAQEJCNEIxMkJCRTMzRDNFQUFENDQwQEQ0Q0IyQzQzM0JDQEJCM0NDJCNENCRUNBQ0Q0RUJCM0JCMjRDMzRCNUNDREVCQkRCMjAzMzAzQkNCMURBQUFAQUBAQUBBNDJCMEMzQTBDQEBBMUQyMjQyQkExNUFARUUyREExQUJCQjIzMjIyMjI1RUFBRENDRkRBRkVAQkREQ0VDQEJCQENDREFEQUFBQYiJiJiIGIiYmJiIGIiJiImIGIiJiImIGIiYmJiYgA==";
+;// ./src/hyphenator-for-czech-language.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const CZECH_LANGUAGE = "cs";
+const CZECH_TEST_WORD = "nejneobhospodarovavatelnejsimi";
+const PROCESSED_ATTRIBUTE = "data-hyphenator-for-czech-language";
+const SKIPPED_TAGS = new Set(["ABBR", "ACRONYM", "AUDIO", "BR", "BUTTON", "CODE", "IMG", "INPUT", "KBD", "LABEL", "MATH", "OPTION", "PRE", "SAMP", "SCRIPT", "STYLE", "SUB", "SUP", "SVG", "TEXTAREA", "VAR", "VIDEO"]);
+function dataUrlToArrayBuffer(dataUrl) {
+  const commaIndex = dataUrl.indexOf(",");
+  const metadata = dataUrl.slice(0, commaIndex);
+  const payload = dataUrl.slice(commaIndex + 1);
+  if (metadata.endsWith(";base64")) {
+    const binary = atob(payload);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i !== binary.length; ++i) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return bytes.buffer;
+  }
+  const decoded = decodeURIComponent(payload);
+  const bytes = new Uint8Array(decoded.length);
+  for (let i = 0; i !== decoded.length; ++i) {
+    bytes[i] = decoded.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
+let czechHyphenatorPromise;
+function getCzechHyphenator() {
+  if (!czechHyphenatorPromise) {
+    czechHyphenatorPromise = hyphenopoly_module.config({
+      loader: async () => dataUrlToArrayBuffer(cs_namespaceObject),
+      require: [CZECH_LANGUAGE]
+    }).get(CZECH_LANGUAGE);
+  }
+  return czechHyphenatorPromise;
+}
+function getSelectedNodes() {
+  const host = document.location.host;
+  console.log("location.host: " + host);
+  if (host.startsWith("www.ceska-justice.cz") || host.startsWith("www.zdravotnickydenik.cz")) {
+    console.log("using rules for Ceska Justice");
+    return document.body.querySelectorAll("article.post");
+  }
+  if (/^(.+\.)?(ihned|hn)\.(cz|news)$/.test(host)) {
+    console.log("using rules for IHned");
+    return document.body.querySelectorAll("article, .perex, div[id=main-content], div[id=content] h1, div.content-column, div.article, div.content");
+  }
+  if (host.endsWith(".aktualne.cz")) {
+    console.log("using rules for Aktualne");
+    return document.body.querySelectorAll("div.clanek, div.titulek-clanku, div.obsah, div.page");
+  }
+  if (host === "www.ceskenoviny.cz") {
+    console.log("using rules for Ceske Noviny");
+    return document.body.querySelectorAll("div.box-article");
+  }
+  if (host.endsWith(".idnes.cz")) {
+    console.log("using rules for IDnes");
+    return document.body.querySelectorAll("div.art-full, div.col, div.hp-b, div[id=main] div[id=content]");
+  }
+  if (host.endsWith(".reflex.cz")) {
+    console.log("using rules for Reflex");
+    return document.body.querySelectorAll("article");
+  }
+  if (host.endsWith(".respekt.cz")) {
+    console.log("using rules for Respekt");
+    return document.body.querySelectorAll("div.layout_content-text, div.layout_content-full");
+  }
+  if (host.endsWith(".ceskatelevize.cz")) {
+    console.log("using rules for Ceska televize");
+    return document.body.querySelectorAll("article, div[id=myPage] div[id=mainPanel]");
+  }
+  if (host.endsWith(".seznam.cz") || host.endsWith(".seznamzpravy.cz")) {
+    console.log("using rules for Seznam");
+    return document.body.querySelectorAll("main");
+  }
+  if (/^(.+\.)?neviditelnypes.lidovky\.cz$/.test(host)) {
+    console.log("using rules for Neviditelny Pes");
+    return document.body.querySelectorAll("div[id=art-full], div[id=col-c]");
+  }
+  if (host.endsWith(".lidovky.cz")) {
+    console.log("using rules for Lidovky");
+    return document.body.querySelectorAll("div[id=content]");
+  }
+  if (host === "svobodneforum.cz") {
+    console.log("using rules for Svobodne forum");
+    return document.body.querySelectorAll("main");
+  }
+  if (host.endsWith(".rozhlas.cz")) {
+    console.log("using rules for Rozhlas");
+    return document.body.querySelectorAll("div.main, div[id=main], div[id=aside]");
+  }
+  if (host === "mediahub.cz") {
+    console.log("using rules for Mediahub");
+    return document.body.querySelectorAll("section[id=section-content], section[id=section-sidebar], div.container");
+  }
+  if (host === "cs.wikipedia.org") {
+    console.log("using rules for Ceska Wikipedia");
+    return document.body.querySelectorAll("div[id=bodyContent]");
+  }
+  if (host.endsWith(".novinky.cz")) {
+    console.log("using rules for Novinky");
+    return document.body.querySelectorAll("div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]");
+  }
+  if (host.endsWith(".info.cz")) {
+    console.log("using rules for Info");
+    return document.body.querySelectorAll("article");
+  }
+  if (host.endsWith(".tyden.cz")) {
+    console.log("using rules for Tyden");
+    return document.body.querySelectorAll("div.article, div.articles");
+  }
+  if (/^(www\.)?echo24\.cz$/.test(host)) {
+    console.log("using rules for Echo24");
+    return document.body.querySelectorAll("div[id=content], article, section");
+  }
+  if (host.endsWith("parlamentnilisty.cz")) {
+    console.log("using rules for Parlamentni Listy");
+    return document.body.querySelectorAll("div[id=main]");
+  }
+  if (/^(.+\.)?forum24\.cz$/.test(host)) {
+    console.log("using rules for Forum24");
+    return document.body.querySelectorAll("article");
+  }
+  if (/^(.+\.)?euro\.cz$/.test(host)) {
+    console.log("using rules for Euro.cz");
+    return document.body.querySelectorAll("div[id=article]");
+  }
+  if (/^(.+\.)?e15\.cz$/.test(host)) {
+    console.log("using rules for E15");
+    return document.body.querySelectorAll("article");
+  }
+  if (/^(.+\.)?neovlivni\.cz$/.test(host)) {
+    console.log("using rules for Neovlivni");
+    return document.body.querySelectorAll("section");
+  }
+  if (/^www\.sysifos\.cz$/.test(host)) {
+    console.log("using rules for sysifos.cz");
+    document.documentElement.setAttribute("lang", CZECH_LANGUAGE);
+    return document.body.querySelectorAll("div[id=blok005a]");
+  }
+  if (/^(.+\.)?denikreferendum\.cz$/.test(host)) {
+    console.log("using rules for Denik Referendum");
+    return document.body.querySelectorAll("div[id=content]");
+  }
+  if (/^(.+\.)?denik\.cz$/.test(host)) {
+    console.log("using rules for Denik");
+    return document.body.querySelectorAll("div.content");
+  }
+  if (/^(.+\.)?irozhlas\.cz$/.test(host)) {
+    console.log("using rules for iRozhlas");
+    return document.body.querySelectorAll("article");
+  }
+  if (/^(.+\.)?epravo\.cz$/.test(host)) {
+    console.log("using rules for epravo.cz");
+    return document.body.querySelectorAll(".article, .article-detail");
+  }
+  if (/^www\.ahaonline\.cz$/.test(host)) {
+    console.log("using rules for ahaonline.cz");
+    return document.body.querySelectorAll("article");
+  }
+  if (/^www\.christnet\.eu$/.test(host)) {
+    console.log("using rules for christnet.eu");
+    return document.body.querySelectorAll(".article-text");
+  }
+  if (/^tn\.nova\.cz$/.test(host)) {
+    console.log("using rules for tn.nova.cz");
+    return document.body.querySelectorAll("div.article");
+  }
+  if (/^www\.autoforum\.cz$/.test(host)) {
+    console.log("using rules for autoforum.cz");
+    return document.body.querySelectorAll("div.article-detail, div#content-right");
+  }
+  console.log("No rule matched.");
+  return [];
+}
+function shouldSkipElement(node) {
+  return node.nodeType === Node.ELEMENT_NODE && SKIPPED_TAGS.has(node.tagName);
+}
+function hasSkippedAncestor(node, root) {
+  let element = node.parentElement;
+  while (element && element !== root) {
+    if (shouldSkipElement(element)) {
+      return true;
+    }
+    element = element.parentElement;
+  }
+  return false;
+}
+function hyphenateTextNodes(root, hyphenateText) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(textNode) {
+      if (!textNode.nodeValue.trim()) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      const parent = textNode.parentElement;
+      if (!parent || parent.closest("[data-hyphenator-for-czech-language]") !== root || hasSkippedAncestor(textNode, root)) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
   });
-  Hyphenator.run();
+  const textNodes = [];
+  while (walker.nextNode()) {
+    textNodes.push(walker.currentNode);
+  }
+  textNodes.forEach(textNode => {
+    textNode.nodeValue = hyphenateText(textNode.nodeValue);
+  });
+}
+function prepareRoot(root) {
+  if (root.getAttribute(PROCESSED_ATTRIBUTE) === "true" || shouldSkipElement(root)) {
+    return false;
+  }
+  root.setAttribute(PROCESSED_ATTRIBUTE, "true");
+  if (!root.getAttribute("lang")) {
+    root.setAttribute("lang", CZECH_LANGUAGE);
+  }
+  return true;
+}
+async function hyphenatorForCzechLanguageOnSelectedSites() {
+  console.log("Hyphenator here.");
+  try {
+    const nodes = Array.from(getSelectedNodes()).filter(prepareRoot);
+    console.log("Got " + nodes.length + " nodes.");
+    if (nodes.length === 0) {
+      return;
+    }
+    const hyphenateText = await getCzechHyphenator();
+    const sample = hyphenateText(CZECH_TEST_WORD);
+    console.log("Czech Hyphenopoly sample: " + sample);
+    nodes.forEach(node => {
+      hyphenateTextNodes(node, hyphenateText);
+    });
+  } catch (error) {
+    console.error("Hyphenator for Czech language failed.", error);
+  }
 }
 hyphenatorForCzechLanguageOnSelectedSites();
 /******/ })()

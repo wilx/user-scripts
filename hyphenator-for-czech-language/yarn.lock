@@ -3661,6 +3661,7 @@ __metadata:
     eslint-plugin-optimize-regex: "npm:^1.2.1"
     eslint-plugin-promise: "npm:^7.3.0"
     globals: "npm:^17.7.0"
+    hyphenopoly: "npm:^6.1.0"
     jsdoc: "npm:^4.0.5"
     jsdoc-webpack-plugin: "npm:^0.3.0"
     lodash-cli: "npm:^4.17.5"
@@ -3671,6 +3672,13 @@ __metadata:
     yarn-audit-html: "npm:^7.3.2"
   languageName: unknown
   linkType: soft
+
+"hyphenopoly@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "hyphenopoly@npm:6.1.0"
+  checksum: 10c0/665aa8bed8079a37fa64e2c35eb47885e81da063a5ccfcfb756c4ce3719237b451fac220c5bdc806bc289d155b0a279f447e47d043ec3335eece09cc550ca2d6
+  languageName: node
+  linkType: hard
 
 "ignore@npm:^5.1.1, ignore@npm:^5.2.0, ignore@npm:^5.3.2":
   version: 5.3.2

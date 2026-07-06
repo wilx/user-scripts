@@ -58,6 +58,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.wasm$/,
+                type: 'asset/inline'
+            },
+            {
                 test: /\.(m?js)$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
