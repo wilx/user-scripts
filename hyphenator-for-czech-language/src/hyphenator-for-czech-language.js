@@ -150,7 +150,14 @@ function getSelectedNodes () {
     }
     if (host.endsWith(".novinky.cz")) {
         console.log("using rules for Novinky");
-        return document.body.querySelectorAll("div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]");
+        return selectNodes(
+            "div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]",
+            { observeReplacements: true }
+        );
+    }
+    if (/^(.+\.)?(prozeny|super|garaz|sport)\.cz$/.test(host)) {
+        console.log("using rules for Seznam portfolio");
+        return selectNodes("main", { observeReplacements: true });
     }
     if (host.endsWith(".info.cz")) {
         console.log("using rules for Info");

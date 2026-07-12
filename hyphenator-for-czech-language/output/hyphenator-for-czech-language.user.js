@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.184
+// @version     1.0.186
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @match       *://www.ceska-justice.cz/*
@@ -27,6 +27,14 @@
 // @match       *://*.rozhlas.cz/*
 // @match       *://mediahub.cz/*
 // @match       *://*.novinky.cz/*
+// @match       *://prozeny.cz/*
+// @match       *://*.prozeny.cz/*
+// @match       *://super.cz/*
+// @match       *://*.super.cz/*
+// @match       *://garaz.cz/*
+// @match       *://*.garaz.cz/*
+// @match       *://sport.cz/*
+// @match       *://*.sport.cz/*
 // @match       *://news.google.com/*
 // @match       *://*.info.cz/*
 // @match       *://*.tyden.cz/*
@@ -6203,7 +6211,15 @@ function getSelectedNodes() {
   }
   if (host.endsWith(".novinky.cz")) {
     console.log("using rules for Novinky");
-    return document.body.querySelectorAll("div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]");
+    return selectNodes("div#szn-clanky main section, div#szn-clanky header, main section[data-dot=tpl-content]", {
+      observeReplacements: true
+    });
+  }
+  if (/^(.+\.)?(prozeny|super|garaz|sport)\.cz$/.test(host)) {
+    console.log("using rules for Seznam portfolio");
+    return selectNodes("main", {
+      observeReplacements: true
+    });
   }
   if (host.endsWith(".info.cz")) {
     console.log("using rules for Info");
