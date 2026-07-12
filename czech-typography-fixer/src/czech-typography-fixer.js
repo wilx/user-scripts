@@ -23,7 +23,10 @@ class CzechTypographyFixer {
         {
             name: 'Aktualne',
             hostTest: (host) => host.endsWith('.aktualne.cz'),
-            selector: 'div.clanek, div.titulek-clanku, div.obsah, div.page'
+            selector: 'div.clanek, div.titulek-clanku, div.obsah, div.page, '
+                + 'h1.e-web-aktualne-articles-show__title, '
+                + 'p.e-web-aktualne-articles-show-header__perex, '
+                + 'div.e-web-aktualne-articles-show-body__tiptap-content'
         },
         {
             name: 'České Noviny',

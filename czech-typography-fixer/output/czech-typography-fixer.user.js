@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        czech-typography-fixer
 // @description Czech typography fixer for Czech news sites.
-// @version     1.0.185
+// @version     1.0.186
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/czech-typography-fixer
 // @include     *://www.ceska-justice.cz/*
@@ -1718,7 +1718,7 @@ class CzechTypographyFixer {
   }, {
     name: 'Aktualne',
     hostTest: host => host.endsWith('.aktualne.cz'),
-    selector: 'div.clanek, div.titulek-clanku, div.obsah, div.page'
+    selector: 'div.clanek, div.titulek-clanku, div.obsah, div.page, ' + 'h1.e-web-aktualne-articles-show__title, ' + 'p.e-web-aktualne-articles-show-header__perex, ' + 'div.e-web-aktualne-articles-show-body__tiptap-content'
   }, {
     name: 'České Noviny',
     hostTest: host => host === 'www.ceskenoviny.cz',
