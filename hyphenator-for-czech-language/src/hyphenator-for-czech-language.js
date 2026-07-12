@@ -4,6 +4,7 @@ import csWasmUrl from "hyphenopoly/patterns/cs.wasm";
 const CZECH_LANGUAGE = "cs";
 const CZECH_TEST_WORD = "nejneobhospodarovavatelnejsimi";
 const PROCESSED_ATTRIBUTE = "data-hyphenator-for-czech-language";
+const REPROCESS_DELAY_MS = 100;
 const SKIPPED_TAGS = new Set([
     "ABBR",
     "ACRONYM",
@@ -56,6 +57,7 @@ function dataUrlToArrayBuffer (dataUrl) {
 }
 
 let czechHyphenatorPromise;
+let observedRootSelector;
 
 function getCzechHyphenator () {
     if (!czechHyphenatorPromise) {
@@ -66,6 +68,14 @@ function getCzechHyphenator () {
     }
 
     return czechHyphenatorPromise;
+}
+
+function selectNodes (selector, options = {}) {
+    if (options.observeReplacements) {
+        observedRootSelector = selector;
+    }
+
+    return document.body.querySelectorAll(selector);
 }
 
 function getSelectedNodes () {
@@ -112,7 +122,7 @@ function getSelectedNodes () {
     }
     if (host.endsWith(".seznam.cz") || host.endsWith(".seznamzpravy.cz")) {
         console.log("using rules for Seznam");
-        return document.body.querySelectorAll("main");
+        return selectNodes("main", { observeReplacements: true });
     }
     if (/^(.+\.)?neviditelnypes.lidovky\.cz$/.test(host)) {
         console.log("using rules for Neviditelny Pes");
@@ -302,4 +312,49 @@ async function hyphenatorForCzechLanguageOnSelectedSites () {
     }
 }
 
+function containsObservedRoot (node) {
+    return node.nodeType === Node.ELEMENT_NODE
+        && (node.matches(observedRootSelector)
+            || node.querySelector(observedRootSelector) !== null);
+}
+
+function mutationsContainObservedRoot (mutations) {
+    for (let i = 0; i !== mutations.length; ++i) {
+        const addedNodes = mutations[i].addedNodes;
+
+        for (let j = 0; j !== addedNodes.length; ++j) {
+            if (containsObservedRoot(addedNodes[j])) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function observeSelectedRootReplacements () {
+    if (!observedRootSelector) {
+        return;
+    }
+
+    let reprocessTimer;
+    const observer = new MutationObserver((mutations) => {
+        if (!mutationsContainObservedRoot(mutations)) {
+            return;
+        }
+
+        clearTimeout(reprocessTimer);
+        reprocessTimer = setTimeout(
+            hyphenatorForCzechLanguageOnSelectedSites,
+            REPROCESS_DELAY_MS
+        );
+    });
+
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
+}
+
 hyphenatorForCzechLanguageOnSelectedSites();
+observeSelectedRootReplacements();

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.182
+// @version     1.0.184
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @match       *://www.ceska-justice.cz/*
@@ -6098,6 +6098,7 @@ const cs_namespaceObject = "data:application/wasm;base64,AGFzbQEAAAABGwVgA39/fwF
 const CZECH_LANGUAGE = "cs";
 const CZECH_TEST_WORD = "nejneobhospodarovavatelnejsimi";
 const PROCESSED_ATTRIBUTE = "data-hyphenator-for-czech-language";
+const REPROCESS_DELAY_MS = 100;
 const SKIPPED_TAGS = new Set(["ABBR", "ACRONYM", "AUDIO", "BR", "BUTTON", "CODE", "IMG", "INPUT", "KBD", "LABEL", "MATH", "OPTION", "PRE", "SAMP", "SCRIPT", "STYLE", "SUB", "SUP", "SVG", "TEXTAREA", "VAR", "VIDEO"]);
 function dataUrlToArrayBuffer(dataUrl) {
   const commaIndex = dataUrl.indexOf(",");
@@ -6119,6 +6120,7 @@ function dataUrlToArrayBuffer(dataUrl) {
   return bytes.buffer;
 }
 let czechHyphenatorPromise;
+let observedRootSelector;
 function getCzechHyphenator() {
   if (!czechHyphenatorPromise) {
     czechHyphenatorPromise = hyphenopoly_module.config({
@@ -6127,6 +6129,12 @@ function getCzechHyphenator() {
     }).get(CZECH_LANGUAGE);
   }
   return czechHyphenatorPromise;
+}
+function selectNodes(selector, options = {}) {
+  if (options.observeReplacements) {
+    observedRootSelector = selector;
+  }
+  return document.body.querySelectorAll(selector);
 }
 function getSelectedNodes() {
   const host = document.location.host;
@@ -6165,7 +6173,9 @@ function getSelectedNodes() {
   }
   if (host.endsWith(".seznam.cz") || host.endsWith(".seznamzpravy.cz")) {
     console.log("using rules for Seznam");
-    return document.body.querySelectorAll("main");
+    return selectNodes("main", {
+      observeReplacements: true
+    });
   }
   if (/^(.+\.)?neviditelnypes.lidovky\.cz$/.test(host)) {
     console.log("using rules for Neviditelny Pes");
@@ -6329,6 +6339,38 @@ async function hyphenatorForCzechLanguageOnSelectedSites() {
     console.error("Hyphenator for Czech language failed.", error);
   }
 }
+function containsObservedRoot(node) {
+  return node.nodeType === Node.ELEMENT_NODE && (node.matches(observedRootSelector) || node.querySelector(observedRootSelector) !== null);
+}
+function mutationsContainObservedRoot(mutations) {
+  for (let i = 0; i !== mutations.length; ++i) {
+    const addedNodes = mutations[i].addedNodes;
+    for (let j = 0; j !== addedNodes.length; ++j) {
+      if (containsObservedRoot(addedNodes[j])) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+function observeSelectedRootReplacements() {
+  if (!observedRootSelector) {
+    return;
+  }
+  let reprocessTimer;
+  const observer = new MutationObserver(mutations => {
+    if (!mutationsContainObservedRoot(mutations)) {
+      return;
+    }
+    clearTimeout(reprocessTimer);
+    reprocessTimer = setTimeout(hyphenatorForCzechLanguageOnSelectedSites, REPROCESS_DELAY_MS);
+  });
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+}
 hyphenatorForCzechLanguageOnSelectedSites();
+observeSelectedRootReplacements();
 /******/ })()
 ;
