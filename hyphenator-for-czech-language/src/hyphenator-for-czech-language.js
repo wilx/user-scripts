@@ -83,7 +83,12 @@ function getSelectedNodes () {
     }
     if (host.endsWith(".aktualne.cz")) {
         console.log("using rules for Aktualne");
-        return document.body.querySelectorAll("div.clanek, div.titulek-clanku, div.obsah, div.page");
+        return document.body.querySelectorAll(
+            "div.clanek, div.titulek-clanku, div.obsah, div.page, "
+            + "h1.e-web-aktualne-articles-show__title, "
+            + "p.e-web-aktualne-articles-show-header__perex, "
+            + "div.e-web-aktualne-articles-show-body__tiptap-content"
+        );
     }
     if (host === "www.ceskenoviny.cz") {
         console.log("using rules for Ceske Noviny");

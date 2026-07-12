@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        hyphenator-for-czech-language
 // @description Hyphenator for news sitez in Czech
-// @version     1.0.180
+// @version     1.0.182
 // @author      wilx
 // @homepage    https://github.com/wilx/user-scripts/hyphenator-for-czech-language
 // @match       *://www.ceska-justice.cz/*
@@ -6141,7 +6141,7 @@ function getSelectedNodes() {
   }
   if (host.endsWith(".aktualne.cz")) {
     console.log("using rules for Aktualne");
-    return document.body.querySelectorAll("div.clanek, div.titulek-clanku, div.obsah, div.page");
+    return document.body.querySelectorAll("div.clanek, div.titulek-clanku, div.obsah, div.page, h1.e-web-aktualne-articles-show__title, p.e-web-aktualne-articles-show-header__perex, div.e-web-aktualne-articles-show-body__tiptap-content");
   }
   if (host === "www.ceskenoviny.cz") {
     console.log("using rules for Ceske Noviny");
